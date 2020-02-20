@@ -1,0 +1,30 @@
+{
+  "name": "react-chat-app",
+  "version": "1.0.0",
+  "description": "Chat application developed using the MERN stack (MongoDB, Express.js, React.js and Node.js).",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JAMT-UCN/react-chat-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JAMT-UCN/react-chat-app/issues"
+  },
+  "homepage": "https://github.com/JAMT-UCN/react-chat-app#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.1.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.1",
+    "nodemon": "^2.0.2"
+  }
+}
