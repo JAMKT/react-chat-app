@@ -1,6 +1,6 @@
 // Check for environment
 if(process.env.NODE_ENV === 'production') {
-    module.exports = { mongoURI: '' }; // TODO: Add database connection string
+    module.exports = { mongoURI: '' }; // Add your remote db connection string here
 } else {
-    module.exports = { mongoURI: '' }; // TODO: Add database connection string
+    module.exports = { mongoURI: '' }; // Add your local db connection string here
 }

@@ -27,7 +27,7 @@ npm run client
 ```
 
 ***Notes:*** 
-* *Add your MongoDB connection string(s) to the keys.js file.*
+* *Add your MongoDB connection strings to the keys.js file.*
 * *Port for the client: 3000. Port for the server and the proxy: 5000. If you have to change the port for the server or the proxy, remember to change both!*
 
 ### Version
