@@ -12,7 +12,7 @@ const app = express();
 app.use(bodyParser.json());
 
 //DB Congig
-const db = require('./keys').mongoURI;
+const db = require('./config/dbKeys').mongoURI;
 
 //Connect to MongoDB
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
