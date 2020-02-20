@@ -5,6 +5,8 @@ Chat application developed using the MERN stack (MongoDB, Express.js, React.js a
 ### Pre-requisites
 Before starting to work on this project, you must have Node.js installed on your machine.
 
+Also, check out the guidelines used in this project [here](https://github.com/JAMT-UCN/coding-guidelines).
+
 ### Quick start
 ``` 
 # Install dependencies on the server side
