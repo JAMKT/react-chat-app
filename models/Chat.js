@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 
 //Define schema of chats
-var chatSchema = new.mongoose.Schema({
+var chatSchema = new mongoose.Schema({
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
