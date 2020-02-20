@@ -27,7 +27,15 @@ npm run client
 ```
 
 ***Notes:*** 
-* *Add your MongoDB connection strings to the keys.js file.*
+* *Add your MongoDB connection strings to the dbKeys.js file inside of the `config` folder.*
+    - *You must create the dbKeys.js file yourself. It should look like this (with your strings):*
+    ```
+    if(process.env.NODE_ENV === 'production') {
+        module.exports = { mongoURI: '' }; // Add your remote db connection string here
+    } else {
+        module.exports = { mongoURI: '' }; // Add your local db connection string here
+    }
+    ```
 * *Port for the client: 3000. Port for the server and the proxy: 5000. If you have to change the port for the server or the proxy, remember to change both!*
 
 ### Version
