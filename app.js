@@ -13,7 +13,6 @@ app.use(bodyParser.json());
 
 //DB Congig
 const db = require('./config/keys').mongoURI;
-// mongoose.connect(require('./config/keys').mongoURI, { useNewUrlParser: true });
 
 //Connect to MongoDB
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -25,6 +24,5 @@ app.use('/api/users', users);
 app.use('/api/chats', chats);
 app.use('/api/messages', messages);
 
-const port = process.env.PORT || 5000;
-
+const port = require('./config/env').serverPORT;
 app.listen(port, () => console.log(`Server started on port ${port}`));

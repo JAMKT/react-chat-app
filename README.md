@@ -11,7 +11,7 @@ Before starting to work on this project, you must have Node.js installed on your
 npm install
 
 # Install dependencies on the client side
-... [TODO: Add command here]
+npm client-install
 
 # Run the client & server with concurrently
 npm run dev
@@ -24,7 +24,9 @@ npm run client
 
 ```
 
-***Note***: *Add your MongoDB connection string(s) to the dbKeys.js file.*
+***Notes:***: 
+* *Add your MongoDB connection string(s) to the keys.js file.*
+* *Port for the client: 3000. Port for the server and the proxy: 5000. If you have to change the port for the server or the proxy, remember to change both!*
 
 ### Version
 1.0.0
