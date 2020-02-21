@@ -2,11 +2,11 @@
   "name": "react-chat-app",
   "version": "1.0.0",
   "description": "Chat application developed using the MERN stack (MongoDB, Express.js, React.js and Node.js).",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server.js",
-    "server": "nodemon app.js",
+    "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
