@@ -27,8 +27,8 @@ npm run client
 ```
 
 ***Notes:*** 
-* *Add your MongoDB connection strings to the dbKeys.js file inside of the `config` folder.*
-    - *You must create the dbKeys.js file yourself. It should look like this (with your strings):*
+* *Create a file called dbKeys.js inside the `config` folder and add your MongoDB connection strings in there.*
+    - *The content of dbKeys.js should look like this (with your strings):*
     ```
     if(process.env.NODE_ENV === 'production') {
         module.exports = { mongoURI: '' }; // Add your remote db connection string here
