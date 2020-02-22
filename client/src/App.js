@@ -12,7 +12,7 @@ import CreateGroup from './components/Pages/CreateGroup';
 import AddContact from './components/Pages/AddContact';
 import Profile from './components/Pages/Profile';
 import Error404 from './components/Pages/Error404';
-
+import './styles/base.css'
 
 function App() {
   return (
