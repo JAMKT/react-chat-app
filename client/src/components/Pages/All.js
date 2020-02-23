@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import MainNavbar from '../Common/MainNavbar'
 import UserList from '../Common/UserList';
+import MainMessageChat from '../Common/MainMessageChat';
 
 export default class All extends Component {
     render() {
@@ -28,7 +29,7 @@ export default class All extends Component {
                         
                     </div>
                     <div class="col">
-                         All Chat
+                         <MainMessageChat />
                     </div>
                 </div>
             </div>
