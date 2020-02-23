@@ -180,6 +180,9 @@
 .grey-bg{
     background-color: #EFEEF2;
 }
+.blue-bg {
+    background-color: #6363FF;
+}
 .padding-32 {
     padding: 32px;
 }
@@ -340,7 +343,22 @@
     padding: 8px 12px;
 }
 
-
-
-
 /* Main Message Chat END */
+
+
+
+/* Setting | Profile START */
+
+.setting-profile-image{
+    border-radius: 50%;
+    max-width: 160px;
+    max-height: 160px;
+    overflow: hidden;
+}
+.settings-icon{
+    border-radius: 50%;
+    max-width: 32px;
+    max-height: 32px;
+    margin-right: 12px;
+    overflow: hidden;
+}
