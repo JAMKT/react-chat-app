@@ -36,6 +36,13 @@ npm run client
         module.exports = { mongoURI: '' }; // Add your local db connection string here
     }
     ```
+* *Create another file inside the `config` folder called `tokenConfig.js`.*
+    - *The content of this file should look like this (with whatever text you want as the value of "secret"):*
+    ```
+    module.exports = {
+        secret: ''
+    }
+    ```
 * *Port for the client: 3000. Port for the server and the proxy: 5000. If you have to change the port for the server or the proxy, remember to change both!*
 
 ### Version
