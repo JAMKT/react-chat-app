@@ -2,9 +2,21 @@
 var mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
-    username: String,
-    password: String,
-    email: String,
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
     //Automatically gets the date of creation of the user
     created: {
         type: Date,
