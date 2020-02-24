@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 
 function App() {
+  console.log(localStorage);
   return (
     <div className="App">
       <header className="App-header">

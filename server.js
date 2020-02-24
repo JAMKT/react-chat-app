@@ -15,6 +15,12 @@ const io = socketio(server);
 //BodyParser Middleware
 app.use(bodyParser.json());
 
+// app.use(function (req, res, next) {
+//     //We're passing the user info
+//     res.locals.currentUser = {};
+//     next();
+// });
+
 //DB Congig
 const db = require('./config/dbKeys').mongoURI;
 
