@@ -30,12 +30,10 @@ router.get('/:id', (req, res) => {
 // Register new user
 router.post('/register', async (req, res) => {
     // Encrypt the password
-    // First create the salt, then the hash with the password and the salt as parameters
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(req.body.password, salt);
 
     // Create a new user
-    // If there are no errors: save the user into the database and redirect them to '/login'
     try {
         const newUser = new User({
             username: req.body.username,
@@ -51,7 +49,6 @@ router.post('/register', async (req, res) => {
         res.status(500)
             .send("Error registering new user please try again.");
     }
-
 });
 
 // POST
@@ -61,7 +58,6 @@ router.post('/login', (req, res) => {
     let email = req.body.email;
 
     if (password && email) {
-
         User.findOne({ "email": email }, function (err, foundedUser) {
             if (!foundedUser) {
                 res.json({
