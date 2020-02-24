@@ -58,14 +58,14 @@ router.post('/login', (req, res) => {
     let email = req.body.email;
 
     if (password && email) {
-        User.findOne({ "email": email }, function (err, foundedUser) {
-            if (!foundedUser) {
+        User.findOne({ "email": email }, function (err, foundUser) {
+            if (!foundUser) {
                 res.json({
                     success: false,
                     message: 'Incorrect credentials 1'
                 });
             } else {
-                bcrypt.compare(password, foundedUser.password, (err, password) => {
+                bcrypt.compare(password, foundUser.password, (err, password) => {
                     if (password) {
                         let token = jwt.sign({ email: email },
                             config.secret,
