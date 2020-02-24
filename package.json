@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/JAMT-UCN/react-chat-app#readme",
   "dependencies": {
+    "bcrypt": "^4.0.0",
     "body-parser": "^1.19.0",
     "concurrently": "^5.1.0",
     "express": "^4.17.1",
