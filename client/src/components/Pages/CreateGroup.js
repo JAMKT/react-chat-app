@@ -21,6 +21,24 @@ export default class CreateGroup extends Component {
                                         <input className='hide-input-field' type="text" />
                                     </div>
                                 </div>
+                                <div className="row margin-top-sm">
+
+                                    <div className="user-added-to-group justify-center text-center">
+                                        <div>
+                                            <img src="https://via.placeholder.com/72" />
+                                            <h5>Username</h5>
+                                        </div>
+                                        <span className="user-group-remove">X</span>
+                                    </div>                                    
+                                    <div className="user-added-to-group justify-center text-center">
+                                        <div>
+                                            <img src="https://via.placeholder.com/72" />
+                                            <h5>Username</h5>
+                                        </div>
+                                        <span className="user-group-remove">X</span>
+                                    </div>
+                                    
+                                </div>
                             </div>
                         </div>
                         <div className="row scrollable">
