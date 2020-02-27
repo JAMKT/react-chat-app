@@ -36,8 +36,6 @@ const Register = () => {
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
-        console.log('Singup!');
-        console.log(formState.inputs, formState.isValid);
 
         axios({
             method: 'post',

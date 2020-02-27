@@ -27,8 +27,6 @@ const Login = () => {
    
    const onSubmitHandler = (event) => {
        event.preventDefault();
-       console.log('Login!');
-       console.log(formState.inputs, formState.isValid);
 
        axios({
         method: 'post',
