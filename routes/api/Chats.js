@@ -23,7 +23,6 @@ router.get('/default', (req, res) => {
 // GET
 // Get group chats
 router.get('/group', (req, res) => {
-    
     Chat.find({ $where: "this.members.length > 2" }, (err, chats) => {
         res.send(chats);
     });
