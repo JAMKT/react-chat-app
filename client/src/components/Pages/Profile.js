@@ -5,26 +5,26 @@ import SettingItem from '../Common/SettingItem';
 export default class Profile extends Component {
     render() {
         return (
-             <div class="container">
-                <div class="row">
-                    <div class="side-col grey-bg full-height">
-                        <div class="row shadow">
-                            <div class="col padding-32">
+             <div className="container">
+                <div className="row">
+                    <div className="side-col grey-bg full-height">
+                        <div className="row shadow">
+                            <div className="col padding-32">
                                 <MainNavbar />
-                                <div class="row">
-                                    <h1 class="margin-sm">Settings</h1>
+                                <div className="row">
+                                    <h1 className="margin-sm">Settings</h1>
                                 </div>
                             </div>
                         </div>
-                        <div class="row padding-32">
-                            <div class="col"> 
-                                <div class="row justify-center padding-20">
-                            <img class="setting-profile-image" src="https://via.placeholder.com/160" />
+                        <div className="row padding-32">
+                            <div className="col"> 
+                                <div className="row justify-center padding-20">
+                            <img className="setting-profile-image" src="https://via.placeholder.com/160" />
                             </div>
-                            <div class="row justify-center">
+                            <div className="row justify-center">
                                 <h2>Username</h2>
                             </div>
-                            <div class="row">
+                            <div className="row">
                                 <h4>Setting group name</h4>
                             </div>
                             <SettingItem />
@@ -32,7 +32,7 @@ export default class Profile extends Component {
                         </div>
                         
                     </div>
-                    <div class="col full-width full-height blue-bg">
+                    <div className="col full-width full-height blue-bg">
                          
                     </div>
                 </div>

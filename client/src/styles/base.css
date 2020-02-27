@@ -96,9 +96,79 @@
 .margin-bot-ml {
     margin-bottom: 40px;
 }
-
 .margin-bot-l {
     margin-bottom: 48px;
+}
+.padding-32 {
+    padding: 32px;
+}
+
+.padding-24 {
+    padding: 24px;
+}
+
+.padding-20 {
+    padding: 20px;
+}
+
+.padding-16 {
+    padding: 16px;
+}
+
+.padding-12 {
+    padding: 12px;
+}
+
+.padding-8 {
+    padding: 8px;
+}
+
+.padding-32 {
+    padding: 32px;
+}
+
+.padding-24 {
+    padding: 24px;
+}
+
+.padding-20 {
+    padding: 20px;
+}
+
+.padding-16 {
+    padding: 16px;
+}
+
+.padding-12 {
+    padding: 12px;
+}
+
+.padding-8 {
+    padding: 8px;
+}
+
+.side-padding-32 {
+    padding: 0 32px;
+}
+
+.side-padding-24 {
+    padding: 0 24px;
+}
+
+.side-padding-20 {
+    padding: 0 20px;
+}
+
+.side-padding-16 {
+    padding: 0 16px;
+}
+
+.side-padding-12 {
+    padding: 0 12px;
+}
+
+.side-padding-8 {
+    padding: 0 8px;
 }
 .remove-list-style{
     list-style: none;
@@ -176,31 +246,22 @@
 
 /* Global styles START */
 
-
+::-webkit-scrollbar {
+    display: none;
+}
+body{
+    background-color: #6363FF;
+}
+ul{
+    padding: 0;
+}
 .grey-bg{
     background-color: #EFEEF2;
 }
 .blue-bg {
     background-color: #6363FF;
 }
-.padding-32 {
-    padding: 32px;
-}
-.padding-24 {
-    padding: 24px;
-}
-.padding-20 {
-    padding: 20px;
-}
-.padding-16 {
-    padding: 16px;
-}
-.padding-12 {
-    padding: 12px;
-}
-.padding-8 {
-    padding: 8px;
-}
+
 .search-field{
     position: relative;
     background-color: #FFFFFF;
@@ -224,7 +285,12 @@
     margin-left: 42px;
     font-size: 1em;
 }
-
+.border-bottom{
+    border-bottom: 1px solid #DBDBDB;
+}
+.scrollable{
+    overflow: scroll;
+}
 /* Global styles END */
 
 /* Navbar START */
@@ -274,8 +340,10 @@
 /* User List END */
 
 /* Main Message Chat START */
+
 .chat-header{
     box-shadow: 2px 3px 6px #c9c9c9;
+    background-color: #fff;
 }
 .chat-header-profile{
     display: flex;
@@ -303,6 +371,9 @@
     max-width: 22px;
     max-height: 22px;
     margin-right: 10px;
+}
+.main-message-chat{
+    background-color: #fff;
 }
 .message-profile-icon{
     align-self: flex-end;
@@ -362,3 +433,56 @@
     margin-right: 12px;
     overflow: hidden;
 }
+
+/* Setting | Profile END */
+
+
+/* Alphabetical Slider START */
+
+.alphabetical-slider{
+    position: absolute;
+    right: 20px;
+    text-align: center;
+    width: 40px;
+    z-index: 100;
+    top: 50%;
+    transform: translate(0%, -28%);
+}
+.alphabetical-slider ul {
+    color: #6363FF;
+    list-style: none;
+}
+.alphabetical-slider li {
+    padding-bottom: 3px;
+    cursor: pointer;
+}
+
+/* Alphabetical Slider END */
+
+
+/* Contacts START */
+
+.alphabet-letter-col{
+    display: flex;
+    padding-left: 30px;
+    width: 20px;
+    font-size: 1.2em;
+    color: #6363FF;
+    font-weight: 100;
+    text-transform: uppercase;
+}
+
+/* Contacts END */
+
+
+
+/* Mobile optimization START */
+
+@media(max-width: 1000px){
+    .hide-on-mobile {
+        display: none;
+    }
+}
+
+
+/* Mobile optimization END */
