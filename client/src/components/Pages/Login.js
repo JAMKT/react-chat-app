@@ -41,7 +41,7 @@ const Login = () => {
     return (
         <div className="container">
             <div className="row">
-                <div className="padding-32 side-col">
+                <div className="padding-32 side-col white-bg">
                     <h1 className="margin-s text-center">Log in</h1>
                     <form onSubmit={onSubmitHandler}>
                         <Input 

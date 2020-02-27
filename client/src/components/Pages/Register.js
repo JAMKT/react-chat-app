@@ -52,7 +52,7 @@ const Register = () => {
     return (
         <div className="container">
             <div className="row">
-                <div className="side-col padding-32">
+                <div className="side-col padding-32 white-bg">
                     <h1 className="margin-s text-center">Create your account</h1>
                     <form onSubmit={onSubmitHandler}>
                         <Input
