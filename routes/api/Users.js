@@ -81,11 +81,6 @@ router.post('/login', (req, res) => {
                             token: token
                         });
 
-                        // res.locals.currentUser = {
-                        //     token: token,
-                        //     username: username
-                        // }
-
                     } else {
                         res.json({
                             success: false,
@@ -104,7 +99,4 @@ router.post('/login', (req, res) => {
 });
 
 // TODO: Decide on how to handle the "logout" functionality
-// router.post('/logout', (req, res) => {
-//     res.locals.currentUser= {};
-// });
 module.exports = router;
