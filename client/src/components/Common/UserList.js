@@ -9,6 +9,10 @@ export default class UserList extends Component {
                 <UserListItem name="placeholder" time="placeholder" unread="placeholder" />
                 <UserListItem name="placeholder" time="placeholder" unread="placeholder" />
                 <UserListItem name="placeholder" time="placeholder" unread="placeholder" />
+                <UserListItem name="placeholder" time="placeholder" unread="placeholder" />
+                <UserListItem name="placeholder" time="placeholder" unread="placeholder" />
+                <UserListItem name="placeholder" time="placeholder" unread="placeholder" />
+                <UserListItem name="placeholder" time="placeholder" unread="placeholder" />
             </div>
         )
     }

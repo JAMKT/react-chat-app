@@ -2,10 +2,12 @@ import React from 'react'
 import UserListItem from './UserListItem';
 import UserListGroup from './UserListGroup';
 import AlphabeticalSlider from './AlphabeticalSlider';
-export default function ContactList() {
 
-    function ContactHandler(props) {
+export default function ContactList(props) {
+
+    function ContactHandler() {
     /* Dummy data */
+    console.log(props.type)
     const dummyUnorderedContactList = [
             { name: "Maria" },
             { name: "Alessia" },
@@ -53,7 +55,7 @@ export default function ContactList() {
         });
         console.log(alphabeticalContactGroupList);
         
-        const UserListGroupItem = alphabeticalContactGroupList.map((group, key) => <UserListGroup key={key} letter={group.letter} users={group.names} /> );
+        const UserListGroupItem = alphabeticalContactGroupList.map((group, key) => <UserListGroup key={key} type={props.type} letter={group.letter} users={group.names} /> );
         return(
             <div className="contact-list full-width col">
                 { UserListGroupItem }
