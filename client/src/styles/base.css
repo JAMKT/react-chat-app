@@ -505,15 +505,35 @@ ul{
 
 /* Create Group START */
 
+.user-added-to-group{
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-flow: column wrap;
+    width: 92px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+.user-added-to-group img{
+    border-radius: 50%;
+}
+.user-group-remove{
+    cursor: pointer;
+    background-color: grey;
+    width: 22px;
+    height: 22px;
+    color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 20px;
+}
 .group-checkbox-col{
     display: flex;
     flex-flow: column nowrap;
     width: 64px;
     padding-right: 48px;
 }
-
-
-
 .checkbox-wrap {
     display: block;
     position: relative;
@@ -523,18 +543,13 @@ ul{
     font-size: 22px;
     user-select: none;
 }
-
-/* Hide the browser's default checkbox */
 .checkbox-wrap input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
     height: 0;
     width: 0;
-
 }
-
-/* Create a custom checkbox */
 .checkmark {
     border-radius: 50%;
     overflow: hidden;
@@ -546,31 +561,21 @@ ul{
     background-color: transparent;
     border: 1px solid #797979;
 }
-
-/* On mouse-over, add a grey background color */
 .checkbox-wrap:hover input~.checkmark {
     background-color: #c9c9c9;
 }
-
-/* When the checkbox is checked, add a blue background */
 .checkbox-wrap input:checked~.checkmark {
     background-color: #6363FF;
     border: 1px solid #6363FF;
 }
-
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
-
-/* Show the checkmark when checked */
 .checkbox-wrap input:checked~.checkmark:after {
     display: block;
 }
-
-/* Style the checkmark/indicator */
 .checkbox-wrap .checkmark:after {
     left: 9px;
     top: 5px;
@@ -580,7 +585,5 @@ ul{
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
 }
-
-
 
 /* Create Group END */
