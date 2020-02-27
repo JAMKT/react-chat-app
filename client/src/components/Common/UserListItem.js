@@ -25,9 +25,21 @@ export default function UserListItem(props) {
                         :
                         null
                     }
+
                     
                 </div>
             </div>
+            {
+                props.type == "CREATE_GROUP"?
+                <div className="group-checkbox-col justify-center">
+                    <div className="checkbox-wrap">
+                        <input className="checkbox" type="checkbox" id={"checkbox_"+ props.index+props.name } />
+                        <label className="checkmark" htmlFor={"checkbox_"+ props.index+props.name} ></label>
+                    </div>
+                </div>
+                :
+                null
+            }
         </div>
     )
 }
