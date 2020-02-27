@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-//import Login from './components/Pages/Login';
 import Login from './components/Pages/Login';
 import Register from './components/Pages/Register';
 import All from './components/Pages/All';
@@ -17,7 +16,6 @@ import Error404 from './components/Pages/Error404';
 import './styles/base.css'
 
 function App() {
-  console.log(localStorage);
   return (
     <div className="App">
       <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
