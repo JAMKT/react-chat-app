@@ -3,7 +3,7 @@ import React from 'react'
 export default function AlphabeticalSlider() {
     return (
         <div className="alphabetical-slider row">
-            <ul class="col">
+            <ul className="col">
                 <li>A</li>
                 <li>B</li>
                 <li>C</li>

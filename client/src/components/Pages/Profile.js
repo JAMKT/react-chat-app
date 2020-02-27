@@ -25,7 +25,7 @@ export default class Profile extends Component {
                             <div className="row justify-center">
                                 <h2>Username</h2>
                             </div>
-                            <div class="row">
+                            <div className="row">
                                 <h4>Edit Profile</h4>
                             </div>
                             <SettingItem />
