@@ -11,6 +11,7 @@ import Contacts from './components/Pages/Contacts';
 import CreateGroup from './components/Pages/CreateGroup';
 import AddContact from './components/Pages/AddContact';
 import Profile from './components/Pages/Profile';
+import LandingPage from './components/Pages/LandingPage';
 import Error404 from './components/Pages/Error404';
 import './styles/base.css'
 
@@ -20,7 +21,8 @@ function App() {
       <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
       <Router>
             <Switch>
-              <Route path="/" exact component={ Login }></Route>
+              <Route path="/" exact component={ LandingPage }></Route>
+              <Route path="/Login" exact component={ Login }></Route>
               <Route path="/Register" component={ Register }></Route>
               <Route path="/All" component={ All }></Route>
               <Route path="/Chat" component={ Chat }></Route>

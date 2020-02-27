@@ -19,11 +19,15 @@
 }
 
 .full-height {
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .height-50{
     height: 50%;
+}
+
+.font-size-l{
+    font-size: 50px;
 }
 
 .text-center {
@@ -31,7 +35,7 @@
 }
 
 .margin-xs {
-    margin: 8px 0tom;
+    margin: 8px 0;
 }
 
 .margin-s {
@@ -213,6 +217,10 @@
 
 
 /* Grid START */
+.flex-container{
+    width: 100%;
+    display: flex;
+}
 
 .container {
     width: 100%;
@@ -246,8 +254,15 @@
 
 /* Global styles START */
 
+
 ::-webkit-scrollbar {
     display: none;
+}
+.white-bg{
+    background-color: #fff;
+}
+.grey-bg{
+    background-color: #EFEEF2;
 }
 body{
     background-color: #6363FF;

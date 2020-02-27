@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import MainNavbar from '../Common/MainNavbar';
 import SettingItem from '../Common/SettingItem';
 
+
 export default class Profile extends Component {
     render() {
         return (
@@ -24,8 +25,8 @@ export default class Profile extends Component {
                             <div className="row justify-center">
                                 <h2>Username</h2>
                             </div>
-                            <div className="row">
-                                <h4>Setting group name</h4>
+                            <div class="row">
+                                <h4>Edit Profile</h4>
                             </div>
                             <SettingItem />
                             </div>
