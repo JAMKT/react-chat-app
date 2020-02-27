@@ -30,7 +30,7 @@ const SettingItem = (props) => {
  
 
     return (
-        <div class="align-center row margin-top-s">
+        <div className="align-center row margin-top-s">
             <form className="row" onSubmit={onSubmitHandler}>
                 <Input 
                     id="name"
