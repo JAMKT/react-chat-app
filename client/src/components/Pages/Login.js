@@ -4,7 +4,7 @@ import Button from '../Common/Button/Button';
 import { VALIDATOR_MINLENGTH, VALIDATOR_EMAIL } from '../util/validator';
 import { useForm } from '../hooks/formHook';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 
 const Login = () => {
 
@@ -29,6 +29,15 @@ const Login = () => {
        event.preventDefault();
        console.log('Login!');
        console.log(formState.inputs, formState.isValid);
+
+       axios({
+        method: 'post',
+        url: '/api/users/login',
+        data: {
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value
+        }
+    });
    }
 
     return (
