@@ -114,7 +114,6 @@ const Register = () => {
 
                     </form>
                     <p className="margin-s link-text">Already have an account? Login <Link to="/login">here!</Link></p>
-                    <Link to="/All">Go to main page</Link>
                 </div>
 
                 <div className="col blue-bg full-height padding-32">

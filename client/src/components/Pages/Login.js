@@ -76,7 +76,6 @@ const Login = () => {
                                 disabledBtn={!formState.isValid}>Log in</Button>
                     </form>
                     <p className="margin-s link-text">Don't have an account yet? Register <Link to="/register">here!</Link></p>
-                    <Link to="/All">Go to main page</Link>
                 </div>
 
                 <div className="col blue-bg full-height padding-32">
