@@ -46,8 +46,8 @@ const Register = () => {
         }
 
         axios.post('/api/users/register', data)
-            .then(res => {
-                console.log(res.data);
+            .then(() => {
+                window.location.href = "/login";
             })
             .catch(err => console.log(err));
     }

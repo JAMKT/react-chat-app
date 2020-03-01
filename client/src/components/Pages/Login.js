@@ -34,8 +34,8 @@ const Login = () => {
         }
 
         axios.post('/api/users/login', data)
-            .then(res => {
-                console.log(res.data);
+            .then(() => {
+                window.location.href = "/all";
             })
             .catch(err => console.log(err));
    }
