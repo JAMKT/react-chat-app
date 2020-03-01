@@ -5,22 +5,22 @@ export default function MainNavbar() {
     return (
         <nav className="row">
             <div className="navbar-profile">
-                <Link to="/Profile">
+                <Link to="/profile">
                     <img src="https://via.placeholder.com/78" />
                 </Link>
             </div>
             <ul className="remove-list-style navbar-icon-list">
                 <li className="absolute-center-pin">
-                    <Link to="/All"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/comment-solid.svg'} /></Link>
+                    <Link to="/all"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/comment-solid.svg'} /></Link>
                 </li>
                 <li className="absolute-center-pin">
-                    <Link to="/Contacts"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/address-book-solid.svg'} /></Link>
+                    <Link to="/contacts"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/address-book-solid.svg'} /></Link>
                 </li>
                 <li className="absolute-center-pin">
-                    <Link to="/CreateGroup"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/group-plus.svg'} /></Link>
+                    <Link to="/create-group"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/group-plus.svg'} /></Link>
                 </li>
                 <li className="absolute-center-pin">
-                    <Link to="/AddContact"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/contact-plus.svg'} /></Link>
+                    <Link to="/add-contact"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/contact-plus.svg'} /></Link>
                 </li>
             </ul>
         </nav>
