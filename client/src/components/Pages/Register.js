@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import Input from '../Common/FormElements/Input';
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH, VALIDATOR_EMAIL } from '../util/validator';
 import { useForm } from '../hooks/formHook';
@@ -37,16 +38,18 @@ const Register = () => {
     const onSubmitHandler = (event) => {
         event.preventDefault();
 
-        axios({
-            method: 'post',
-            url: '/api/users/register',
-            data: {
-                username: formState.inputs.username.value,
-                name: formState.inputs.name.value,
-                email: formState.inputs.email.value,
-                password: formState.inputs.password.value
-            }
-        });
+        const data = {
+            username: formState.inputs.username.value,
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value
+        }
+
+        axios.post('/api/users/register', data)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err));
     }
 
     return (

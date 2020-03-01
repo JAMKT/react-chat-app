@@ -26,16 +26,18 @@ const Login = () => {
     );
    
    const onSubmitHandler = (event) => {
-       event.preventDefault();
+        event.preventDefault();
 
-       axios({
-        method: 'post',
-        url: '/api/users/login',
-        data: {
+        const data = {
             email: formState.inputs.email.value,
             password: formState.inputs.password.value
         }
-    });
+
+        axios.post('/api/users/login', data)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err));
    }
 
     return (
