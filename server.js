@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const http = require('http');
+const passport = require("passport");
+const session = require("express-session");
 const socketio = require('socket.io');
 
 const users = require('./routes/api/Users');
@@ -22,6 +24,19 @@ const db = require('./config/dbKeys').mongoURI;
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
+
+// Initialize sessions
+app.use(session({
+    secret: 'sessionSecret',
+    resave: false,
+    saveUninitialized: false,
+    expires: new Date(Date.now() + 3600000)
+}));
+
+// Initialize passport
+app.use(passport.initialize());
+// Initialize passport session
+app.use(passport.session());
 
 //User Routes
 app.use('/api/users', users);
