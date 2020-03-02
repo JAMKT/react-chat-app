@@ -14,7 +14,7 @@ import Profile from './components/Pages/Profile';
 import LandingPage from './components/Pages/LandingPage';
 import Error404 from './components/Pages/Error404';
 import './styles/base.css'
-import axios from 'axios';
+import getCurrentUser from './currentUser';
 
 function App() {
   getCurrentUser();
@@ -42,19 +42,5 @@ function App() {
     </div>
   );
 }
-
-
-const getCurrentUser = () => {
-  axios.get('/api/users/current-user')
-    .then((currentUser) => {
-      if (currentUser.data.username) {
-        // window.location.href = "/all";
-        console.log("Current User: " + currentUser.data.username);
-      } else {
-        console.log("No user logged in");
-      }
-    })
-    .catch(err => console.log(err));
-};
 
 export default App;
