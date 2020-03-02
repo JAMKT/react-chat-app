@@ -44,6 +44,11 @@ app.use('/api/users', users);
 app.use('/api/chats', chats);
 app.use('/api/messages', messages);
 
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
+
 // Testing connection with sockets
 io.on('connection', socket => {
     socket.on('join', () => {
