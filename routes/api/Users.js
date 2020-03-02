@@ -52,6 +52,14 @@ router.post('/register', async (req, res) => {
 
 // POST
 // Login with user credentials
+//Handling login logic
+// router.post("/login", passport.authenticate("local",
+//     {
+//         successRedirect: "/notes",
+//         failureRedirect: "/user/login"
+//     }), function (req, res) {
+//     }
+// );
 router.post('/login', (req, res, next) => {
     let password = req.body.password;
     let email = req.body.email;
@@ -66,16 +74,16 @@ router.post('/login', (req, res, next) => {
             } else {
                 bcrypt.compare(password, foundUser.password, (err, password) => {
                     if (password) {
-                        passport.authenticate('local', (err, foundUser) => {
+                        passport.authenticate('local')(req, res, function () {
                             //TODO
                             if (err) {
                                 console.log(err);
                             } else {
                                 res.json({
-                                    foundUser: foundUser
+                                    foundUser: req.user
                                 });
                             }
-                        })(req, res, next);
+                        });
                     } else {
                         res.json({
                             success: false,
@@ -101,16 +109,23 @@ router.get('/logout', (req, res) => {
 
 // GET
 // Get single user by username
-router.get('/new-contact/:username', middleware, (req, res) => {
+router.get('/new-contact/:username', (req, res) => {
     User.find({ "username": req.params.username }, (err, newContact) => {
         if (err) {
             console.log(err);
         } else {
-            User.findById(req.user.id, (err, foundUser) => {
+            console.log(newContact);
+            console.log(req.user);
+            User.findById(req.user._id, (err, foundUser) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    foundUser.contacts.push(newContact);
+                    res.send("newContact");
+                    foundUser.contacts.unshift({ user: newContact._id });
+                    foundUser.save().then(foundUser => {
+                        console.log(foundUser);
+                        return;
+                    })
                 }
             });
         }

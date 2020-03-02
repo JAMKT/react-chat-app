@@ -17,6 +17,8 @@ const io = socketio(server);
 
 //BodyParser Middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Passport Config
 require('./config/passport')(passport);
@@ -29,7 +31,7 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
-// Initialize sessions
+// // Initialize sessions
 app.use(session({
     secret: sessionSecret,
     resave: false,
