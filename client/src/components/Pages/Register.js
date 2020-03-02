@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import Input from '../Common/FormElements/Input';
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH, VALIDATOR_EMAIL } from '../util/validator';
 import { useForm } from '../hooks/formHook';
 import { Link } from 'react-router-dom';
 import Button from '../Common/Button/Button';
 import ImageInput from '../Common/FormElements/ImageInput';
+import axios from 'axios';
 
 const Register = () => {
 
@@ -36,20 +38,31 @@ const Register = () => {
             isValid: false
         }
     );
-   
-   const onSubmitHandler = (event) => {
-       event.preventDefault();
-       console.log('Singup!');
-       console.log(formState.inputs, formState.isValid);
-   }
+
+    const onSubmitHandler = (event) => {
+        event.preventDefault();
+
+        const data = {
+            username: formState.inputs.username.value,
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value
+        }
+
+        axios.post('/api/users/register', data)
+            .then(() => {
+                window.location.href = "/login";
+            })
+            .catch(err => console.log(err));
+    }
 
     return (
         <div className="container">
             <div className="row">
-                <div className="side-col padding-32">
+                <div className="side-col padding-32 white-bg">
                     <h1 className="margin-s text-center">Create your account</h1>
                     <form onSubmit={onSubmitHandler}>
-                        <Input 
+                        <Input
                             id="name"
                             type="text"
                             label="Name"
@@ -59,12 +72,11 @@ const Register = () => {
                             inputStyle="hide-text-input-field"
                             inputContainerStyle="margin-s input-field"
                             labelStyle="input-field-label"
-                            errorStyle="error-border"
-                            
-                            
+                            errorStyle="error-border"                     
                             />
 
-                        <Input 
+
+                        <Input
                             id="email"
                             type="email"
                             label="Email"
@@ -75,9 +87,9 @@ const Register = () => {
                             inputContainerStyle="margin-s input-field"
                             labelStyle="input-field-label"
                             errorStyle="error-border"
-                            />
+                        />
 
-                        <Input 
+                        <Input
                             id="username"
                             type="username"
                             label="Username"
@@ -89,8 +101,8 @@ const Register = () => {
                             labelStyle="input-field-label"
                             errorStyle="error-border"
                         />
-                        
-                        <Input 
+
+                        <Input
                             id="password"
                             type="password"
                             label="Password"
@@ -126,10 +138,10 @@ const Register = () => {
                     
                     </form>
                     <p className="margin-s link-text">Already have an account? Login <Link to="/login">here!</Link></p>
-                    <Link to="/All">Go to main page</Link>
                 </div>
 
                 <div className="col blue-bg full-height padding-32"></div>
+
             </div>
         </div>
     );

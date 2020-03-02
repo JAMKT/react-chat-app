@@ -4,7 +4,7 @@ import Button from '../Common/Button/Button';
 import { VALIDATOR_MINLENGTH, VALIDATOR_EMAIL } from '../util/validator';
 import { useForm } from '../hooks/formHook';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 
 const Login = () => {
 
@@ -24,20 +24,33 @@ const Login = () => {
             isValid: false
         }
     );
-   
-   const onSubmitHandler = (event) => {
-       event.preventDefault();
-       console.log('Login!');
-       console.log(formState.inputs, formState.isValid);
-   }
+
+    const onSubmitHandler = (event) => {
+        event.preventDefault();
+
+        const data = {
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value
+        }
+
+        axios.post('/api/users/login', data)
+            .then((foundUser) => {
+                if (foundUser.data.foundUser) {
+                    window.location.href = "/all";
+                } else {
+                    window.location.href = "/login";
+                }
+            })
+            .catch(err => console.log(err));
+    }
 
     return (
         <div className="container">
             <div className="row">
-                <div className="padding-32 side-col">
+                <div className="padding-32 side-col white-bg">
                     <h1 className="margin-s text-center">Log in</h1>
                     <form onSubmit={onSubmitHandler}>
-                        <Input 
+                        <Input
                             id="email"
                             type="email"
                             label="Email"
@@ -48,9 +61,9 @@ const Login = () => {
                             inputContainerStyle="margin-s input-field"
                             labelStyle="input-field-label"
                             errorStyle="error-border"
-                            />
-                        
-                        <Input 
+                        />
+
+                        <Input
                             id="password"
                             type="password"
                             label="Password"
@@ -63,17 +76,16 @@ const Login = () => {
                             errorStyle="error-border"
                         />
 
-                            <Button 
-                                type="submit"
-                                btnStyle="Button margin-xs"
-                                disabledBtn={!formState.isValid}>Log in</Button>
+                        <Button
+                            type="submit"
+                            btnStyle="Button margin-xs"
+                            disabledBtn={!formState.isValid}>Log in</Button>
                     </form>
                     <p className="margin-s link-text">Don't have an account yet? Register <Link to="/register">here!</Link></p>
-                    <Link to="/All">Go to main page</Link>
                 </div>
 
                 <div className="col blue-bg full-height padding-32">
-                   
+
                 </div>
             </div>
         </div>

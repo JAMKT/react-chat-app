@@ -1,4 +1,4 @@
 node_modules
 client/node_modules
 config/dbKeys.js
-config/tokenConfig.js
+config/sessionConfig.js

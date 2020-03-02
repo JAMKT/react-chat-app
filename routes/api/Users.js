@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-
-let jwt = require('jsonwebtoken');
-let config = require('../../config/tokenConfig');
-let middleware = require('../../middleware/checkToken');
+const passport = require("passport");
 
 //User Model
 const User = require('../../models/User');
+
+const middleware = require('../../middleware/isLoggedIn');
 
 // GET
 // Get users
@@ -32,11 +31,11 @@ router.post('/register', async (req, res) => {
     // Encrypt the password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(req.body.password, salt);
-
     // Create a new user
     try {
         const newUser = new User({
             username: req.body.username,
+            name: req.body.name,
             email: req.body.email,
             password: hash
         });
@@ -53,7 +52,7 @@ router.post('/register', async (req, res) => {
 
 // POST
 // Login with user credentials
-router.post('/login', (req, res) => {
+router.post('/login', (req, res, next) => {
     let password = req.body.password;
     let email = req.body.email;
 
@@ -67,25 +66,16 @@ router.post('/login', (req, res) => {
             } else {
                 bcrypt.compare(password, foundUser.password, (err, password) => {
                     if (password) {
-                        let token = jwt.sign({ email: email },
-                            config.secret,
-                            {
-                                expiresIn: '24h' // expires in 24 hours
+                        passport.authenticate('local', (err, foundUser) => {
+                            //TODO
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                res.json({
+                                    foundUser: foundUser
+                                });
                             }
-                        );
-
-                        // return the JWT token for the future API calls
-                        res.json({
-                            success: true,
-                            message: 'Authentication successful!',
-                            token: token
-                        });
-
-                        // res.locals.currentUser = {
-                        //     token: token,
-                        //     username: username
-                        // }
-
+                        })(req, res, next);
                     } else {
                         res.json({
                             success: false,
@@ -103,8 +93,28 @@ router.post('/login', (req, res) => {
     }
 });
 
-// TODO: Decide on how to handle the "logout" functionality
-// router.post('/logout', (req, res) => {
-//     res.locals.currentUser= {};
-// });
+// GET
+// Logout
+router.get('/logout', (req, res) => {
+    req.logout();
+});
+
+// GET
+// Get single user by username
+router.get('/new-contact/:username', middleware, (req, res) => {
+    User.find({ "username": req.params.username }, (err, newContact) => {
+        if (err) {
+            console.log(err);
+        } else {
+            User.findById(req.user.id, (err, foundUser) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    foundUser.contacts.push(newContact);
+                }
+            });
+        }
+    });
+});
+
 module.exports = router;

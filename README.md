@@ -36,7 +36,7 @@ npm run client
         module.exports = { mongoURI: '' }; // Add your local db connection string here
     }
     ```
-* *Create another file inside the `config` folder called `tokenConfig.js`.*
+* *Create another file inside the `config` folder called `sessionConfig.js`.*
     - *The content of this file should look like this (with whatever text you want as the value of "secret"):*
     ```
     module.exports = {

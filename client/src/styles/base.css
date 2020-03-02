@@ -19,7 +19,7 @@
 }
 
 .full-height {
-    min-height: 100vh;
+    height: 100vh;
 }
 
 .height-50{
@@ -100,9 +100,79 @@
 .margin-bot-ml {
     margin-bottom: 40px;
 }
-
 .margin-bot-l {
     margin-bottom: 48px;
+}
+.padding-32 {
+    padding: 32px;
+}
+
+.padding-24 {
+    padding: 24px;
+}
+
+.padding-20 {
+    padding: 20px;
+}
+
+.padding-16 {
+    padding: 16px;
+}
+
+.padding-12 {
+    padding: 12px;
+}
+
+.padding-8 {
+    padding: 8px;
+}
+
+.padding-32 {
+    padding: 32px;
+}
+
+.padding-24 {
+    padding: 24px;
+}
+
+.padding-20 {
+    padding: 20px;
+}
+
+.padding-16 {
+    padding: 16px;
+}
+
+.padding-12 {
+    padding: 12px;
+}
+
+.padding-8 {
+    padding: 8px;
+}
+
+.side-padding-32 {
+    padding: 0 32px;
+}
+
+.side-padding-24 {
+    padding: 0 24px;
+}
+
+.side-padding-20 {
+    padding: 0 20px;
+}
+
+.side-padding-16 {
+    padding: 0 16px;
+}
+
+.side-padding-12 {
+    padding: 0 12px;
+}
+
+.side-padding-8 {
+    padding: 0 8px;
 }
 .remove-list-style{
     list-style: none;
@@ -184,8 +254,21 @@
 
 /* Global styles START */
 
+
+::-webkit-scrollbar {
+    display: none;
+}
 .white-bg{
     background-color: #fff;
+}
+.grey-bg{
+    background-color: #EFEEF2;
+}
+body{
+    background-color: #6363FF;
+}
+ul{
+    padding: 0;
 }
 .grey-bg{
     background-color: #EFEEF2;
@@ -193,24 +276,7 @@
 .blue-bg {
     background-color: #6363FF;
 }
-.padding-32 {
-    padding: 32px;
-}
-.padding-24 {
-    padding: 24px;
-}
-.padding-20 {
-    padding: 20px;
-}
-.padding-16 {
-    padding: 16px;
-}
-.padding-12 {
-    padding: 12px;
-}
-.padding-8 {
-    padding: 8px;
-}
+
 .search-field{
     position: relative;
     background-color: #FFFFFF;
@@ -234,7 +300,12 @@
     margin-left: 42px;
     font-size: 1em;
 }
-
+.border-bottom{
+    border-bottom: 1px solid #DBDBDB;
+}
+.scrollable{
+    overflow: scroll;
+}
 /* Global styles END */
 
 /* Navbar START */
@@ -284,8 +355,10 @@
 /* User List END */
 
 /* Main Message Chat START */
+
 .chat-header{
     box-shadow: 2px 3px 6px #c9c9c9;
+    background-color: #fff;
 }
 .chat-header-profile{
     display: flex;
@@ -313,6 +386,9 @@
     max-width: 22px;
     max-height: 22px;
     margin-right: 10px;
+}
+.main-message-chat{
+    background-color: #fff;
 }
 .message-profile-icon{
     align-self: flex-end;
@@ -372,3 +448,142 @@
     margin-right: 12px;
     overflow: hidden;
 }
+
+/* Setting | Profile END */
+
+
+/* Alphabetical Slider START */
+
+.alphabetical-slider{
+    position: absolute;
+    right: 20px;
+    text-align: center;
+    width: 40px;
+    z-index: 100;
+    top: 50%;
+    transform: translate(0%, -28%);
+}
+.alphabetical-slider ul {
+    color: #6363FF;
+    list-style: none;
+}
+.alphabetical-slider li {
+    padding-bottom: 3px;
+    cursor: pointer;
+}
+
+/* Alphabetical Slider END */
+
+
+/* Contacts START */
+
+.alphabet-letter-col{
+    display: flex;
+    padding-left: 30px;
+    width: 20px;
+    font-size: 1.2em;
+    color: #6363FF;
+    font-weight: 100;
+    text-transform: uppercase;
+}
+
+/* Contacts END */
+
+
+
+/* Mobile optimization START */
+
+@media(max-width: 1000px){
+    .hide-on-mobile {
+        display: none;
+    }
+}
+
+
+/* Mobile optimization END */
+
+
+/* Create Group START */
+
+.user-added-to-group{
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-flow: column wrap;
+    width: 92px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+.user-added-to-group img{
+    border-radius: 50%;
+}
+.user-group-remove{
+    cursor: pointer;
+    background-color: grey;
+    width: 22px;
+    height: 22px;
+    color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 20px;
+}
+.group-checkbox-col{
+    display: flex;
+    flex-flow: column nowrap;
+    width: 64px;
+    padding-right: 48px;
+}
+.checkbox-wrap {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    user-select: none;
+}
+.checkbox-wrap input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.checkmark {
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: transparent;
+    border: 1px solid #797979;
+}
+.checkbox-wrap:hover input~.checkmark {
+    background-color: #c9c9c9;
+}
+.checkbox-wrap input:checked~.checkmark {
+    background-color: #6363FF;
+    border: 1px solid #6363FF;
+}
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.checkbox-wrap input:checked~.checkmark:after {
+    display: block;
+}
+.checkbox-wrap .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Create Group END */

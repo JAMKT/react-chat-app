@@ -40,7 +40,6 @@ const SettingItem = (props) => {
  
 
     return (
-
         <div class="row padding-32">
             <div class="col"> 
                 <div class="row justify-center padding-20 settings-wrap">

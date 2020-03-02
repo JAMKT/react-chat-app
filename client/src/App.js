@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-//import Login from './components/Pages/Login';
 import Login from './components/Pages/Login';
 import Register from './components/Pages/Register';
 import All from './components/Pages/All';
@@ -17,24 +16,23 @@ import Error404 from './components/Pages/Error404';
 import './styles/base.css'
 
 function App() {
-  console.log(localStorage);
   return (
     <div className="App">
       <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
       <Router>
             <Switch>
               <Route path="/" exact component={ LandingPage }></Route>
-              <Route path="/Login" exact component={ Login }></Route>
-              <Route path="/Register" component={ Register }></Route>
-              <Route path="/All" component={ All }></Route>
-              <Route path="/Chat" component={ Chat }></Route>
-              <Route path="/SocialMedia" component={ SocialMedia }></Route>
-              <Route path="/Mentions" component={ Mentions }></Route>
-              <Route path="/Comments" component={ Comments }></Route>
-              <Route path="/Contacts" component={ Contacts }></Route>
-              <Route path="/CreateGroup" component={ CreateGroup }></Route>
-              <Route path="/AddContact" component={ AddContact }></Route>
-              <Route path="/Profile" component={ Profile }></Route>
+              <Route path="/login" exact component={ Login }></Route>
+              <Route path="/register" component={ Register }></Route>
+              <Route path="/all" component={ All }></Route>
+              <Route path="/chat" component={ Chat }></Route>
+              <Route path="/social-media" component={ SocialMedia }></Route>
+              <Route path="/mentions" component={ Mentions }></Route>
+              <Route path="/comments" component={ Comments }></Route>
+              <Route path="/contacts" component={ Contacts }></Route>
+              <Route path="/create-group" component={ CreateGroup }></Route>
+              <Route path="/add-contact" component={ AddContact }></Route>
+              <Route path="/profile" component={ Profile }></Route>
               <Route path="*" component={ Error404 }></Route>
             </Switch>
           </Router>
