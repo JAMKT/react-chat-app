@@ -17,6 +17,12 @@ router.get('/', (req, res) => {
 });
 
 // GET
+// Get current user 
+router.get('/current-user', middleware, (req, res) => {
+    res.send(req.user);
+});
+
+// GET
 // Get single user by its id
 router.get('/:id', (req, res) => {
     User.findById(req.params.id, (err, user) => {
