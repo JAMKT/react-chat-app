@@ -66,16 +66,16 @@ router.post('/login', (req, res, next) => {
             } else {
                 bcrypt.compare(password, foundUser.password, (err, password) => {
                     if (password) {
-                        passport.authenticate('local', {
-                            successRedirect: '/all',
-                            failureRedirect: '/login'
+                        passport.authenticate('local', (err, foundUser) => {
+                            //TODO
+                            // if (err) {
+                            //     console.log(err);
+                            // } else {
+                                res.json({
+                                    foundUser: foundUser
+                                });
+                            // }
                         })(req, res, next);
-
-                        res.json({
-                            success: true,
-                            message: 'Authentication successful!'
-                        });
-
                     } else {
                         res.json({
                             success: false,
