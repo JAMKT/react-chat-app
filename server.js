@@ -18,6 +18,9 @@ const io = socketio(server);
 //BodyParser Middleware
 app.use(bodyParser.json());
 
+// Passport Config
+require('./config/passport')(passport);
+
 //DB Congig
 const db = require('./config/dbKeys').mongoURI;
 

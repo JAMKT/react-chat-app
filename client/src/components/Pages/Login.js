@@ -24,8 +24,8 @@ const Login = () => {
             isValid: false
         }
     );
-   
-   const onSubmitHandler = (event) => {
+
+    const onSubmitHandler = (event) => {
         event.preventDefault();
 
         const data = {
@@ -34,11 +34,15 @@ const Login = () => {
         }
 
         axios.post('/api/users/login', data)
-            .then(() => {
-                window.location.href = "/all";
+            .then((foundUser) => {
+                if (foundUser.data.foundUser) {
+                    window.location.href = "/all";
+                } else {
+                    window.location.href = "/login";
+                }
             })
             .catch(err => console.log(err));
-   }
+    }
 
     return (
         <div className="container">
@@ -46,7 +50,7 @@ const Login = () => {
                 <div className="padding-32 side-col white-bg">
                     <h1 className="margin-s text-center">Log in</h1>
                     <form onSubmit={onSubmitHandler}>
-                        <Input 
+                        <Input
                             id="email"
                             type="email"
                             label="Email"
@@ -57,9 +61,9 @@ const Login = () => {
                             inputContainerStyle="margin-s input-field"
                             labelStyle="input-field-label"
                             errorStyle="error-border"
-                            />
-                        
-                        <Input 
+                        />
+
+                        <Input
                             id="password"
                             type="password"
                             label="Password"
@@ -72,16 +76,16 @@ const Login = () => {
                             errorStyle="error-border"
                         />
 
-                            <Button 
-                                type="submit"
-                                btnStyle="Button margin-xs"
-                                disabledBtn={!formState.isValid}>Log in</Button>
+                        <Button
+                            type="submit"
+                            btnStyle="Button margin-xs"
+                            disabledBtn={!formState.isValid}>Log in</Button>
                     </form>
                     <p className="margin-s link-text">Don't have an account yet? Register <Link to="/register">here!</Link></p>
                 </div>
 
                 <div className="col blue-bg full-height padding-32">
-                   
+
                 </div>
             </div>
         </div>

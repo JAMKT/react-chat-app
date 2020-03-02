@@ -27,7 +27,7 @@ export default class All extends Component {
                         <div className="row scrollable">
                             <UserList />
                         </div>
-                        
+
                     </div>
                     <div className="col hide-on-mobile">
                         <MainMessageChat />
