@@ -5,6 +5,7 @@ const http = require('http');
 const passport = require("passport");
 const session = require("express-session");
 const socketio = require('socket.io');
+const sessionSecret = require('sessionConfig').sessionSecret;
 
 const users = require('./routes/api/Users');
 const chats = require('./routes/api/Chats');
@@ -27,7 +28,7 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Initialize sessions
 app.use(session({
-    secret: 'sessionSecret',
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
     expires: new Date(Date.now() + 3600000)
