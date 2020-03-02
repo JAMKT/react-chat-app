@@ -68,13 +68,13 @@ router.post('/login', (req, res, next) => {
                     if (password) {
                         passport.authenticate('local', (err, foundUser) => {
                             //TODO
-                            // if (err) {
-                            //     console.log(err);
-                            // } else {
+                            if (err) {
+                                console.log(err);
+                            } else {
                                 res.json({
                                     foundUser: foundUser
                                 });
-                            // }
+                            }
                         })(req, res, next);
                     } else {
                         res.json({
