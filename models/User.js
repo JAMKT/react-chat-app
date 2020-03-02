@@ -21,6 +21,14 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    contacts: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+        }
+    ],
     //Automatically gets the date of creation of the user
     created: {
         type: Date,
