@@ -21,6 +21,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     User.findById(req.params.id, (err, user) => {
         if (err) res.send('User not found.');
+        console.log(user);
         res.send(user);
     });
 });
@@ -115,13 +116,13 @@ router.get('/new-contact/:username', (req, res) => {
             console.log(err);
         } else {
             console.log(newContact);
-            console.log(req.user);
+            console.log(newContact[0].id);
             User.findById(req.user._id, (err, foundUser) => {
                 if (err) {
                     console.log(err);
                 } else {
                     res.send("newContact");
-                    foundUser.contacts.unshift({ user: newContact._id });
+                    foundUser.contacts.unshift({ user: newContact[0].id });
                     foundUser.save().then(foundUser => {
                         console.log(foundUser);
                         return;
