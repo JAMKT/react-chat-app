@@ -6,6 +6,8 @@ const passport = require("passport");
 //User Model
 const User = require('../../models/User');
 
+const middleware = require('../../middleware/isLoggedIn');
+
 // GET
 // Get users
 router.get('/', (req, res) => {
@@ -99,7 +101,7 @@ router.get('/logout', (req, res) => {
 
 // GET
 // Get single user by username
-router.get('/new-contact/:username', (req, res) => {
+router.get('/new-contact/:username', middleware, (req, res) => {
     User.find({ "username": req.params.username }, (err, newContact) => {
         if (err) {
             console.log(err);
