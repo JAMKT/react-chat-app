@@ -5,7 +5,7 @@ const http = require('http');
 const passport = require("passport");
 const session = require("express-session");
 const socketio = require('socket.io');
-const sessionSecret = require('./config/sessionConfig').sessionSecret;
+const sessionSecret = require('./config/sessionConfig').secret;
 
 const users = require('./routes/api/Users');
 const chats = require('./routes/api/Chats');
