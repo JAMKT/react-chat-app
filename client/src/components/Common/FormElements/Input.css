@@ -1,25 +1,4 @@
-/*
-.Input{
-    border-radius: 80px;
-    border: none;
-    background: #EFEEF2;
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
-}
-.inputContainer{
-    position: relative;
-}
 
-.inputContainer label:focus {
-    position: absolute;
-    left: 30px;
-    top: -10px;
-    width: 20px;
-    height: 20px;
-}
-
-*/
 .input-field-label{
     position: absolute;
     top: 50%;
@@ -75,9 +54,79 @@
 
 .error-text{
     color: #E50000;
+    display: block;
+}
+.error-text-image{
+    color: #E50000;
+    display: block;
+    z-index: 3;
+    margin-top: 31%;
+}
+.no-error-text{
+    display: none;
 }
 
 .link-text a{
     text-decoration: none;
     color: #6363FF;
+}
+
+
+input[type="file"] {
+    display: none;
+}
+
+.file-input{
+    height: 62px;
+    cursor: pointer;
+}
+
+.file-type-lable{
+    display: inline-block;
+    padding: 18px 72% 18px 0px;
+    cursor: pointer;
+}
+
+.img-preview{
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    object-fit: cover;
+    position: absolute;
+    right: 30px;
+    top: 13px;
+}
+
+.image-input-label{
+    border-radius: 50%;
+    width: 160px;
+    right: 50%;
+    top: 40%;
+    font-weight: 700;
+    height: 160px;
+    position: absolute;
+    background-image: url('../../images/blank-profile-picture.png');
+    transform: translate(50%, -50%);
+    cursor: pointer;
+    background-size: cover;
+    z-index: 1;
+}
+.opacity-0{
+    opacity: 0;
+}
+.profile-image{
+    border-radius: 50%;
+    width: 160px;
+    right: 33.2%;
+    top: -7%;
+    z-index: 0;
+    font-weight: 700;
+    height: 160px;
+    position: absolute;
+    object-fit: cover;
+    z-index: 0;
+}
+.settings-wrap{
+    position: relative;
+    height: 170px;
 }

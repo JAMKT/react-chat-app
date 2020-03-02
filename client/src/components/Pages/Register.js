@@ -4,6 +4,7 @@ import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH, VALIDATOR_EMAIL } from '../util
 import { useForm } from '../hooks/formHook';
 import { Link } from 'react-router-dom';
 import Button from '../Common/Button/Button';
+import ImageInput from '../Common/FormElements/ImageInput';
 
 const Register = () => {
 
@@ -25,8 +26,11 @@ const Register = () => {
             username: {
                 value: '',
                 isValid: false
+            },
+            profileImage: {
+                value: '',
+                isValid: false
             }
-
         },
         {
             isValid: false
@@ -56,6 +60,8 @@ const Register = () => {
                             inputContainerStyle="margin-s input-field"
                             labelStyle="input-field-label"
                             errorStyle="error-border"
+                            
+                            
                             />
 
                         <Input 
@@ -97,19 +103,33 @@ const Register = () => {
                             errorStyle="error-border"
                         />
 
+                        <ImageInput 
+                            id="profileImage"
+                            label="Profile Picture"
+                            htmlFor="profileImage"
+                            errorText="Please select an image"
+                            onInput={inputHandler}
+                            inputStyle="hide-text-input-field"
+                            inputContainerStyle="margin-s input-field file-input"
+                            labelStyle="input-field-label file-type-lable"
+                            errorStyle="error-border"
+                            imgStyle="img-preview"
+                            errorTextStyle="error-text"
+                            opacity="1"
+                        />  
+
                         <Button 
                             type="submit"
                             btnStyle="Button margin-xs"
-                            disabledBtn={!formState.isValid}>Sign Up</Button>
+                            disabledBtn={!formState.isValid}>Sign Up
+                        </Button>
                     
                     </form>
                     <p className="margin-s link-text">Already have an account? Login <Link to="/login">here!</Link></p>
                     <Link to="/All">Go to main page</Link>
                 </div>
 
-                <div className="col blue-bg full-height padding-32">
-                   
-                </div>
+                <div className="col blue-bg full-height padding-32"></div>
             </div>
         </div>
     );
