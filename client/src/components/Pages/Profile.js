@@ -12,25 +12,13 @@ export default class Profile extends Component {
                         <div className="row shadow">
                             <div className="col padding-32">
                                 <MainNavbar />
-                                <div className="row">
-                                    <h1 className="margin-sm">Settings</h1>
+
+                                <div class="row">
+                                    <h1 class="margin-sm">Profile</h1>
                                 </div>
                             </div>
                         </div>
-                        <div className="row padding-32">
-                            <div className="col"> 
-                                <div className="row justify-center padding-20">
-                            <img className="setting-profile-image" src="https://via.placeholder.com/160" />
-                            </div>
-                            <div className="row justify-center">
-                                <h2>Username</h2>
-                            </div>
-                            <div className="row">
-                                <h4>Edit Profile</h4>
-                            </div>
-                            <SettingItem />
-                            </div>
-                        </div>
+                        <SettingItem />
                         
                     </div>
                     <div className="col full-width full-height blue-bg">
