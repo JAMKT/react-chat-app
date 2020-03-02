@@ -97,4 +97,22 @@ router.get('/logout', (req, res) => {
     req.logout();
 });
 
+// GET
+// Get single user by username
+router.get('/new-contact/:username', (req, res) => {
+    User.find({ "username": req.params.username }, (err, newContact) => {
+        if (err) {
+            console.log(err);
+        } else {
+            User.findById(req.user.id, (err, foundUser) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    foundUser.contacts.push(newContact);
+                }
+            });
+        }
+    });
+});
+
 module.exports = router;
