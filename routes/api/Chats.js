@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-//Chat Model
+// Models
 const Chat = require('../../models/Chat');
+const User = require('../../models/User');
 
 // GET
 // Get all chats
@@ -39,14 +40,36 @@ router.get('/:id', (req, res) => {
 
 // POST
 // Create chat
-router.post('/', (req, res) => {
-    // TODO: Handle validation
+router.post('/', async (req, res) => {
+    let chatMembers = [];
+    let membersList = req.body; // This needs to be an array of users
 
-    const newChat = new Chat({
-        // TODO: Define how to differentiate between default chats and group chats before creating this feature
-    });
+    try {
+        // Loop through the array of users taken from the client side
+        // Push the users to the chatMembers array
+        for (const member of membersList) {
+            await User.findOne({ "username": member.username })
+                .then(member => { chatMembers.push(member._id); })
+                .catch(err => console.log(err));
+        }
 
-    newChat.save();
+        // Create new chat
+        const newChat = new Chat({
+            author: {
+                id: req.user._id,
+                username: req.user.username
+            },
+            members: chatMembers,
+            messages: []
+        });
+    
+        newChat.save();
+        res.status(200).send("Chat created.");
+    } catch(err) {
+        // If there are errors: send an error
+        res.status(500)
+            .send("Chat could not be created.");
+    }
 });
 
 // DELETE
