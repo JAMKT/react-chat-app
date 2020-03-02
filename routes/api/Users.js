@@ -114,7 +114,7 @@ router.get('/new-contact/:username', (req, res) => {
                     console.log(err);
                 } else {
                     res.send("newContact");
-                    foundUser.contacts.unshift({ user: newContact[0].id });
+                    foundUser.contacts.unshift({ user: newContact[0].id, username: newContact[0].username });
                     foundUser.save().then(foundUser => {
                         return;
                     })

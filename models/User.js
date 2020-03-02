@@ -26,7 +26,8 @@ const userSchema = new mongoose.Schema({
             user: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User"
-            },
+            }, 
+            username: String
         }
     ],
     //Automatically gets the date of creation of the user
