@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
                 .then(member => { chatMembers.push(member._id); })
                 .catch(err => console.log(err));
         }
-
+ 
         // Create new chat
         const newChat = new Chat({
             author: {
