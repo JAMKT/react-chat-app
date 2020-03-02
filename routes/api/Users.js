@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-
-let jwt = require('jsonwebtoken');
-let config = require('../../config/tokenConfig');
-let middleware = require('../../middleware/checkToken');
+const passport = require("passport");
 
 //User Model
 const User = require('../../models/User');
@@ -53,7 +50,7 @@ router.post('/register', async (req, res) => {
 
 // POST
 // Login with user credentials
-router.post('/login', (req, res) => {
+router.post('/login', (req, res, next) => {
     let password = req.body.password;
     let email = req.body.email;
 
@@ -67,18 +64,14 @@ router.post('/login', (req, res) => {
             } else {
                 bcrypt.compare(password, foundUser.password, (err, password) => {
                     if (password) {
-                        let token = jwt.sign({ email: email },
-                            config.secret,
-                            {
-                                expiresIn: '24h' // expires in 24 hours
-                            }
-                        );
+                        passport.authenticate('local', {
+                            successRedirect: '/all',
+                            failureRedirect: '/login'
+                        })(req, res, next);
 
-                        // return the JWT token for the future API calls
                         res.json({
                             success: true,
-                            message: 'Authentication successful!',
-                            token: token
+                            message: 'Authentication successful!'
                         });
 
                     } else {
@@ -98,5 +91,10 @@ router.post('/login', (req, res) => {
     }
 });
 
-// TODO: Decide on how to handle the "logout" functionality
+// GET
+// Logout
+router.get('/logout', (req, res) => {
+    req.logout();
+});
+
 module.exports = router;
