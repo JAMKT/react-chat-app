@@ -54,13 +54,6 @@ router.post('/register', async (req, res) => {
 // POST
 // Login with user credentials
 //Handling login logic
-// router.post("/login", passport.authenticate("local",
-//     {
-//         successRedirect: "/notes",
-//         failureRedirect: "/user/login"
-//     }), function (req, res) {
-//     }
-// );
 router.post('/login', (req, res, next) => {
     let password = req.body.password;
     let email = req.body.email;
@@ -116,7 +109,6 @@ router.get('/new-contact/:username', (req, res) => {
             console.log(err);
         } else {
             console.log(newContact);
-            console.log(newContact[0].id);
             User.findById(req.user._id, (err, foundUser) => {
                 if (err) {
                     console.log(err);
@@ -124,7 +116,6 @@ router.get('/new-contact/:username', (req, res) => {
                     res.send("newContact");
                     foundUser.contacts.unshift({ user: newContact[0].id });
                     foundUser.save().then(foundUser => {
-                        console.log(foundUser);
                         return;
                     })
                 }
