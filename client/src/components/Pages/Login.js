@@ -32,8 +32,14 @@ const Login = () => {
             email: formState.inputs.email.value,
             password: formState.inputs.password.value
         }
-
-        axios.post('/api/users/login', data)
+        const config = {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        
+        axios.post('/api/users/login', data, config)
             .then((foundUser) => {
                 if (foundUser.data.foundUser) {
                     window.location.href = "/all";
