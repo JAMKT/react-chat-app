@@ -4,6 +4,7 @@ const router = express.Router();
 // Models
 const Chat = require('../../models/Chat');
 const Message = require('../../models/Message');
+const Chat = require('../../models/Chat');
 
 // GET
 // Get all messages related to a specific chat
