@@ -3,6 +3,7 @@ import UserListItem from './UserListItem';
 import UserListGroup from './UserListGroup';
 import AlphabeticalSlider from './AlphabeticalSlider';
 import getCurrentUser from '../../currentUser';
+import axios from 'axios';
 
 export default function ContactList(props) {
     getCurrentUser();
