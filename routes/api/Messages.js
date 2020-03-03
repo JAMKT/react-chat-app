@@ -3,6 +3,7 @@ const router = express.Router();
 
 //Message Model
 const Message = require('../../models/Message');
+const Chat = require('../../models/Chat');
 
 // GET
 // Get messages
@@ -25,7 +26,6 @@ router.get('/:id', (req, res) => {
 // Create new message
 router.post('/', (req, res) => {
     // TODO: Handle validation
-
     const newMessage = new Message({
         content: req.body.content,
         // TODO: Handle authentication to make this work as it should!
@@ -34,8 +34,18 @@ router.post('/', (req, res) => {
             username: req.user.username
         }
     });
-
-    newMessage.save();
+    
+    Chat.find(req.params.id, (err, foundChat) => {
+        Message.create(newMessage, (err, newMessage) => {
+            if (err){
+                console.log(err);
+            }else {
+                newMessage.save();
+                foundChat.messages.push(newMessage);
+                foundChat.save();
+            }
+        });
+    });
 });
 
 // DELETE
