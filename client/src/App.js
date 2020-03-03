@@ -14,6 +14,7 @@ import Profile from './components/Pages/Profile';
 import LandingPage from './components/Pages/LandingPage';
 import Error404 from './components/Pages/Error404';
 import './styles/base.css'
+import axios from 'axios';
 
 function App() {
   return (

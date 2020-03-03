@@ -2,33 +2,10 @@ import React from 'react'
 import UserListItem from './UserListItem';
 import UserListGroup from './UserListGroup';
 import AlphabeticalSlider from './AlphabeticalSlider';
-import axios from 'axios';
 import getCurrentUser from '../../currentUser';
 
 export default function ContactList(props) {
-    const requestGetCurrentUser = () => {
-        axios.get('/api/users/current-user')
-            .then((currentUser) => {
-                if (currentUser.data.username) {
-                    console.log("Current User: " + currentUser.data.username);
-                    const loggedInUser = currentUser.data;
-                    return loggedInUser;
-                } else {
-                    console.log("No user logged in");
-                    const loggedInUser = {};
-                    return loggedInUser;
-                }
-            })
-            .catch(err => console.log(err));
-    };
-
-    async function getCurrentUser() {
-        const result = await requestGetCurrentUser();
-        return result;
-    }
-
-    // const currentUser = getCurrentUser();
-    console.log(getCurrentUser());
+    getCurrentUser();
 
     function ContactHandler() {
         /* Dummy data */

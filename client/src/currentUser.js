@@ -3,6 +3,8 @@ import axios from 'axios';
 const requestGetCurrentUser = () => {
   axios.get('/api/users/current-user')
     .then((currentUser) => {
+      console.log("Current User Obj");
+      console.log(currentUser);
       if (currentUser.data.username) {
         console.log("Current User: " + currentUser.data.username);
         const loggedInUser = currentUser.data;
