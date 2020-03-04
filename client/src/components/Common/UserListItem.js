@@ -30,7 +30,7 @@ export default function UserListItem(props) {
                 </div>
                 { /* Bottom part of the column */ }
                 <div className="row height-50 space-between align-center">
-                    <p>{props.id}</p> 
+                    <p>{props.alreadyAdded}</p> 
                 </div>
             </div>
             <div className="user-list-button-col">
