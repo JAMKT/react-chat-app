@@ -86,8 +86,8 @@ function App() {
           <Route path="/" exact component={LandingPage}></Route>
           <Route path="/login" exact component={Login}></Route>
           <Route path="/register" component={Register}></Route>
-          <PrivateRoute path="/all" component={All}></PrivateRoute>
-          <PrivateRoute path="/" exact component={LandingPage}></PrivateRoute>
+          <Route path="/all" component={All}></Route>
+          <Route path="/" exact component={LandingPage}></Route>
           <Route path="/chat" component={Chat}></Route>
           <Route path="/social-media" component={SocialMedia}></Route>
           <Route path="/mentions" component={Mentions}></Route>
