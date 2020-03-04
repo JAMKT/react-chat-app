@@ -5,6 +5,8 @@ const router = express.Router();
 const Chat = require('../../models/Chat');
 const User = require('../../models/User');
 
+const middleware = require('../../middleware/isLoggedIn');
+
 // GET
 // Get all chats
 router.get('/', (req, res) => {
@@ -52,7 +54,7 @@ router.post('/', async (req, res) => {
                 .then(member => { chatMembers.push(member._id); })
                 .catch(err => console.log(err));
         }
- 
+
         // Create new chat
         const newChat = new Chat({
             author: {
@@ -62,10 +64,10 @@ router.post('/', async (req, res) => {
             members: chatMembers,
             messages: []
         });
-    
+
         newChat.save();
         res.status(200).send("Chat created.");
-    } catch(err) {
+    } catch (err) {
         // If there are errors: send an error
         res.status(500)
             .send("Chat could not be created.");
@@ -80,9 +82,22 @@ router.post('/:id', (req, res) => {
             if (err) console.log(err);
             res.send('success', 'Your chat has been deleted!');
         });
-    } catch(err) {
+    } catch (err) {
         res.send('error', 'Your chat could not be deleted. Try again.');
     }
+});
+
+//GET
+//Get last 10 chats
+router.get('/last-ten', middleware, (req, res) => {
+    Chat.find({ "members": { $elemMatch: { "user": req.user.id } } }).sort({ "lastUpdate": -1 }).limit(10).exec((err, lastChats) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(lastChats);
+            res.send(lastChats);
+        }
+    });
 });
 
 
