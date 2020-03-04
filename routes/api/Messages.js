@@ -17,34 +17,32 @@ router.get('/:id/messages', (req, res) => {
 // GET
 // Get single message by its id
 router.get('/:id/messages/:messageId', async (req, res) => {
-    // Message.findById(req.params.id, (err, message) => {
-    //     if (err) res.send('Message not found.');
-    //     res.send(message);
-    // });
     const message = await Message.findById(req.params.messageId, (err, message) => {
         if (err) res.send('Message not found.');
         return message;
     })
 
-    Chat.find({ 
-        '_id': req.params.id, 
-        messages: { '$elemMatch': { _id: req.params.messageId } } 
-    }, (err, chat) => {
+    Chat.findById(req.params.id, (err, chat) => {
         if (err) res.send('No chat found.');
-        console.log(chat);
+    
+        const messagesArray = chat.messages;
 
-        // chat.messages.forEach(msg => {
-        //     if (msg._id == message._id) {
-        //         return message;
-        //     }
-        // });
+        if (messagesArray.length > 0) {
+            chat.messages.forEach(msg => {
+                if (msg._id == message._id) {
+                    res.send(message);
+                }
+            });
+        } else {
+            res.send('No message found in this chat');
+        }
     });
 });
 
 // POST
 // Create new message
 router.post('/:id/messages/', (req, res) => {
-    // TODO: Handle validation
+    let messagesArray = [];
 
     const newMessage = new Message({
         content: req.body.content,
@@ -55,6 +53,25 @@ router.post('/:id/messages/', (req, res) => {
     });
 
     newMessage.save();
+
+    Chat.findById(req.params.id, (err, chat) => {
+        if (err) res.send('Message not found.');
+
+        // Push new message to array
+        messagesArray.push(newMessage);
+        console.log(messagesArray);
+    });
+
+    // Update chat with new messages
+    Chat.findOneAndUpdate({ _id: req.params.id }, {
+        $addToSet: {
+            messages: messagesArray
+        }
+    }, 
+    { new: true }, // Return the newly updated version of the document
+    (err, chat) => {
+        if (err) { res.send('Could not update this chat.'); }
+    });
 });
 
 // DELETE
