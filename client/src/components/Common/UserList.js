@@ -5,9 +5,6 @@ import { AuthContext } from '../context/authContext';
 const UserList = (props) => {
     const userContext = useContext( AuthContext );
 
-    const getCurrentUserContactsArray = () => {
-        
-    }
     if(props.searching === true){
         return (
             <div className="user-list col">
