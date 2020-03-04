@@ -132,7 +132,7 @@ router.get('/new-contact/:username', (req, res) => {
 
 // POST
 // Update user's settings
-router.post('/:id', async (req, res) => {
+router.post('/update-user', async (req, res) => {
     User.findOneAndUpdate({ _id: req.user._id }, {
         $set: {
             username: req.body.username,
