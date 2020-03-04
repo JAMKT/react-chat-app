@@ -21,8 +21,8 @@ const Profile = () => {
                             <div className="col padding-32">
                                 <MainNavbar />
 
-                                <div class="row">
-                                    <h1 class="margin-sm">Profile</h1>
+                                <div className="row">
+                                    <h1 className="margin-sm">Profile</h1>
                                 </div>
                             </div>
                         </div>

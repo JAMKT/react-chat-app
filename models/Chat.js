@@ -25,11 +25,13 @@ var chatSchema = new mongoose.Schema({
             ref: "Message"
         }
     ],
+    lastUpdate: Date,
     //Automatically gets the date of creation of the user
     created: {
         type: Date,
         default: Date.now()
-    }
+    },
+    lastUpdated: Date
 });
 
 //Export our schema, this reference will be used in other models

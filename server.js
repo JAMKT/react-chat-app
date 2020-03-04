@@ -47,7 +47,7 @@ app.use(passport.session());
 //User Routes
 app.use('/api/users', users);
 app.use('/api/chats', chats);
-app.use('/api/messages', messages);
+app.use('/api/chats', messages);
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;

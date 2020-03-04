@@ -2,7 +2,6 @@
 
 import axios from 'axios';
 
-
 const getCurrentUser = () => {
     axios.get('/api/users/current-user')
       .then((currentUser) => {

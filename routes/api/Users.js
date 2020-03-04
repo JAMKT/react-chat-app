@@ -130,4 +130,20 @@ router.get('/new-contact/:username', (req, res) => {
     });
 });
 
+// POST
+// Update user's settings
+router.post('/update-user', async (req, res) => {
+    User.findOneAndUpdate({ _id: req.user._id }, {
+        $set: {
+            username: req.body.username,
+            name: req.body.name,
+            email: req.body.email
+        }
+    }, 
+    { new: true }, // Return the newly updated version of the document
+    (err, user) => {
+        if (err) { res.send('Could not update this user.'); }
+    });
+});
+
 module.exports = router;
