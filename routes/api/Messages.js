@@ -67,6 +67,9 @@ router.post('/:id/messages/', (req, res) => {
         Chat.findOneAndUpdate({ _id: req.params.id }, {
             $addToSet: {
                 messages: messagesArray
+            },
+            $set: {
+                lastUpdate: newMessage.created
             }
         }, 
         { new: true }, // Return the newly updated version of the document

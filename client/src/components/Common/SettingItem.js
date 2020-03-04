@@ -4,14 +4,14 @@ import ImageInput from './FormElements/ImageInput';
 import Button from '../Common/Button/Button';
 import { useForm } from '../hooks/formHook';
 import { VALIDATOR_EMAIL, VALIDATOR_REQUIRE } from '../util/validator';
-
+import axios from 'axios';
 
 const SettingItem = (props) => {
     const [formState, inputHandler] = useForm(
         //set inital input state + form validity state
         {
             email: {
-                value: props.value,
+                value: props.email,
                 isValid: true
             },
             name: {
@@ -21,11 +21,11 @@ const SettingItem = (props) => {
             username: {
                 value: props.username,
                 isValid: true
-            },
-            profileImage: {
-                value: props.profileImage,
-                isValid: true
             }
+            // profileImage: {
+            //     value: props.profileImage,
+            //     isValid: true
+            // }
         },
         {
             isValid: true
@@ -34,15 +34,31 @@ const SettingItem = (props) => {
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
-        console.log('Login!');
-        console.log(formState.inputs, formState.isValid);
+        
+        const data = {
+            email: formState.inputs.email.value,
+            name: formState.inputs.name.value,
+            username: formState.inputs.username.value
+            //profileImage: formState.inputs.profileImage.value
+        }
+        const config = {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        
+        axios.post('/api/users/update-user', data, config)
+            .then((updatedUser) => {
+                console.log(updatedUser);
+            })
+            .catch(err => console.log(err));
     }
- 
 
     return (
-        <div class="row padding-32">
-            <div class="col"> 
-                <div class="row justify-center padding-20 settings-wrap">
+        <div className="row padding-32">
+            <div className="col"> 
+                <div className="row justify-center padding-20 settings-wrap">
                     <ImageInput 
                         id="profileImage"
                         htmlFor="profileImage"
@@ -56,15 +72,15 @@ const SettingItem = (props) => {
                         />
                 </div>
 
-                <div class="row justify-center">
+                <div className="row justify-center">
                     <h2>Username</h2>
                 </div>
 
-                <div class="row">
+                <div className="row">
                     <h4>Edit Profile</h4>
                 </div>
 
-                <div class="align-center row margin-top-s">
+                <div className="align-center row margin-top-s">
                     <form className="row" onSubmit={onSubmitHandler}>
                         <Input 
                             id="name"

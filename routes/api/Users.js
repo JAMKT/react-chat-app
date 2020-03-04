@@ -131,6 +131,7 @@ router.get('/new-contact/:username', (req, res) => {
     });
 });
 
+//Get the users that fit the search with regex
 router.get('/searching/:username', (req, res) => {
     console.log(req.params.username)
     if (req.params.username){
@@ -149,9 +150,28 @@ router.get('/searching/:username', (req, res) => {
     }
 });
 
+// POST
+// Update user's settings
+router.post('/update-user', async (req, res) => {
+    User.findOneAndUpdate({ _id: req.user._id }, {
+        $set: {
+            username: req.body.username,
+            name: req.body.name,
+            email: req.body.email
+        }
+    }, 
+    { new: true }, // Return the newly updated version of the document
+    (err, user) => {
+        if (err) { res.send('Could not update this user.'); }
+    });
+});
+
 
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
+
+
+
 
 module.exports = router;
