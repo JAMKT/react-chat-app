@@ -2,13 +2,16 @@ import React from 'react'
 import UserListItem from './UserListItem';
 import UserListGroup from './UserListGroup';
 import AlphabeticalSlider from './AlphabeticalSlider';
+import getCurrentUser from '../../currentUser';
+import axios from 'axios';
 
 export default function ContactList(props) {
+    getCurrentUser();
 
     function ContactHandler() {
-    /* Dummy data */
-    console.log(props.type)
-    const dummyUnorderedContactList = [
+        /* Dummy data */
+        // console.log(props.type)
+        const dummyUnorderedContactList = [
             { name: "Maria" },
             { name: "Alessia" },
             { name: "Jose" },
@@ -23,13 +26,13 @@ export default function ContactList(props) {
             { name: "Zion" },
             { name: "Dave" }
         ];
-        
+
         /* Creating an ordered contact list */
         let orderedContactList = dummyUnorderedContactList.sort(
-        function(a, b){
-            let nameA = a.name.toUpperCase();
-            let nameB = b.name.toUpperCase();
-            return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
+            function (a, b) {
+                let nameA = a.name.toUpperCase();
+                let nameB = b.name.toUpperCase();
+                return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
             }
         );
 
@@ -54,17 +57,17 @@ export default function ContactList(props) {
             alphabeticalContactGroupList.push(alphabeticalContactGroup);
         });
         console.log(alphabeticalContactGroupList);
-        
-        const UserListGroupItem = alphabeticalContactGroupList.map((group, key) => <UserListGroup key={key} type={props.type} letter={group.letter} users={group.names} /> );
-        return(
+
+        const UserListGroupItem = alphabeticalContactGroupList.map((group, key) => <UserListGroup key={key} type={props.type} letter={group.letter} users={group.names} />);
+        return (
             <div className="contact-list full-width col">
-                { UserListGroupItem }
+                {UserListGroupItem}
                 <AlphabeticalSlider />
             </div>
-           
+
         )
     }
-    return(
+    return (
         <ContactHandler />
     )
 }

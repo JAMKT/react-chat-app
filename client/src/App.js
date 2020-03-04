@@ -14,11 +14,9 @@ import Profile from './components/Pages/Profile';
 import LandingPage from './components/Pages/LandingPage';
 import Error404 from './components/Pages/Error404';
 import './styles/base.css'
-import getCurrentUser from './currentUser';
+import axios from 'axios';
 
 function App() {
-  getCurrentUser();
-
   return (
     <div className="App">
       <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
