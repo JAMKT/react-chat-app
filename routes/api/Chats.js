@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
 // Create chat
 router.post('/', async (req, res) => {
     let chatMembers = [];
-    let membersList = req.body; // This needs to be an array of users
+    let membersList = req.body;
 
     try {
         // Loop through the array of users taken from the client side
