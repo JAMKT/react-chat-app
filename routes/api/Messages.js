@@ -41,7 +41,10 @@ router.post('/', (req, res) => {
                 console.log(err);
             }else {
                 newMessage.save();
+                
                 foundChat.messages.push(newMessage);
+                foundChat.lastUpdate = newMessage.created;
+
                 foundChat.save();
             }
         });
