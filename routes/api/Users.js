@@ -110,7 +110,7 @@ router.get('/logout', (req, res) => {
 // GET
 // Get single user by username
 router.get('/new-contact/:username', (req, res) => {
-    User.find({ "username": req.params.username }, (err, newContact) => {
+    User.findOne({ "username": req.params.username }, (err, newContact) => {
         if (err) {
             console.log(err);
         } else {
@@ -119,12 +119,24 @@ router.get('/new-contact/:username', (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.send("newContact");
-                    foundUser.contacts.unshift({ user: newContact[0].id, username: newContact[0].username });
-                    foundUser.save().then(foundUser => {
-                        console.log(foundUser)
-                        return;
-                    })
+                    if (foundUser.contacts.length === 0) {
+                        foundUser.contacts.unshift({ user: newContact.id, username: newContact.username });
+                        foundUser.save().then(foundUser => {
+                            res.send(foundUser);
+                        });
+                    } else {
+                        foundUser.contacts.forEach((contact) => {
+                            if (contact.user === newContact.id) {
+                                foundUser.contacts.unshift({ user: newContact.id, username: newContact.username });
+                                foundUser.save().then(foundUser => {
+                                    res.send(foundUser);
+                                });
+                            } else {
+                                res.send(newContact.username + " is already in contacts");
+                            }
+
+                        })
+                    }
                 }
             });
         }
