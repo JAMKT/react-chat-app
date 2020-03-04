@@ -351,6 +351,10 @@ ul{
     border-radius: 50%;
     margin-right: 20px;
 }
+.user-list-button-col {
+    display: flex;
+    align-items: center;
+}
 
 /* User List END */
 
