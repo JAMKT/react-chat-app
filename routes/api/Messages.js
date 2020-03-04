@@ -42,36 +42,42 @@ router.get('/:id/messages/:messageId', async (req, res) => {
 // POST
 // Create new message
 router.post('/:id/messages/', (req, res) => {
-    let messagesArray = [];
+    try {
+        let messagesArray = [];
 
-    const newMessage = new Message({
-        content: req.body.content,
-        author: {
-            id: req.user._id,
-            username: req.user.username
-        }
-    });
+        const newMessage = new Message({
+            content: req.body.content,
+            author: {
+                id: req.user._id,
+                username: req.user.username
+            }
+        });
 
-    newMessage.save();
+        newMessage.save();
 
-    Chat.findById(req.params.id, (err, chat) => {
-        if (err) res.send('Message not found.');
+        Chat.findById(req.params.id, (err, chat) => {
+            if (err) res.send('Message not found.');
 
-        // Push new message to array
-        messagesArray.push(newMessage);
-        console.log(messagesArray);
-    });
+            // Push new message to array
+            messagesArray.push(newMessage);
+            console.log(messagesArray);
+        });
 
-    // Update chat with new messages
-    Chat.findOneAndUpdate({ _id: req.params.id }, {
-        $addToSet: {
-            messages: messagesArray
-        }
-    }, 
-    { new: true }, // Return the newly updated version of the document
-    (err, chat) => {
-        if (err) { res.send('Could not update this chat.'); }
-    });
+        // Update chat with new messages
+        Chat.findOneAndUpdate({ _id: req.params.id }, {
+            $addToSet: {
+                messages: messagesArray
+            }
+        }, 
+        { new: true }, // Return the newly updated version of the document
+        (err, chat) => {
+            if (err) { res.send('Could not update this chat.'); }
+        });
+    } catch(err) {
+        console.log(err);
+        res.send('Could not create this message.');
+    }
+    
 });
 
 // DELETE
@@ -80,10 +86,10 @@ router.post('/:id/messages/:id', (req, res) => {
     try {
         Message.findByIdAndRemove({ _id: req.params.id }, (err) => {
             if (err) console.log(err);
-            res.send('success', 'Your message has been deleted!');
+            res.send('Message has been deleted!');
         });
     } catch(err) {
-        res.send('error', 'Your message could not be deleted. Try again.');
+        res.send('Message could not be deleted. Try again.');
     }
 });
 

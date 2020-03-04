@@ -78,10 +78,10 @@ router.post('/:id', (req, res) => {
     try {
         Chat.findByIdAndRemove({ _id: req.params.id }, (err) => {
             if (err) console.log(err);
-            res.send('success', 'Your chat has been deleted!');
+            res.send('Chat has been deleted!');
         });
     } catch(err) {
-        res.send('error', 'Your chat could not be deleted. Try again.');
+        res.send('Chat could not be deleted. Try again.');
     }
 });
 
