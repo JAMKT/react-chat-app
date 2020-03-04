@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Input from '../Common/FormElements/Input';
 import Button from '../Common/Button/Button';
 import { VALIDATOR_MINLENGTH, VALIDATOR_EMAIL } from '../util/validator';
 import { useForm } from '../hooks/formHook';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../context/authContext';
 
 const Login = () => {
+   
+    const auth = useContext(AuthContext);
 
-    const [formState, inputHandler, setFormData] = useForm(
+    const [formState, inputHandler] = useForm(
         //set inital input state + form validity state
         {
             email: {
@@ -27,6 +30,8 @@ const Login = () => {
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
+
+        //auth.login();
 
         const data = {
             email: formState.inputs.email.value,
