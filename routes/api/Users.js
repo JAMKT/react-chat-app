@@ -122,12 +122,32 @@ router.get('/new-contact/:username', (req, res) => {
                     res.send("newContact");
                     foundUser.contacts.unshift({ user: newContact[0].id, username: newContact[0].username });
                     foundUser.save().then(foundUser => {
+                        console.log(foundUser)
                         return;
                     })
                 }
             });
         }
     });
+});
+
+//Get the users that fit the search with regex
+router.get('/searching/:username', (req, res) => {
+    console.log(req.params.username)
+    if (req.params.username){
+        //Declaring the regular expression of the search
+        const regex = new RegExp(escapeRegex(req.params.username), 'gi');
+        //Looking for coffees where the name or kind match with the regular expression
+        User.find({ $or: [{ username: regex }] }, function (err, response) {
+            if (err) {
+                console.log(err);
+            } else {
+                //Rendering the index template with the found coffees
+                res.send(response);
+                }
+            }    
+        )
+    }
 });
 
 // POST
@@ -145,5 +165,13 @@ router.post('/update-user', async (req, res) => {
         if (err) { res.send('Could not update this user.'); }
     });
 });
+
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
+
+
 
 module.exports = router;
