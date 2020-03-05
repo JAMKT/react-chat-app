@@ -38,7 +38,6 @@ const SettingItem = (props) => {
         const data = {
             email: formState.inputs.email.value,
             name: formState.inputs.name.value,
-            username: formState.inputs.username.value
             //profileImage: formState.inputs.profileImage.value
         }
         const config = {
@@ -73,7 +72,7 @@ const SettingItem = (props) => {
                 </div>
 
                 <div className="row justify-center">
-                    <h2>Username</h2>
+                    <h2>{formState.inputs.username.value}</h2>
                 </div>
 
                 <div className="row">
@@ -104,21 +103,6 @@ const SettingItem = (props) => {
                             value={formState.inputs.email.value}
                             errorText="Please enter a valid email."
                             validator={[VALIDATOR_EMAIL()]}
-                            onInput={inputHandler}
-                            inputStyle="hide-text-input-field"
-                            inputContainerStyle="margin-s input-field white-bg"
-                            labelStyle="input-field-label-active"
-                            errorStyle="error-border"
-                            />
-
-                        <Input 
-                            id="username"
-                            type="text"
-                            label="Username"
-                            valid={true}
-                            value={formState.inputs.username.value}
-                            errorText="Please enter a valid username."
-                            validator={[VALIDATOR_REQUIRE()]}
                             onInput={inputHandler}
                             inputStyle="hide-text-input-field"
                             inputContainerStyle="margin-s input-field white-bg"
