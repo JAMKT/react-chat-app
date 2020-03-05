@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
 
-const Login = () => {
+const Login = (props) => {
    
     const auth = useContext(AuthContext);
 
@@ -32,7 +32,6 @@ const Login = () => {
         event.preventDefault();
 
         //auth.login();
-
         const data = {
             email: formState.inputs.email.value,
             password: formState.inputs.password.value
@@ -45,11 +44,13 @@ const Login = () => {
         };
         
         axios.post('/api/users/login', data, config)
+
             .then((foundUser) => {
                 if (foundUser.data.foundUser) {
-                    window.location.href = "/all";
+                    auth.login(foundUser.data.foundUser);
+                    props.history.push('/all')
                 } else {
-                    window.location.href = "/login";
+                    props.history.push('/login')
                 }
             })
             .catch(err => console.log(err));

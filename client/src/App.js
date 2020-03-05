@@ -15,96 +15,95 @@ import LandingPage from './components/Pages/LandingPage';
 import Error404 from './components/Pages/Error404';
 import axios from 'axios';
 import './styles/base.css'
-//import getCurrentUser from './currentUser';
 import { AuthContext } from './components/context/authContext';
 import  { ProtectedRoute } from './protectedRoute';
 
-
 function App() {
 
-  const [loggedIn, setLoggedIn ] = useState(false);
+  const [loggedIn, setLoggedIn ] = useState(null);
   const [currUser, setCurrUser] = useState(false);
 
   const login = useCallback((user) => {
-      console.log('loggin!');
       setLoggedIn(true);
-      console.log(user.username);
       setCurrUser(user);
-      console.log('this is the user data:' + currUser);
   }, []);
 
   const logout = useCallback(() => {
-    console.log('logging out');
     setLoggedIn(false);
   }, []);
 
-  const getCurrentUser = () => {
-    
+  function getCurrentUser(){
     axios.get('/api/users/current-user')
       .then((currentUser) => {
-        console.log(currentUser);
         if (currentUser.data.username) {
-          console.log("Current User: " + currentUser.data.username);
           const loggedInUser = currentUser.data;
-          console.log(loggedInUser);
           login(loggedInUser);
-          //userData(loggedInUser);
-          
-          return loggedInUser;
+          console.log("User logged in: ");
+          console.log(loggedInUser)
+          return true;
         } else {
           console.log("No user logged in");
-       
+          return false;
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        return false
+      });
   };
 
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
-/*
-  const userStatus = () => {
-    let loggedInUser = loggedIn;
-    console.log(loggedIn);
-    if(loggedIn){
-      return true;
-    }else{
-      return false;
+useEffect(() => {
+  console.log("USE EFFECT")
+  //getCurrentUser();
+}, []);
+
+  async function userStatus() {
+    let userStatus = false;
+    if (loggedIn === false) {
+      userStatus = await getCurrentUser();
     }
+    if(loggedIn === null){
+      userStatus = await getCurrentUser();
+    }
+    if(userStatus === undefined){
+        userStatus = false
+    }
+    if (loggedIn === true) {
+      userStatus = true
+    }
+    console.log(userStatus)
+    return userStatus;
   }
-  */
-/*
+
+
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props) => (
-      userStatus() ? <Component {...props} /> : <Redirect to='/Login' />
+      userStatus() ? <Component {...props} /> : <Redirect to="/login" />
     )} />
   )
-*/
+
   return (
     <div className="App">
       <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
       <AuthContext.Provider value={{loggedIn: loggedIn, login: login, logout: logout, currUser: currUser}}>
         <Router>
-        <Switch>
-          <Route path="/" exact component={LandingPage}></Route>
-          <Route path="/login" exact component={Login}></Route>
-          <Route path="/register" component={Register}></Route>
-          <ProtectedRoute path="/all" component={All}></ProtectedRoute>
-          <Route path="/chat" component={Chat}></Route>
-          <Route path="/social-media" component={SocialMedia}></Route>
-          <Route path="/mentions" component={Mentions}></Route>
-          <Route path="/comments" component={Comments}></Route>
-          <Route path="/contacts" component={Contacts}></Route>
-          <Route path="/create-group" component={CreateGroup}></Route>
-          <Route path="/add-contact" component={AddContact}></Route>
-          <Route path="/profile" component={Profile}></Route>
-          <Route path="*" component={Error404}></Route>
-        
-        </Switch>
-
+          <Switch>
+            <Route path="/" exact component={LandingPage}></Route>
+            <Route path="/login" exact component={Login}></Route>
+            <Route path="/register" component={Register}></Route>
+            <PrivateRoute path="/all" component={All}></PrivateRoute>
+            <PrivateRoute path="/chat" component={Chat}></PrivateRoute>
+            <PrivateRoute path="/social-media" component={SocialMedia}></PrivateRoute>
+            <PrivateRoute path="/mentions" component={Mentions}></PrivateRoute>
+            <PrivateRoute path="/comments" component={Comments}></PrivateRoute>
+            <PrivateRoute path="/contacts" component={Contacts}></PrivateRoute>
+            <PrivateRoute path="/create-group" component={CreateGroup}></PrivateRoute>
+            <PrivateRoute path="/add-contact" component={AddContact}></PrivateRoute>
+            <PrivateRoute path="/profile" component={Profile}></PrivateRoute>
+            <Route path="*" component={Error404}></Route>
+          </Switch>
         </Router>
       </AuthContext.Provider>
-      
     </div>
     
   );

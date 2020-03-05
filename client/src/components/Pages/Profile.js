@@ -1,11 +1,17 @@
-import React, { Component, useContext } from 'react'
+import React, { Component, useEffect, useContext } from 'react'
 import MainNavbar from '../Common/MainNavbar';
 import SettingItem from '../Common/SettingItem';
 import { AuthContext } from '../context/authContext';
 
 
-const Profile = () => {
+const Profile = (props) => {
     const auth = useContext(AuthContext);
+
+    useEffect(() => {
+        if (auth.currUser === false) {
+            props.history.push('/login')
+        }
+    })
 
     return (
             <div className="container">
