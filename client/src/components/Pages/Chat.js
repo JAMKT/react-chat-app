@@ -1,11 +1,21 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useContext } from 'react'
+import { AuthContext } from '../context/authContext';
 
-export default class Chat extends Component {
-    render() {
-        return (
-            <div>
-                Chat
-            </div>
-        )
-    }
+const Chat = (props) => {
+    
+    const auth = useContext(AuthContext);
+
+    useEffect(() => {
+        if (auth.currUser === false) {
+            props.history.push('/login')
+        }
+    })
+
+    return (
+        <div>
+            Chat
+        </div>
+    )
 }
+
+export default Chat;

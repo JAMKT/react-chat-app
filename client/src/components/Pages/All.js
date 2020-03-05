@@ -1,12 +1,18 @@
-import React, { Component, useContext, useState } from 'react'
+import React, { Component, useEffect, useContext, useState } from 'react'
 import MainNavbar from '../Common/MainNavbar';
 import ChatList from '../Common/ChatList';
 import MainMessageChat from '../Common/MainMessageChat';
 import { AuthContext } from '../context/authContext';
 import axios from 'axios';
 
-const All = () => {
-    const userContext = useContext( AuthContext );
+const All = (props) => {
+    const auth = useContext(AuthContext);
+
+    useEffect(() => {
+        if (auth.currUser === false) {
+            props.history.push('/login')
+        }
+    })
 
     const [searching, setSearching] = useState(false);
     const [chats, setChats] = useState(null);
@@ -56,7 +62,6 @@ const All = () => {
                     <div className="row scrollable">
                         <ChatList searching={searching} chats={chats}/>
                     </div>
-
                 </div>
                 <div className="col hide-on-mobile">
                     <MainMessageChat />
