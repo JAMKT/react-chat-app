@@ -54,6 +54,7 @@ app.use((req, res, next) => {
     next();
 });
 
+
 // Testing connection with sockets
 io.on('connection', socket => {
     socket.on('join', () => {
