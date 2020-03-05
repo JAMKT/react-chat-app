@@ -7,7 +7,7 @@ const ChatList = (props) => {
         return (
             <div className="user-list col">
                 {
-                    
+
                 }
             </div>
         )
@@ -21,8 +21,13 @@ const ChatList = (props) => {
         return (
             <div className="user-list col">
                 {
-                    props.chat.map((chat, index) => {
-                        return <ChatListItem key={index} lastUpdate={chat.lastUpdate} id={chat._id} />
+                    props.chats.map((chat, index) => {
+                        return <ChatListItem 
+                            key={index} 
+                            id={chat._id} 
+                            name={'random name'} // TODO: Change name to dynamic value
+                            lastUpdate={chat.lastUpdate} 
+                        />
                     })
                 }
             </div>
