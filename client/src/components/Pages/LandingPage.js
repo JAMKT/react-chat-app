@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const LandingPage = () => {
     return(
         <div className="container">
-            <div className="row"> 
+            <div className="row">
                 <div className="padding-32 side-col full-height white-bg">
                     <div className="margin-s padding-32">
                         <h1 className="margin-m text-center font-size-l">JAMT</h1>

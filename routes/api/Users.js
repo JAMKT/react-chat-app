@@ -162,7 +162,8 @@ router.post('/update-user', isLoggedIn, async (req, res) => {
     User.findOneAndUpdate({ _id: req.user._id }, {
         $set: {
             name: req.body.name,
-            email: req.body.email
+            email: req.body.email,
+            avatarColor: req.body.avatarColor
         }
     },
         { new: true }, // Return the newly updated version of the document
