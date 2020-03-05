@@ -110,43 +110,38 @@ router.get('/logout', (req, res) => {
 // GET
 // Get single user by username
 router.get('/new-contact/:username', (req, res) => {
-    User.findOne({ "username": req.params.username }, (err, newContact) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(newContact);
-            User.findById(req.user._id, (err, foundUser) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    if (foundUser.contacts.length === 0) {
-                        foundUser.contacts.unshift({ user: newContact.id, username: newContact.username });
-                        foundUser.save().then(foundUser => {
-                            res.send(foundUser);
-                        });
-                    } else {
-                        foundUser.contacts.forEach((contact) => {
-                            if (contact.user === newContact.id) {
-                                foundUser.contacts.unshift({ user: newContact.id, username: newContact.username });
-                                foundUser.save().then(foundUser => {
-                                    res.send(foundUser);
-                                });
-                            } else {
-                                res.send(newContact.username + " is already in contacts");
-                            }
-
-                        })
+    //Geting the logged user
+    User.findById(req.user._id)
+        .then(user => {
+            //Looking the user to follow by id
+            User.findOne({ "username": req.params.username })
+                .then(contact => {
+                    if (req.user.id == contact.id) {
+                        console.log("You cannot follow yourself");
+                        return;
                     }
-                }
-            });
-        }
-    });
+                    // // check if the requested user is already in follower list of other user then 
+                    if (user.contacts.filter(contacts =>
+                        contacts.user.toString() === contact.id).length > 0) {
+                        return;
+                    }
+                    user.contacts.unshift({ user: contact.id, username: contact.username });
+                    user.save()
+                    contact.contacts.unshift({ user: req.user.id, username: req.user.username });
+                    //Save user to the following user
+                    contact.save().then(user => {
+                        return;
+                    }
+                    )
+                })
+                .catch(err => res.send(err))
+        })
 });
 
 //Get the users that fit the search with regex
 router.get('/searching/:username', (req, res) => {
     console.log(req.params.username)
-    if (req.params.username){
+    if (req.params.username) {
         //Declaring the regular expression of the search
         const regex = new RegExp(escapeRegex(req.params.username), 'gi');
         //Looking for coffees where the name or kind match with the regular expression
@@ -156,8 +151,8 @@ router.get('/searching/:username', (req, res) => {
             } else {
                 //Rendering the index template with the found coffees
                 res.send(response);
-                }
-            }    
+            }
+        }
         )
     }
 });
@@ -171,11 +166,11 @@ router.post('/update-user', async (req, res) => {
             name: req.body.name,
             email: req.body.email
         }
-    }, 
-    { new: true }, // Return the newly updated version of the document
-    (err, user) => {
-        if (err) { res.send('Could not update this user.'); }
-    });
+    },
+        { new: true }, // Return the newly updated version of the document
+        (err, user) => {
+            if (err) { res.send('Could not update this user.'); }
+        });
 });
 
 
