@@ -1,9 +1,10 @@
 import React from 'react'
 
-export default function ChatListItem() {
+const ChatListItem = (props) => {
     return (
         <div className="user-list-item padding-20 row">
-            <div className="user-list-img-col">
+            { props.lastUpdate
+            /* <div className="user-list-img-col">
                 <img src="https://via.placeholder.com/64" />
             </div>
             <div className="col">
@@ -39,7 +40,9 @@ export default function ChatListItem() {
                 </div>
                 :
                 null
-            }
+            } */}
         </div>
     )
 }
+
+export default ChatListItem;

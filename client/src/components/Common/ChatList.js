@@ -6,10 +6,12 @@ const ChatList = (props) => {
     if (props.searching === true) {
         return (
             <div className="user-list col">
-                Searching...
+                {
+                    
+                }
             </div>
         )
-    } else if(props.chats === null || props.chats === [] || props.userchatss === undefined){
+    } else if(props.chats === null || props.chats === [] || props.chats === undefined){
         return(
             <div className="user-list col">
                 Start chatting!
