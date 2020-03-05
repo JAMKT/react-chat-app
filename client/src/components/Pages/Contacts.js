@@ -1,9 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import MainNavbar from '../Common/MainNavbar';
 import ContactList from '../Common/ContactList';
 import MainMessageChat from '../Common/MainMessageChat';
+import { AuthContext } from '../context/authContext';
 
-const Contacts = () => {
+const Contacts = (props) => {
+    const auth = useContext(AuthContext);
+
+    useEffect(() => {
+        if (auth.currUser === false) {
+            props.history.push('/login')
+        }
+    })
+    
     return (
         <div className="container">
             <div className="row">

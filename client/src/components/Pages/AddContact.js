@@ -1,9 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import MainNavbar from '../Common/MainNavbar';
 import UserList from '../Common/UserList';
 import axios from 'axios';
+import { AuthContext } from '../context/authContext';
 
-const AddContact = () => {
+const AddContact = (props) => {
+
+    const auth = useContext(AuthContext);
+
+    useEffect(() => {
+        if (auth.currUser === false) {
+            props.history.push('/login')
+        }
+    })
 
     const [searching, setSearching] = useState(false);
     const [users, setUsers] = useState(null);
