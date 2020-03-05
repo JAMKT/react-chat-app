@@ -3,8 +3,6 @@ import axios from 'axios';
 
 export default function UserListItem(props) {
 
-    
-
     const apiCall = (event) => {
         event.preventDefault();
 
@@ -12,7 +10,10 @@ export default function UserListItem(props) {
             .then((newContact) => {
                 console.log(newContact)
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log("ERRORING HERE")
+                console.log(err)
+            });
     }
 
 
@@ -33,9 +34,14 @@ export default function UserListItem(props) {
                     <p>{props.alreadyAdded}</p> 
                 </div>
             </div>
-            <div className="user-list-button-col">
-                <button onClick={apiCall} id={props.name}>Add friend</button>
-            </div>
+            { props.type === "USER_LIST_GROUP" ? (
+                null
+            ) : (
+                <div className="user-list-button-col">
+                    <button onClick={apiCall} id={props.name}>Add friend</button>
+                </div>
+            )}
+            
         </div>
     )
 }
