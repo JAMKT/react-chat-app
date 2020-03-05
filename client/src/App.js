@@ -17,18 +17,20 @@ import axios from 'axios';
 import './styles/base.css'
 //import getCurrentUser from './currentUser';
 import { AuthContext } from './components/context/authContext';
+import  { ProtectedRoute } from './protectedRoute';
+
 
 function App() {
-    
+
   const [loggedIn, setLoggedIn ] = useState(false);
   const [currUser, setCurrUser] = useState(false);
 
   const login = useCallback((user) => {
-    console.log('loggin!');
-    setLoggedIn(true);
-    console.log(user.username);
-    setCurrUser(user);
-    console.log('this is the user data:' + currUser);
+      console.log('loggin!');
+      setLoggedIn(true);
+      console.log(user.username);
+      setCurrUser(user);
+      console.log('this is the user data:' + currUser);
   }, []);
 
   const logout = useCallback(() => {
@@ -60,7 +62,7 @@ function App() {
   useEffect(() => {
     getCurrentUser();
   }, []);
-
+/*
   const userStatus = () => {
     let loggedInUser = loggedIn;
     console.log(loggedIn);
@@ -70,13 +72,14 @@ function App() {
       return false;
     }
   }
-
+  */
+/*
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props) => (
       userStatus() ? <Component {...props} /> : <Redirect to='/Login' />
     )} />
   )
-
+*/
   return (
     <div className="App">
       <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
@@ -86,8 +89,7 @@ function App() {
           <Route path="/" exact component={LandingPage}></Route>
           <Route path="/login" exact component={Login}></Route>
           <Route path="/register" component={Register}></Route>
-          <PrivateRoute path="/all" component={All}></PrivateRoute>
-          <PrivateRoute path="/" exact component={LandingPage}></PrivateRoute>
+          <ProtectedRoute path="/all" component={All}></ProtectedRoute>
           <Route path="/chat" component={Chat}></Route>
           <Route path="/social-media" component={SocialMedia}></Route>
           <Route path="/mentions" component={Mentions}></Route>
@@ -102,7 +104,9 @@ function App() {
 
         </Router>
       </AuthContext.Provider>
+      
     </div>
+    
   );
 }
 
