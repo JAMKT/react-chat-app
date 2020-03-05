@@ -160,7 +160,6 @@ router.get('/searching/:username', (req, res) => {
 router.post('/update-user', async (req, res) => {
     User.findOneAndUpdate({ _id: req.user._id }, {
         $set: {
-            username: req.body.username,
             name: req.body.name,
             email: req.body.email
         }
