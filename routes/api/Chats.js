@@ -82,7 +82,7 @@ router.post('/:id', (req, res) => {
             if (err) console.log(err);
             res.send('Chat has been deleted!');
         });
-    } catch(err) {
+    } catch (err) {
         res.send('Chat could not be deleted. Try again.');
     }
 });
@@ -104,19 +104,35 @@ router.get('/last-ten', middleware, (req, res) => {
 // Get the chats that fit the search with regex
 router.get('/searching/:username', (req, res) => {
     console.log(req.params.username)
-    if (req.params.username){
+    if (req.params.username) {
         // Declaring the regular expression of the search
         const regex = new RegExp(escapeRegex(req.params.username), 'gi');
         // Looking for chat where the member's username matches with the regular expression
-        Chat.find({ "author._id": req.user._id, $or: [{ members: { $elemMatch: { username: regex } } }] }, function (err, response) {
+        Chat.find({ "author._id": req.user._id, $or: [{ members: { $elemMatch: { username: regex } } }] }, function (err, chats) {
             if (err) {
                 console.log(err);
             } else {
-                    // Rendering the index template with the found chat
-                    res.send(response);
-                }
-            }    
+                // Rendering the index template with the found chat
+                chats.forEach((chat) => {
+                    chat.members.forEach((member) => {
+                        if (member.username != req.user.username) {
+                            chat.title = member.username;
+                        }
+                    });
+                });
+                res.send(chats);
+            }
+        }
         )
+    } else {
+        chats.forEach((chat) => {
+            chat.members.forEach((member) => {
+                if (member.username != req.user.username) {
+                    chat.title = member.username;
+                }
+            });
+        });
+        res.send(chats);
     }
 });
 
