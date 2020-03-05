@@ -30,8 +30,6 @@ const UserList = (props) => {
                                     let contactId = contact.user;
                                     newUserContactsArray.push(contactId);
                                 });
-                                console.log(user);
-                                console.log(newUserContactsArray);
                                 if (newUserContactsArray.includes(user._id)) {
                                     return <UserListItem key={index} name={user.username} id={user._id} alreadyAdded="Already a friend" />
                                 } else {

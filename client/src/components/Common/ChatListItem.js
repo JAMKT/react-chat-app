@@ -2,7 +2,7 @@ import React from 'react'
 
 const ChatListItem = (props) => {
     return (
-        <div className="user-list-item padding-20 row">
+        <div className="user-list-item padding-20 row clickable">
             <div className="user-list-img-col">
                 <img src="https://via.placeholder.com/64" />
             </div>

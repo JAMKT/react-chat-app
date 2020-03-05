@@ -311,6 +311,9 @@ ul{
 .scrollable{
     overflow: scroll;
 }
+.clickable {
+    cursor: pointer;
+}
 /* Global styles END */
 
 /* Navbar START */

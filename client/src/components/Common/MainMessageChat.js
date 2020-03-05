@@ -38,8 +38,7 @@ const MainMessageChat = () => {
         axios.post('/api/chats/' + chatId + '/messages', data, config)
             .then((newMessage) => {
                 if (newMessage) {
-                    // window.location.href = "/all";
-                    console.log(newMessage);
+                    // ...
                 }
             })
             .catch(err => console.log(err));

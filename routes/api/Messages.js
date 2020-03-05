@@ -60,7 +60,6 @@ router.post('/:id/messages/', (req, res) => {
 
             // Push new message to array
             messagesArray.push(newMessage);
-            console.log(messagesArray);
         });
 
         // Update chat with new messages
@@ -77,7 +76,6 @@ router.post('/:id/messages/', (req, res) => {
             if (err) { res.send('Could not update this chat.'); }
         });
     } catch(err) {
-        console.log(err);
         res.send('Could not create this message.');
     }
     

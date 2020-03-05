@@ -14,7 +14,6 @@ const AddContact = () => {
             
             axios.get('/api/users/searching/' + document.getElementById("username").value)
                 .then((response) => {
-                    console.log(response);
                     setUsers(response.data);
                     setSearching(false);
                 })

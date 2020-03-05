@@ -4,9 +4,7 @@ import { createContext } from 'react';
 // when the Context gets updated, the components also get the update
 export const AuthContext = createContext({
     loggedIn: null,
-    login: (login) => {
-        console.log(login);
-    },
+    login: () => {},
     logout: () => {},
     currUser: null
 });

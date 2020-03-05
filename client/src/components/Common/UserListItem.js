@@ -10,11 +10,10 @@ export default function UserListItem(props) {
 
         axios.get('/api/users/new-contact/' + event.target.id)
             .then((newContact) => {
-                console.log(newContact)
+                // ...
             })
             .catch(err => {
-                console.log("ERRORING HERE")
-                console.log(err)
+                console.log(err);
             });
     }
 
@@ -26,9 +25,7 @@ export default function UserListItem(props) {
                 {username: username},
                 {username: userContext.currUser.username}
             ]
-        }
-        
-        console.log(data);
+        };
 
         const config = {
             withCredentials: true,
@@ -38,11 +35,9 @@ export default function UserListItem(props) {
         };
 
         axios.post('/api/chats', data, config)
-            .then(
-                (shit) => {
-                    console.log(shit);
-                }
-            )
+            .then(chats => {
+                // ...
+            })
             .catch(err => console.log(err));
     }
 

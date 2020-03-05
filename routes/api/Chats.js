@@ -11,7 +11,6 @@ const middleware = require('../../middleware/isLoggedIn');
 // Get all chats
 router.get('/', (req, res) => {
     Chat.find({ members: { $elemMatch: { user: req.user._id } } }, (err, chats) => {
-        console.log(chats);
         res.send(chats);
     });
 });
@@ -51,10 +50,8 @@ router.post('/', async (req, res) => {
         // Loop through the array of users taken from the client side
         // Push the users to the chatMembers array
         for (const member of membersList) {
-            console.log(member.username);
             await User.findOne({ "username": member.username })
                 .then(member => { 
-                    console.log(member);
                     chatMembers.push({
                         username: member.username,
                         user: member
@@ -72,7 +69,6 @@ router.post('/', async (req, res) => {
             messages: []
         });
 
-        console.log(newChat);
         newChat.save();
         res.status(200).send("Chat created.");
     } catch (err) {
@@ -102,7 +98,6 @@ router.get('/last-ten', middleware, (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            console.log(lastChats);
             res.send(lastChats);
         }
     });
@@ -111,7 +106,6 @@ router.get('/last-ten', middleware, (req, res) => {
 // GET
 // Get the chats that fit the search with regex
 router.get('/searching/:username', (req, res) => {
-    console.log(req.params.username)
     if (req.params.username) {
         // Declaring the regular expression of the search
         const regex = new RegExp(escapeRegex(req.params.username), 'gi');
@@ -130,8 +124,7 @@ router.get('/searching/:username', (req, res) => {
                 });
                 res.send(chats);
             }
-        }
-        )
+        });
     } else {
         chats.forEach((chat) => {
             chat.members.forEach((member) => {

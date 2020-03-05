@@ -28,13 +28,11 @@ const ImageInput = (props) => {
 
     const imgUploadHandler = (event) => {
         event.preventDefault();
-        console.log(event.target.files);
         
         let selectedFile;
         let validFile = isValid;
 
         if( event.target.files.length === 0){
-            console.log('no file selected!');
             setIsValid(false);
             validFile = false;
             document.getElementById("error-span").classList.add(props.errorStyle);

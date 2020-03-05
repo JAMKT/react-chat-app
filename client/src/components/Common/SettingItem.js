@@ -54,7 +54,7 @@ const SettingItem = (props) => {
         
         axios.post('/api/users/update-user', data, config)
             .then((updatedUser) => {
-                console.log(updatedUser);
+                // ...
             })
             .catch(err => console.log(err));
     }
