@@ -6,11 +6,11 @@ const passport = require("passport");
 //User Model
 const User = require('../../models/User');
 
-const middleware = require('../../middleware/isLoggedIn');
+const isLoggedIn = require('../../middleware/isLoggedIn');
 
 // GET
 // Get users
-router.get('/', (req, res) => {
+router.get('/', isLoggedIn, (req, res) => {
     User.find({}, (err, users) => {
         res.send(users);
     });
@@ -18,13 +18,13 @@ router.get('/', (req, res) => {
 
 // GET
 // Get current user 
-router.get('/current-user', middleware, (req, res) => {
+router.get('/current-user', isLoggedIn, (req, res) => {
     res.send(req.user);
 });
 
 // GET
 // Get single user by its id
-router.get('/:id', (req, res) => {
+router.get('/:id', isLoggedIn, (req, res) => {
     User.findById(req.params.id, (err, user) => {
         if (err) res.send('User not found.');
         console.log(user);
@@ -109,7 +109,7 @@ router.get('/logout', (req, res) => {
 
 // GET
 // Get single user by username
-router.get('/new-contact/:username', (req, res) => {
+router.get('/new-contact/:username', isLoggedIn, (req, res) => {
     //Geting the logged user
     User.findById(req.user._id)
         .then(user => {
@@ -139,7 +139,7 @@ router.get('/new-contact/:username', (req, res) => {
 });
 
 //Get the users that fit the search with regex
-router.get('/searching/:username', (req, res) => {
+router.get('/searching/:username', isLoggedIn, (req, res) => {
     if (req.params.username) {
         //Declaring the regular expression of the search
         const regex = new RegExp(escapeRegex(req.params.username), 'gi');
@@ -157,7 +157,7 @@ router.get('/searching/:username', (req, res) => {
 
 // POST
 // Update user's settings
-router.post('/update-user', async (req, res) => {
+router.post('/update-user', isLoggedIn, async (req, res) => {
     User.findOneAndUpdate({ _id: req.user._id }, {
         $set: {
             name: req.body.name,
