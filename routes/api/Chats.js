@@ -10,7 +10,7 @@ const middleware = require('../../middleware/isLoggedIn');
 // GET
 // Get all chats
 router.get('/', (req, res) => {
-    Chat.find({ members: { $elemMatch: { user: req.user._id } } }, (err, chats) => {
+    Chat.find({ members: { $elemMatch: { _id: req.user._id } } }, (err, chats) => {
         res.send(chats);
     });
 });
@@ -43,17 +43,16 @@ router.get('/:id', (req, res) => {
 // POST
 // Create chat
 router.post('/', async (req, res) => {
-    console.log("----------------");
     let chatMembers = [];
-    console.log(req.body.members);
     let membersList = req.body.members;
 
     try {
         // Loop through the array of users taken from the client side
         // Push the users to the chatMembers array
         for (const member of membersList) {
+            console.log(member.username);
             await User.findOne({ "username": member.username })
-                .then(member => { chatMembers.push(member._id); })
+                .then(member => { chatMembers.push(member); })
                 .catch(err => console.log(err));
         }
 
@@ -62,7 +61,7 @@ router.post('/', async (req, res) => {
             author: {
                 id: req.user._id,
                 username: req.user.username
-            },
+            }, 
             members: chatMembers,
             messages: []
         });
