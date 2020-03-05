@@ -43,8 +43,10 @@ router.get('/:id', (req, res) => {
 // POST
 // Create chat
 router.post('/', async (req, res) => {
+    console.log("----------------");
     let chatMembers = [];
-    let membersList = req.body;
+    console.log(req.body.members);
+    let membersList = req.body.members;
 
     try {
         // Loop through the array of users taken from the client side
@@ -115,8 +117,8 @@ router.get('/searching/:username', (req, res) => {
                 // Rendering the index template with the found chat
                 chats.forEach((chat) => {
                     chat.members.forEach((member) => {
-                        if (member.username != req.user.username) {
-                            chat.title = member.username;
+                        if (member.user.id != req.user.id) {
+                            chat.title = member.user.username;
                         }
                     });
                 });
