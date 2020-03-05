@@ -10,7 +10,8 @@ const middleware = require('../../middleware/isLoggedIn');
 // GET
 // Get all chats
 router.get('/', (req, res) => {
-    Chat.find({}, (err, chats) => {
+    Chat.find({ members: { $elemMatch: { user: req.user._id } } }, (err, chats) => {
+        console.log(chats);
         res.send(chats);
     });
 });
@@ -44,27 +45,34 @@ router.get('/:id', (req, res) => {
 // Create chat
 router.post('/', async (req, res) => {
     let chatMembers = [];
-    let membersList = req.body;
+    let membersList = req.body.members;
 
     try {
         // Loop through the array of users taken from the client side
         // Push the users to the chatMembers array
         for (const member of membersList) {
+            console.log(member.username);
             await User.findOne({ "username": member.username })
-                .then(member => { chatMembers.push(member._id); })
+                .then(member => { 
+                    console.log(member);
+                    chatMembers.push({
+                        username: member.username,
+                        user: member
+                    }); })
                 .catch(err => console.log(err));
-        }
+     }
 
         // Create new chat
         const newChat = new Chat({
             author: {
                 id: req.user._id,
                 username: req.user.username
-            },
+            }, 
             members: chatMembers,
             messages: []
         });
 
+        console.log(newChat);
         newChat.save();
         res.status(200).send("Chat created.");
     } catch (err) {
@@ -82,7 +90,7 @@ router.post('/:id', (req, res) => {
             if (err) console.log(err);
             res.send('Chat has been deleted!');
         });
-    } catch(err) {
+    } catch (err) {
         res.send('Chat could not be deleted. Try again.');
     }
 });
@@ -99,6 +107,46 @@ router.get('/last-ten', middleware, (req, res) => {
         }
     });
 });
+
+// GET
+// Get the chats that fit the search with regex
+router.get('/searching/:username', (req, res) => {
+    console.log(req.params.username)
+    if (req.params.username) {
+        // Declaring the regular expression of the search
+        const regex = new RegExp(escapeRegex(req.params.username), 'gi');
+        // Looking for chat where the member's username matches with the regular expression
+        Chat.find({ "author._id": req.user._id, $or: [{ members: { $elemMatch: { username: regex } } }] }, function (err, chats) {
+            if (err) {
+                console.log(err);
+            } else {
+                // Rendering the index template with the found chat
+                chats.forEach((chat) => {
+                    chat.members.forEach((member) => {
+                        if (member.user.id != req.user.id) {
+                            chat.title = member.user.username;
+                        }
+                    });
+                });
+                res.send(chats);
+            }
+        }
+        )
+    } else {
+        chats.forEach((chat) => {
+            chat.members.forEach((member) => {
+                if (member.username != req.user.username) {
+                    chat.title = member.username;
+                }
+            });
+        });
+        res.send(chats);
+    }
+});
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 
 module.exports = router;
