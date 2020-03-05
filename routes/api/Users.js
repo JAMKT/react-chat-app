@@ -169,7 +169,8 @@ router.post('/update-user', async (req, res) => {
         $set: {
             username: req.body.username,
             name: req.body.name,
-            email: req.body.email
+            email: req.body.email,
+            avatarColor: req.body.avatarColor
         }
     }, 
     { new: true }, // Return the newly updated version of the document

@@ -97,35 +97,6 @@ input[type="file"] {
     top: 13px;
 }
 
-.image-input-label{
-    border-radius: 50%;
-    width: 160px;
-    right: 50%;
-    top: 40%;
-    font-weight: 700;
-    height: 160px;
-    position: absolute;
-    background-image: url('../../images/blank-profile-picture.png');
-    transform: translate(50%, -50%);
-    cursor: pointer;
-    background-size: cover;
-    z-index: 1;
-}
-.opacity-0{
-    opacity: 0;
-}
-.profile-image{
-    border-radius: 50%;
-    width: 160px;
-    right: 33.2%;
-    top: -7%;
-    z-index: 0;
-    font-weight: 700;
-    height: 160px;
-    position: absolute;
-    object-fit: cover;
-    z-index: 0;
-}
 .settings-wrap{
     position: relative;
     height: 170px;

@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    avatarColor: {
+        type: String,
+        required: false
+    },
     contacts: [
         {
             user: {

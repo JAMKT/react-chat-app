@@ -28,10 +28,6 @@ const Register = () => {
             username: {
                 value: '',
                 isValid: false
-            },
-            profileImage: {
-                value: '',
-                isValid: false
             }
         },
         {
@@ -46,6 +42,7 @@ const Register = () => {
             username: formState.inputs.username.value,
             name: formState.inputs.name.value,
             email: formState.inputs.email.value,
+            avatarColor: 'BLACK',
             password: formState.inputs.password.value
         }
 
@@ -113,22 +110,7 @@ const Register = () => {
                             inputContainerStyle="margin-s input-field"
                             labelStyle="input-field-label"
                             errorStyle="error-border"
-                        />
-
-                        <ImageInput 
-                            id="profileImage"
-                            label="Profile Picture"
-                            htmlFor="profileImage"
-                            errorText="Please select an image"
-                            onInput={inputHandler}
-                            inputStyle="hide-text-input-field"
-                            inputContainerStyle="margin-s input-field file-input"
-                            labelStyle="input-field-label file-type-lable"
-                            errorStyle="error-border"
-                            imgStyle="img-preview"
-                            errorTextStyle="error-text"
-                            opacity="1"
-                        />  
+                        /> 
 
                         <Button 
                             type="submit"

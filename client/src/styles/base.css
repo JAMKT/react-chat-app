@@ -240,10 +240,15 @@
     flex: 1;
     flex-flow: column nowrap;
 }
+.column{
+    display: flex;
+    flex-direction: column;
+}
 .side-col{
     display: flex;
     max-width: 600px;
     width: 100%;
+   
     flex-flow: column nowrap;
     box-sizing: border-box;
 }
@@ -316,6 +321,8 @@ ul{
     height: 78px;
     overflow: hidden;
     border-radius: 50%;   
+    box-shadow: 1px 1px 6px #c9c9c9;
+    position: relative;
 }
 .navbar-icon-list{
     display: flex;
@@ -333,6 +340,10 @@ ul{
 .navbar-icon-list li img {
     max-width: 36px;
     max-height: 36px;
+}
+svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
+    width: 75px;
+    height: 46px;
 }
 
 /* Navbar END */
@@ -452,6 +463,55 @@ ul{
     margin-right: 12px;
     overflow: hidden;
 }
+.profile-img{
+    width: 30%;
+    border-radius: 50%;
+}
+.profile-img-small{
+    width: 79px;
+    height: 80px;
+    object-fit: cover;
+}
+svg.svg-inline--fa.fa-user.fa-w-14{
+    width: 100px;
+}
+.avatar-border{
+    width: 148px;
+    height: 148px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 1px 1px 6px #c9c9c9;
+    position: relative;
+}
+.radio-label{
+    cursor: pointer;
+}
+.radio-btn{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    position: relative;
+    height: 28px;
+    width: 28px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 7px;
+    outline: none;
+}
+.pink{background-color: #E85AAA;}
+.green{background-color: #5DFFA1;}
+.blue{background-color: #6363FF;}
+.black{background-color: #000;}
+
+.radio-btn:checked::before{
+    position: absolute;
+    left: 11px;
+    top: 5px;
+    content: '\02143';
+    transform: rotate(40deg);
+}
+
 
 /* Setting | Profile END */
 

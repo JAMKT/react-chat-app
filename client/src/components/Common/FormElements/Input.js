@@ -59,7 +59,7 @@ const Input = props => {
         });
 
         if(event.target.value.length > 0){
-            document.getElementById(event.target.id).nextElementSibling.classList.add('input-field-label-active')
+            document.getElementById(event.target.id).nextElementSibling.classList.add('input-field-label-active');
         }
     }
 
@@ -68,7 +68,7 @@ const Input = props => {
         // pass in "action" object
         dispatch({
             type: 'TOUCHED'
-        })
+        });
     }
 
     return(
