@@ -15,7 +15,8 @@ var chatSchema = new mongoose.Schema({
             user: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User"
-            }
+            },
+            username: String
         }
     ],
     //The messages parameter is linked with the message collection, getting the message id
@@ -30,8 +31,7 @@ var chatSchema = new mongoose.Schema({
     created: {
         type: Date,
         default: Date.now()
-    },
-    lastUpdated: Date
+    }
 });
 
 //Export our schema, this reference will be used in other models
