@@ -3,28 +3,21 @@ import React from 'react'
 const ChatListItem = (props) => {
     return (
         <div className="user-list-item padding-20 row">
-            { props.lastUpdate
-            /* <div className="user-list-img-col">
+            <div className="user-list-img-col">
                 <img src="https://via.placeholder.com/64" />
             </div>
             <div className="col">
                 <div className="row height-50 space-between align-center">
                     <h3>{props.name}</h3>
                     {
-                    props.unread !== undefined ? 
-                    <span className="user-blue-dot-active"></span>
-                        :
-                        null
+                        props.unread !== undefined ? <span className="user-blue-dot-active"></span> : null
                     }
                     
                 </div>
                 <div className="row height-50 space-between align-center">
                     <p>{props.id}</p>
                     {
-                    props.time !== undefined ? 
-                        <span>Yesterday 6:32 PM</span>
-                        :
-                        null
+                        props.lastUpdate !== undefined ? <span>Yesterday 6:32 PM</span> : null
                     }
 
                     
@@ -40,7 +33,7 @@ const ChatListItem = (props) => {
                 </div>
                 :
                 null
-            } */}
+            }
         </div>
     )
 }

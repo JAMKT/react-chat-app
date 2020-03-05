@@ -12,18 +12,28 @@ const All = () => {
     const [chats, setChats] = useState(null);
 
     const loadChats = () => {
-        if (document.getElementById("username").value && document.getElementById("username").value != ""){
-            setSearching(true);
+        // if (document.getElementById("username").value && document.getElementById("username").value != ""){
+        //     setSearching(true);
 
-            axios.get('/api/chats/searching/' + document.getElementById("username").value)
-                .then((response) => {
-                    console.log(response);
-                    setChats(response.data);
-                    setSearching(false);
-                })
-                .catch(err => console.log(err));
-        }
+        //     axios.get('/api/chats/searching/' + document.getElementById("username").value)
+        //         .then((response) => {
+        //             console.log(response);
+        //             setChats(response.data);
+        //             setSearching(false);
+        //         })
+        //         .catch(err => console.log(err));
+        // }
     }
+
+    const renderChats = () => {
+        axios.get('/api/chats')
+            .then((chats) => {
+                setChats(chats.data);
+                setSearching(false);
+            })
+            .catch(err => console.log(err));
+    }
+    renderChats();
 
     return (
         <div className="container">
