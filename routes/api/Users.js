@@ -110,7 +110,7 @@ router.get('/logout', (req, res) => {
 // GET
 // Get single user by username
 router.get('/new-contact/:username', (req, res) => {
-    User.find({ "username": req.params.username }, (err, newContact) => {
+    User.findOne({ "username": req.params.username }, (err, newContact) => {
         if (err) {
             console.log(err);
         } else {
@@ -119,15 +119,47 @@ router.get('/new-contact/:username', (req, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.send("newContact");
-                    foundUser.contacts.unshift({ user: newContact[0].id, username: newContact[0].username });
-                    foundUser.save().then(foundUser => {
-                        return;
-                    })
+                    if (foundUser.contacts.length === 0) {
+                        foundUser.contacts.unshift({ user: newContact.id, username: newContact.username });
+                        foundUser.save().then(foundUser => {
+                            res.send(foundUser);
+                        });
+                    } else {
+                        foundUser.contacts.forEach((contact) => {
+                            if (contact.user === newContact.id) {
+                                foundUser.contacts.unshift({ user: newContact.id, username: newContact.username });
+                                foundUser.save().then(foundUser => {
+                                    res.send(foundUser);
+                                });
+                            } else {
+                                res.send(newContact.username + " is already in contacts");
+                            }
+
+                        })
+                    }
                 }
             });
         }
     });
+});
+
+//Get the users that fit the search with regex
+router.get('/searching/:username', (req, res) => {
+    console.log(req.params.username)
+    if (req.params.username){
+        //Declaring the regular expression of the search
+        const regex = new RegExp(escapeRegex(req.params.username), 'gi');
+        //Looking for coffees where the name or kind match with the regular expression
+        User.find({ $or: [{ username: regex }] }, function (err, response) {
+            if (err) {
+                console.log(err);
+            } else {
+                //Rendering the index template with the found coffees
+                res.send(response);
+                }
+            }    
+        )
+    }
 });
 
 // POST
@@ -145,5 +177,13 @@ router.post('/update-user', async (req, res) => {
         if (err) { res.send('Could not update this user.'); }
     });
 });
+
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
+
+
 
 module.exports = router;

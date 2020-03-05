@@ -1,22 +1,30 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainNavbar from '../Common/MainNavbar';
 import UserList from '../Common/UserList';
 import axios from 'axios';
 
 const AddContact = () => {
-    const apiCall = (event) => {
-        event.preventDefault();
+
+    const [searching, setSearching] = useState(false);
+    const [users, setUsers] = useState(null);
+
+    const loadUsers = () => {
+        if (document.getElementById("username").value && document.getElementById("username").value != ""){
+            setSearching(true);
+            axios.get('/api/users/searching/' + document.getElementById("username").value)
+                .then((response) => {
+                    console.log(response)
+                    setUsers(response.data)
+                    setSearching(false);
+                })
+                .catch(err => console.log(err));
+        }
         
-        axios.get('/api/users/new-contact/' + document.getElementById("username").value)
-            .then((newContact) => {
-                if (newContact.data.newContact) {
-                    window.location.href = "/all";
-                } else {
-                    window.location.href = "/login";
-                }
-            })
-            .catch(err => console.log(err));
     }
+
+    useEffect(() => {
+
+    })
 
     return (
         <div className="container">
@@ -31,16 +39,13 @@ const AddContact = () => {
                             <div className="row">
                                 <div className="search-field">
                                     <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} />
-                                    <form onSubmit={apiCall}>
-                                        <input id="username" className='hide-input-field' type="text" />
-                                        <input type="submit" />
-                                    </form>
+                                    <input onChange={loadUsers} id="username" className='hide-input-field' type="text" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <UserList />
+                        <UserList searching={searching} users={users} />
                     </div>
 
                 </div>

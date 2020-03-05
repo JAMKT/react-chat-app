@@ -11,15 +11,15 @@ const SettingItem = (props) => {
         //set inital input state + form validity state
         {
             email: {
-                value: props.email,
+                value: props.auth.email,
                 isValid: true
             },
             name: {
-                value: props.name,
+                value: props.auth.name,
                 isValid: true
             },
             username: {
-                value: props.username,
+                value: props.auth.username,
                 isValid: true
             }
             // profileImage: {
@@ -87,13 +87,13 @@ const SettingItem = (props) => {
                             type="text"
                             label="Name"
                             valid={true}
-                            value={props.value}
+                            value={formState.inputs.name.value}
                             errorText="Please enter your name."
                             validator={[VALIDATOR_REQUIRE()]}
                             onInput={inputHandler}
                             inputStyle="hide-text-input-field"
                             inputContainerStyle="margin-s input-field white-bg"
-                            labelStyle="input-field-label"
+                            labelStyle="input-field-label-active"
                             errorStyle="error-border"
                             />
                         <Input 
@@ -101,12 +101,13 @@ const SettingItem = (props) => {
                             type="email"
                             label="Email"
                             valid={true}
+                            value={formState.inputs.email.value}
                             errorText="Please enter a valid email."
                             validator={[VALIDATOR_EMAIL()]}
                             onInput={inputHandler}
                             inputStyle="hide-text-input-field"
                             inputContainerStyle="margin-s input-field white-bg"
-                            labelStyle="input-field-label"
+                            labelStyle="input-field-label-active"
                             errorStyle="error-border"
                             />
 
@@ -115,12 +116,13 @@ const SettingItem = (props) => {
                             type="text"
                             label="Username"
                             valid={true}
+                            value={formState.inputs.username.value}
                             errorText="Please enter a valid username."
                             validator={[VALIDATOR_REQUIRE()]}
                             onInput={inputHandler}
                             inputStyle="hide-text-input-field"
                             inputContainerStyle="margin-s input-field white-bg"
-                            labelStyle="input-field-label"
+                            labelStyle="input-field-label-active"
                             errorStyle="error-border"
                             />
 
