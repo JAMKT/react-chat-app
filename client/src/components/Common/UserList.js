@@ -43,7 +43,6 @@ const UserList = (props) => {
                 }
             </div>
     )} else {
-        console.log(props.users)
         return(
             
             <div className="user-list col">
