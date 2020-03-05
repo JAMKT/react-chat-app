@@ -50,7 +50,7 @@ function App() {
   };
 
 useEffect(() => {
-  console.log("USE EFFECT")
+  console.log("USE EFFECT");
 }, []);
 
   async function userStatus() {
@@ -62,12 +62,11 @@ useEffect(() => {
       userStatus = await getCurrentUser();
     }
     if(userStatus === undefined){
-        userStatus = false
+        userStatus = false;
     }
     if (loggedIn === true) {
-      userStatus = true
+      userStatus = true;
     }
-    console.log(userStatus)
     return userStatus;
   }
 
