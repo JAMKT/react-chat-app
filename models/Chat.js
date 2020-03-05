@@ -15,7 +15,8 @@ var chatSchema = new mongoose.Schema({
             user: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User"
-            }
+            },
+            username: String
         }
     ],
     //The messages parameter is linked with the message collection, getting the message id
