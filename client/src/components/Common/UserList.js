@@ -7,13 +7,13 @@ const UserList = (props) => {
 
     if (props.searching === true) {
         return (
-            <div className="user-list col">
+            <div className="user-list col padding-20 align-center">
                 Searching...
             </div>
         )
     } else if (props.users === null || props.users === [] || props.users === undefined) {
         return (
-            <div className="user-list col">
+            <div className="user-list col padding-20 align-center">
                 Here you can search for users.
             </div>
         )

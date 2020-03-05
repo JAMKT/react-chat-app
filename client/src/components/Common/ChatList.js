@@ -7,15 +7,13 @@ const ChatList = (props) => {
 
     if (props.searching === true) {
         return (
-            <div className="user-list col">
-                {
-
-                }
+            <div className="user-list col padding-20 align-center">
+                Searching...
             </div>
         )
     } else if (props.chats === null || props.chats === [] || props.chats === undefined) {
         return (
-            <div className="user-list col">
+            <div className="user-list col padding-20 align-center">
                 Start chatting!
             </div>
         )
