@@ -18,7 +18,7 @@ const AddContact = (props) => {
     const [users, setUsers] = useState(null);
 
     const loadUsers = () => {
-        if (document.getElementById("username").value && document.getElementById("username").value != ""){
+        if (document.getElementById("username").value && document.getElementById("username").value !== ""){
             setSearching(true);
             
             axios.get('/api/users/searching/' + document.getElementById("username").value)
@@ -46,7 +46,7 @@ const AddContact = (props) => {
                             </div>
                             <div className="row">
                                 <div className="search-field">
-                                    <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} />
+                                    <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input onChange={loadUsers} id="username" className='hide-input-field' type="text" />
                                 </div>
                             </div>

@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import MainNavbar from '../Common/MainNavbar';
 import SettingItem from '../Common/SettingItem';
 import { AuthContext } from '../context/authContext';

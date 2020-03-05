@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext, useEffect } from 'react';
+import React, { useState, useCallback,  useEffect } from 'react';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import Login from './components/Pages/Login';
 import Register from './components/Pages/Register';
@@ -16,7 +16,6 @@ import Error404 from './components/Pages/Error404';
 import axios from 'axios';
 import './styles/base.css'
 import { AuthContext } from './components/context/authContext';
-import  { ProtectedRoute } from './protectedRoute';
 
 function App() {
 

@@ -24,7 +24,7 @@ const ChatList = (props) => {
                     props.chats.map((chat, index) => {
                         var name;
                         chat.members.forEach((member) => {
-                            if (member.username != userContext.currUser.username) {
+                            if (member.username !== userContext.currUser.username) {
                                 name = member.username;
                             }
                         })

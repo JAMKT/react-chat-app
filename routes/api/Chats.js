@@ -57,7 +57,7 @@ router.post('/', async (req, res) => {
                         user: member
                     }); })
                 .catch(err => console.log(err));
-     }
+        }
 
         // Create new chat
         const newChat = new Chat({
@@ -117,7 +117,7 @@ router.get('/searching/:username', (req, res) => {
                 // Rendering the index template with the found chat
                 chats.forEach((chat) => {
                     chat.members.forEach((member) => {
-                        if (member.user.id != req.user.id) {
+                        if (member.user.id !== req.user.id) {
                             chat.title = member.user.username;
                         }
                     });
@@ -128,7 +128,7 @@ router.get('/searching/:username', (req, res) => {
     } else {
         chats.forEach((chat) => {
             chat.members.forEach((member) => {
-                if (member.username != req.user.username) {
+                if (member.username !== req.user.username) {
                     chat.title = member.username;
                 }
             });

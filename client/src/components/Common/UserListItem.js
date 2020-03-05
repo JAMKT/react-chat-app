@@ -45,7 +45,7 @@ export default function UserListItem(props) {
         <div className="user-list-item padding-20 row" onClick={() => createChat(props.name)}>
             { /* Column just for the user image */}
             <div className="user-list-img-col">
-                <img src="https://via.placeholder.com/64" />
+                <img src="https://via.placeholder.com/64" alt=""/>
             </div>
             { /* Column for the main body of the user item */}
             <div className="col">

@@ -4,7 +4,7 @@ const ChatListItem = (props) => {
     return (
         <div className="user-list-item padding-20 row clickable">
             <div className="user-list-img-col">
-                <img src="https://via.placeholder.com/64" />
+                <img src="https://via.placeholder.com/64" alt=""/>
             </div>
             <div className="col">
                 <div className="row height-50 space-between align-center">
@@ -24,7 +24,7 @@ const ChatListItem = (props) => {
                 </div>
             </div>
             {
-                props.type == "CREATE_GROUP"?
+                props.type === "CREATE_GROUP"?
                 <div className="group-checkbox-col justify-center">
                     <div className="checkbox-wrap">
                         <input className="checkbox" type="checkbox" id={"checkbox_"+ props.index+props.name } />

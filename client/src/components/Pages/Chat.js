@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { AuthContext } from '../context/authContext';
 
 const Chat = (props) => {
