@@ -11,9 +11,11 @@ export const ProtectedRoute = ({component: Component, ...rest}) => {
           
             if(auth.loggedIn) {
                 return <Component {...props}/>
-            }else{
-                return <Redirect to={{pathname: '/login'}}/>
             }
+            /*
+            else{
+                return <Redirect to={{pathname: '/login'}}/>
+            }*/
            
         }
     } />

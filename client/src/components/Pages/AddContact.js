@@ -20,15 +20,15 @@ const AddContact = (props) => {
     const loadUsers = () => {
         if (document.getElementById("username").value && document.getElementById("username").value != ""){
             setSearching(true);
+            
             axios.get('/api/users/searching/' + document.getElementById("username").value)
                 .then((response) => {
-                    console.log(response)
-                    setUsers(response.data)
+                    console.log(response);
+                    setUsers(response.data);
                     setSearching(false);
                 })
                 .catch(err => console.log(err));
         }
-        
     }
 
     useEffect(() => {
