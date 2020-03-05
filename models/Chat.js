@@ -30,8 +30,7 @@ var chatSchema = new mongoose.Schema({
     created: {
         type: Date,
         default: Date.now()
-    },
-    lastUpdated: Date
+    }
 });
 
 //Export our schema, this reference will be used in other models

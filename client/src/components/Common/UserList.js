@@ -8,10 +8,10 @@ const UserList = (props) => {
     if(props.searching === true){
         return (
             <div className="user-list col">
-                Searching
+                Searching...
             </div>
         )
-    } else if(props.users === null || props.users === []){
+    } else if(props.users === null || props.users === [] || props.users === undefined){
         return(
             <div className="user-list col">
                 Here you can search for users.

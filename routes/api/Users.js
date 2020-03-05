@@ -149,12 +149,12 @@ router.get('/searching/:username', (req, res) => {
     if (req.params.username){
         //Declaring the regular expression of the search
         const regex = new RegExp(escapeRegex(req.params.username), 'gi');
-        //Looking for coffees where the name or kind match with the regular expression
+        //Looking for users where the username matches with the regular expression
         User.find({ $or: [{ username: regex }] }, function (err, response) {
             if (err) {
                 console.log(err);
             } else {
-                //Rendering the index template with the found coffees
+                //Rendering the index template with the found users
                 res.send(response);
                 }
             }    

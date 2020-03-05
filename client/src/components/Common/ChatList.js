@@ -1,9 +1,31 @@
 import React from 'react'
+import ChatListItem from './ChatListItem';
 
-export default function ChatList() {
-    return (
-        <div>
-            
-        </div>
-    )
+const ChatList = (props) => {
+
+    if (props.searching === true) {
+        return (
+            <div className="user-list col">
+                Searching...
+            </div>
+        )
+    } else if(props.chats === null || props.chats === [] || props.userchatss === undefined){
+        return(
+            <div className="user-list col">
+                Start chatting!
+            </div>
+        )
+    } else {
+        return (
+            <div className="user-list col">
+                {
+                    props.chat.map((chat, index) => {
+                        return <ChatListItem key={index} lastUpdate={chat.lastUpdate} id={chat._id} />
+                    })
+                }
+            </div>
+        )
+    }
 }
+
+export default ChatList;
