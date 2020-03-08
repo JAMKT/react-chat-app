@@ -1,10 +1,13 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Input from '../Common/FormElements/Input';
 import Button from '../Common/Button/Button';
 import { useForm } from '../hooks/formHook';
 import { VALIDATOR_EMAIL, VALIDATOR_REQUIRE } from '../util/validator';
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
+import Popup from './SuccessErrorPopup/Popup';
+import {userSvg} from '../images/user-solid.svg';
 
 const SettingItem = (props) => {
     const [formState, inputHandler] = useForm(
@@ -29,19 +32,25 @@ const SettingItem = (props) => {
     );
 
     const auth = useContext(AuthContext);
+    const history = useHistory();
 
     const [avatarColor, setAvatarColor ] = useState(null);
+    const [success, setSuccess] = useState(null);
+    const [error, setError] = useState(null);
 
+   
     const onSubmitHandler = (event) => {
         event.preventDefault();
         
-        const data = {
+        console.log('submit button pressed');
+        
+         const data = {
             email: formState.inputs.email.value,
             name: formState.inputs.name.value,
             username: formState.inputs.username.value,
             avatarColor: avatarColor
-
         }
+        
         const config = {
             withCredentials: true,
             headers: {
@@ -50,16 +59,57 @@ const SettingItem = (props) => {
         };
         
         axios.post('/api/users/update-user', data, config)
-            .then((updatedUser) => {
-                // ...
-            })
-            .catch(err => console.log(err));
+        .then((data) => {
+            let user = auth.currUser;
+            console.log(data.data.avatarColor, data.data.username);
+
+            if(user.avatarColor !== data.data.avatarColor){
+                user.avatarColor = data.data.avatarColor;
+            }
+            if(user.email !== data.data.email){
+                user.email = data.data.email;
+            }
+            if(user.name !== data.data.name){
+                user.name = data.data.name;
+            }
+            history.push('/profile');
+        })
+        .then(() => {
+            if(success == null){
+               setSuccess(true);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            setError(true);
+        });
     }
 
     const setColorHandler = (event) => {
         setAvatarColor(event.target.value);
     }
+    
+    let successMessage = 
+        success === true ? (
+            <Popup>
+                <h3>Success!</h3>
+                <p>Profile Updated</p>
+            </Popup> ) : null;
 
+    let errorMessage = 
+        error === true ? (
+            <Popup>
+                <h3>Error!</h3>
+                <p>Something went wrong. Please try again.</p>
+            </Popup> ) : null;
+    
+    if (success === true){
+        setTimeout(function(){
+            setSuccess(null);
+        }, 5000)
+    }
+
+    console.log(success);
     return (
         <div className="row padding-32">
             <div className="col">
@@ -137,8 +187,10 @@ const SettingItem = (props) => {
 
                 </div>
 
-                <div className="row">
+                <div className="row column">
                     <h4>Edit Profile</h4>
+                   {successMessage}
+                   {errorMessage}
                 </div>
 
                 <div className="align-center row margin-top-s">

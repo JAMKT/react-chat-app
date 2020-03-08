@@ -31,7 +31,6 @@ const Login = (props) => {
     const onSubmitHandler = (event) => {
         event.preventDefault();
 
-        //auth.login();
         const data = {
             email: formState.inputs.email.value,
             password: formState.inputs.password.value
@@ -44,8 +43,11 @@ const Login = (props) => {
         };
         
         axios.post('/api/users/login', data, config)
-
             .then((foundUser) => {
+                console.log(foundUser)
+                if(foundUser.data.success === false){
+                    console.log('Incorrect email incorrect');
+                }
                 if (foundUser.data.foundUser) {
                     auth.login(foundUser.data.foundUser);
                     props.history.push('/all')
