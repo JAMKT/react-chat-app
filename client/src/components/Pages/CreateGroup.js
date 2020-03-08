@@ -41,7 +41,7 @@ const CreateGroup = (props) => {
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <ContactList type="CREATE_GROUP"/>
+                        <ContactList type="CREATE_GROUP" listType="GROUP_CHAT"/>
                     </div>
                     
                 </div>

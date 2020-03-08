@@ -48,6 +48,20 @@ export default function UserListItem(props) {
         addFriendButton = <button onClick={apiCall} id={props.name}>Add friend</button>;
     }
 
+    let createGroupChatBtn;
+    if (props.listType === "GROUP_CHAT") {
+        createGroupChatBtn = (
+            <div className="group-checkbox-col justify-center">
+                <div className="checkbox-wrap">
+                    <input className="checkbox" type="checkbox" id={"checkbox_"+ props.index+props.name } />
+                    <label className="checkmark" htmlFor={"checkbox_"+ props.index+props.name} ></label>
+                </div>
+            </div>
+        );
+    } else {
+        createGroupChatBtn = "";
+    }
+
     return (
         <div className="user-list-item padding-20 row">
             { /* Column just for the user image */}
@@ -66,12 +80,13 @@ export default function UserListItem(props) {
                 </div>
             </div>
             {props.type === "USER_LIST_GROUP" ? (
-                null
+                    {createGroupChatBtn}
             ) : (
                     <div className="user-list-button-col">
                         {addFriendButton}
                     </div>
-                )}
+                )
+            }
 
         </div>
     )
