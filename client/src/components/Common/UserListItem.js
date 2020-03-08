@@ -5,6 +5,7 @@ import { AuthContext } from '../context/authContext';
 export default function UserListItem(props) {
     const userContext = useContext(AuthContext);
 
+    // Add the selected user as a new contact and create a new chat with them
     const apiCall = (event) => {
         event.preventDefault();
 
@@ -16,10 +17,10 @@ export default function UserListItem(props) {
             });
 
         createChat(props.name);
-    }
+    };
 
+    // Create a normal chat
     const createChat = (username) => {
-
         const data = {
             members: [
                 { username: username },
@@ -35,31 +36,15 @@ export default function UserListItem(props) {
         };
 
         axios.post('/api/chats', data, config)
-            .then(chats => {
-                // ...
-            })
+            .then(() => {})
             .catch(err => console.log(err));
-    }
+    };
 
-    let addFriendButton;
-    if (props.alreadyAdded === "Already a friend") {
-        addFriendButton = "";
-    } else {
-        addFriendButton = <button onClick={apiCall} id={props.name}>Add friend</button>;
-    }
-
-    let createGroupChatBtn;
-    if (props.listType === "GROUP_CHAT") {
-        createGroupChatBtn = (
-            <div className="group-checkbox-col justify-center">
-                <div className="checkbox-wrap">
-                    <input className="checkbox" type="checkbox" id={"checkbox_"+ props.index+props.name } />
-                    <label className="checkmark" htmlFor={"checkbox_"+ props.index+props.name} ></label>
-                </div>
-            </div>
-        );
-    } else {
-        createGroupChatBtn = "";
+    // Add user to an array or users if the checkbox is checked
+    const addUserToGroup = (event) => {
+        if (event.target.checked === true) { 
+            return props.name;   
+        }
     }
 
     return (
@@ -79,11 +64,24 @@ export default function UserListItem(props) {
                     <p>{props.alreadyAdded}</p>
                 </div>
             </div>
-            {props.type === "USER_LIST_GROUP" ? (
-                    {createGroupChatBtn}
-            ) : (
+            {
+                // Determine whether or not this particular user is already one of the curren user's friends
+                // If it is, check where the component is being rendered
+                // If it isn't, display a button to allow the user to add the contact as a friend
+                props.type === "USER_LIST_GROUP" ? 
+                    // Determine whether or not this component is rendered in CreateGroup.js or Contacts.js
+                    // If it is rendered in CreateGroup.js, display a checkbox next to the user's info
+                    props.listType === "GROUP_CHAT" ? (
+                        <div className="group-checkbox-col justify-center">
+                            <div className="checkbox-wrap">
+                                <input className="checkbox" type="checkbox" id={"checkbox_"+ props.index+props.name } onChange={addUserToGroup}/>
+                                <label className="checkmark" htmlFor={"checkbox_"+ props.index+props.name} ></label>
+                            </div>
+                        </div>
+                    ) : null 
+                : (
                     <div className="user-list-button-col">
-                        {addFriendButton}
+                        { props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name}>Add friend</button> }
                     </div>
                 )
             }
