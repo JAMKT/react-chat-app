@@ -16,7 +16,6 @@ export default function ContactList(props) {
                 unorderedContactList.push(contactObj);
             })
         }
-        
 
         /* Creating an ordered contact list */
         let orderedContactList = unorderedContactList.sort(
@@ -50,14 +49,15 @@ export default function ContactList(props) {
         });
 
         const UserListGroupItem = alphabeticalContactGroupList.map((group, key) => <UserListGroup key={key} type="USER_LIST_GROUP" letter={group.letter} users={group.names} />);
+        
         return (
             <div className="contact-list full-width col">
                 { UserListGroupItem }
                 <AlphabeticalSlider />
             </div>
-
         )
     }
+
     return (
         <ContactHandler />
     )
