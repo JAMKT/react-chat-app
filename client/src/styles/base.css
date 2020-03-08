@@ -19,7 +19,8 @@
 }
 
 .full-height {
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
 }
 
 .height-50{
@@ -476,7 +477,7 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
     object-fit: cover;
 }
 svg.svg-inline--fa.fa-user.fa-w-14{
-    width: 100px;
+    width: 80px;
 }
 .avatar-border{
     width: 148px;

@@ -62,10 +62,10 @@ useEffect(() => {
       userStatus = await getCurrentUser();
     }
     if(userStatus === undefined){
-        userStatus = false
+        userStatus = false;
     }
     if (loggedIn === true) {
-      userStatus = true
+      userStatus = true;
     }
     console.log(userStatus)
     return userStatus;

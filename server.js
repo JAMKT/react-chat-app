@@ -26,6 +26,8 @@ require('./config/passport')(passport);
 //DB Congig
 const db = require('./config/dbKeys').mongoURI;
 
+mongoose.set('useFindAndModify', false);
+
 //Connect to MongoDB
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
