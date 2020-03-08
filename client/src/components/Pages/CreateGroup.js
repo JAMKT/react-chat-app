@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import MainNavbar from '../Common/MainNavbar'
 import ContactList from '../Common/ContactList';
 import MainMessageChat from '../Common/MainMessageChat';
@@ -25,7 +25,7 @@ const CreateGroup = (props) => {
                             </div>
                             <div className="row">
                                 <div className="search-field">
-                                    <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} />
+                                    <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input className='hide-input-field' type="text" />
                                 </div>
                             </div>
@@ -33,14 +33,14 @@ const CreateGroup = (props) => {
 
                                 <div className="user-added-to-group justify-center text-center">
                                     <div>
-                                        <img src="https://via.placeholder.com/72" />
+                                        <img src="https://via.placeholder.com/72" alt=""/>
                                         <h5>Username</h5>
                                     </div>
                                     <span className="user-group-remove">X</span>
                                 </div>                                    
                                 <div className="user-added-to-group justify-center text-center">
                                     <div>
-                                        <img src="https://via.placeholder.com/72" />
+                                        <img src="https://via.placeholder.com/72" alt=""/>
                                         <h5>Username</h5>
                                     </div>
                                     <span className="user-group-remove">X</span>

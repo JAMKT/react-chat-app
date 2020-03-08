@@ -369,6 +369,7 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
 .user-list-button-col {
     display: flex;
     align-items: center;
+    z-index: 3000;
 }
 
 /* User List END */

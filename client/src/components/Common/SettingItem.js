@@ -130,7 +130,7 @@ const SettingItem = (props) => {
                             type="radio" 
                             id="PINK"
                             value="#E85AAA" 
-                            defaultChecked={auth.currUser.avatarColor == "#E85AAA" ? true : false} 
+                            defaultChecked={auth.currUser.avatarColor === "#E85AAA" ? true : false} 
                             className="radio-btn pink" 
                             name="color"/> 
                         <label 
@@ -145,7 +145,7 @@ const SettingItem = (props) => {
                             type="radio" 
                             id="GREEN" 
                             value="#5DFFA1" 
-                            defaultChecked={auth.currUser.avatarColor == "#5DFFA1" ? true : false} 
+                            defaultChecked={auth.currUser.avatarColor === "#5DFFA1" ? true : false} 
                             className="radio-btn green" 
                             name="color"/>
                         <label 
@@ -160,7 +160,7 @@ const SettingItem = (props) => {
                             type="radio" 
                             id="BLUE" 
                             value="#6363FF" 
-                            defaultChecked={auth.currUser.avatarColor == "#6363FF" ? true : false} 
+                            defaultChecked={auth.currUser.avatarColor === "#6363FF" ? true : false} 
                             className="radio-btn blue" 
                             name="color"/>
                         <label 
@@ -175,7 +175,7 @@ const SettingItem = (props) => {
                             type="radio" 
                             id="BLACK" 
                             value="#000" 
-                            defaultChecked={auth.currUser.avatarColor == "#000" ? true : false} 
+                            defaultChecked={auth.currUser.avatarColor === "#000" ? true : false} 
                             className="radio-btn black" 
                             name="color"/>
                         <label 

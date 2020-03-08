@@ -25,7 +25,7 @@ const Contacts = (props) => {
                             </div>
                             <div className="row">
                                 <div className="search-field">
-                                    <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} />
+                                    <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input className='hide-input-field' type="text" />
                                 </div>
                             </div>

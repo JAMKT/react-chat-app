@@ -1,6 +1,5 @@
 import React, { useContext} from 'react'
 import { Link } from 'react-router-dom';
-import image from '../images/blank-profile-picture.png';
 import { AuthContext } from '../context/authContext';
 
 export default function MainNavbar() {
@@ -15,16 +14,16 @@ export default function MainNavbar() {
             </div>
             <ul className="remove-list-style navbar-icon-list">
                 <li className="absolute-center-pin">
-                    <Link to="/all"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/comment-solid.svg'} /></Link>
+                    <Link to="/all"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/comment-solid.svg'} alt=""/></Link>
                 </li>
                 <li className="absolute-center-pin">
-                    <Link to="/contacts"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/address-book-solid.svg'} /></Link>
+                    <Link to="/contacts"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/address-book-solid.svg'} alt=""/></Link>
                 </li>
                 <li className="absolute-center-pin">
-                    <Link to="/create-group"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/group-plus.svg'} /></Link>
+                    <Link to="/create-group"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/group-plus.svg'} alt=""/></Link>
                 </li>
                 <li className="absolute-center-pin">
-                    <Link to="/add-contact"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/contact-plus.svg'} /></Link>
+                    <Link to="/add-contact"><img className="absolute-center" src={process.env.PUBLIC_URL + '/icons/contact-plus.svg'} alt=""/></Link>
                 </li>
             </ul>
         </nav>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ChatHeader from './ChatHeader';
 import ResponseMessage from './ResponseMessage';
 import Message from './Message';
@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const MainMessageChat = () => {
 
-    const [formState, inputHandler, setFormData] = useForm(
+    const [formState, inputHandler] = useForm(
         //set inital input state + form validity state
         {
             message: {

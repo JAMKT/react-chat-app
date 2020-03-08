@@ -22,8 +22,8 @@ export default function UserListItem(props) {
 
         const data = {
             members: [
-                {username: username},
-                {username: userContext.currUser.username}
+                { username: username },
+                { username: userContext.currUser.username }
             ]
         };
 
@@ -41,11 +41,18 @@ export default function UserListItem(props) {
             .catch(err => console.log(err));
     }
 
+    let addFriendButton;
+    if (props.alreadyAdded === "Already a friend") {
+        addFriendButton = "";
+    } else {
+        addFriendButton = <button onClick={apiCall} id={props.name}>Add friend</button>;
+    }
+
     return (
         <div className="user-list-item padding-20 row" onClick={() => createChat(props.name)}>
             { /* Column just for the user image */}
             <div className="user-list-img-col">
-                <img src="https://via.placeholder.com/64" />
+                <img src="https://via.placeholder.com/64" alt="" />
             </div>
             { /* Column for the main body of the user item */}
             <div className="col">
@@ -62,7 +69,7 @@ export default function UserListItem(props) {
                 null
             ) : (
                     <div className="user-list-button-col">
-                        <button onClick={apiCall} id={props.name}>Add friend</button>
+                        {addFriendButton}
                     </div>
                 )}
 

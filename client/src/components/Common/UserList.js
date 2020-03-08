@@ -7,13 +7,13 @@ const UserList = (props) => {
 
     if (props.searching === true) {
         return (
-            <div className="user-list col">
+            <div className="user-list col padding-20 align-center">
                 Searching...
             </div>
         )
     } else if (props.users === null || props.users === [] || props.users === undefined) {
         return (
-            <div className="user-list col">
+            <div className="user-list col padding-20 align-center">
                 Here you can search for users.
             </div>
         )
@@ -23,13 +23,14 @@ const UserList = (props) => {
                 {
                     props.users.map((user, index) => {
                         if (userContext.currUser.contacts) {
-                            if (userContext.currUser._id != user._id) {
-                                let newUserContactsArray = new Array();
-                                userContext.currUser.contacts.forEach(contact => {
+                            if (userContext.currUser._id !== user._id) {
+                                let newUserContactsArray = [];
 
+                                userContext.currUser.contacts.forEach(contact => {
                                     let contactId = contact.user;
-                                    newUserContactsArray.push(contactId);
+                                    return newUserContactsArray.push(contactId);
                                 });
+
                                 if (newUserContactsArray.includes(user._id)) {
                                     return <UserListItem key={index} name={user.username} id={user._id} alreadyAdded="Already a friend" />
                                 } else {
@@ -38,19 +39,15 @@ const UserList = (props) => {
                             }
 
                         }
-
-
                     })
                 }
             </div>
         )
     } else {
         return (
-
             <div className="user-list col">
                 Sorry, we found no users T_T
                 <br></br>
-
             </div>
         )
     }

@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useContext, useState } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import MainNavbar from '../Common/MainNavbar';
 import ChatList from '../Common/ChatList';
 import MainMessageChat from '../Common/MainMessageChat';
@@ -18,7 +18,7 @@ const All = (props) => {
     const [chats, setChats] = useState(null);
 
     const loadChats = () => {
-        // if (document.getElementById("username").value && document.getElementById("username").value != ""){
+        // if (document.getElementById("username").value && document.getElementById("username").value !== ""){
         //     setSearching(true);
 
         //     axios.get('/api/chats/searching/' + document.getElementById("username").value)
@@ -33,13 +33,16 @@ const All = (props) => {
 
     const renderChats = () => {
         axios.get('/api/chats')
-            .then((chats) => {
+            .then(chats => {
                 setChats(chats.data);
                 setSearching(false);
             })
             .catch(err => console.log(err));
     }
-    renderChats();
+
+    useEffect(()=>{
+        renderChats();
+    }, [])
 
     return (
         <div className="container">
@@ -53,7 +56,7 @@ const All = (props) => {
                             </div>
                             <div className="row">
                                 <div className="search-field">
-                                    <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} />
+                                    <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input onChange={loadChats} id="username" className='hide-input-field' type="text" />
                                 </div>
                             </div>

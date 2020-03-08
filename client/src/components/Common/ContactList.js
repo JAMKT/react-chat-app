@@ -1,17 +1,14 @@
-import React, { useContext } from 'react'
-import UserListItem from './UserListItem';
+import React, { useContext } from 'react';
 import UserListGroup from './UserListGroup';
 import AlphabeticalSlider from './AlphabeticalSlider';
-import axios from 'axios';
 import { AuthContext } from '../context/authContext';
 
 export default function ContactList(props) {
 
     function ContactHandler() {
         const userContext = useContext(AuthContext);
-        let unorderedContactList = new Array;
+        let unorderedContactList = [];
         if (userContext.currUser.contacts){
-            
             userContext.currUser.contacts.forEach(contact => {
                 let contactObj = {
                     username: contact.username
@@ -31,7 +28,7 @@ export default function ContactList(props) {
         );
 
         /* Creating a list of unique letters from the ordered list */
-        let uniqueLetterList = new Array();
+        let uniqueLetterList = [];
         orderedContactList.forEach(contact => {
             
             let character = contact.username.charAt(0);
@@ -40,7 +37,7 @@ export default function ContactList(props) {
             }
         })
 
-        let alphabeticalContactGroupList = new Array();
+        let alphabeticalContactGroupList = [];
 
         uniqueLetterList.forEach(letter => {
             let alphabeticalContactGroup = {

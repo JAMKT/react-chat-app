@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import React from 'react';
 import Input from '../Common/FormElements/Input';
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH, VALIDATOR_EMAIL } from '../util/validator';
 import { useForm } from '../hooks/formHook';
 import { Link } from 'react-router-dom';
 import Button from '../Common/Button/Button';
-import ImageInput from '../Common/FormElements/ImageInput';
 import axios from 'axios';
 
 const Register = () => {
