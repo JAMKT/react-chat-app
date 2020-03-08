@@ -10,13 +10,13 @@ export default function UserListItem(props) {
 
         axios.get('/api/users/new-contact/' + event.target.id)
             .then((newContact) => {
-                // ...
             })
             .catch(err => {
                 console.log(err);
             });
-    }
 
+        createChat(props.name);
+    }
 
     const createChat = (username) => {
 
@@ -49,7 +49,7 @@ export default function UserListItem(props) {
     }
 
     return (
-        <div className="user-list-item padding-20 row" onClick={() => createChat(props.name)}>
+        <div className="user-list-item padding-20 row">
             { /* Column just for the user image */}
             <div className="user-list-img-col">
                 <img src="https://via.placeholder.com/64" alt="" />

@@ -32,7 +32,7 @@ const UserList = (props) => {
                                 });
 
                                 if (newUserContactsArray.includes(user._id)) {
-                                    return <UserListItem key={index} name={user.username} id={user._id} alreadyAdded="Already a friend" />
+                                    return <UserListItem key={index} name={user.username} id={user._id} alreadyAdded="Already a friend"/>
                                 } else {
                                     return <UserListItem key={index} name={user.username} id={user._id} alreadyAdded="" />
                                 }
