@@ -32,7 +32,7 @@ const Contacts = (props) => {
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <ContactList />
+                        <ContactList listType="DEFAULT_CHAT"/>
                     </div>
                 </div>
                 <div className="col hide-on-mobile">

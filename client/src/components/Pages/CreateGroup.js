@@ -13,6 +13,24 @@ const CreateGroup = (props) => {
         }
     })
 
+    // Create a group chat
+    const createGroupChat = () => {
+        const data = {
+            members: [] // TODO: Get list of users selected
+        };
+
+        const config = {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        axios.post('/api/chats', data, config)
+            .then(() => {})
+            .catch(err => console.log(err));
+    };
+
     return (
         <div className="container">
             <div className="row">
@@ -29,6 +47,7 @@ const CreateGroup = (props) => {
                                     <input className='hide-input-field' type="text" />
                                 </div>
                             </div>
+                            {/* TODO: Make this section dynamic */}
                             <div className="row margin-top-sm">
                                 <div className="user-added-to-group justify-center text-center">
                                     <div>
@@ -41,7 +60,7 @@ const CreateGroup = (props) => {
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <ContactList type="CREATE_GROUP"/>
+                        <ContactList type="CREATE_GROUP" listType="GROUP_CHAT"/>
                     </div>
                     
                 </div>

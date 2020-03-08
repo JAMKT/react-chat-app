@@ -48,7 +48,7 @@ export default function ContactList(props) {
             alphabeticalContactGroupList.push(alphabeticalContactGroup);
         });
 
-        const UserListGroupItem = alphabeticalContactGroupList.map((group, key) => <UserListGroup key={key} type="USER_LIST_GROUP" letter={group.letter} users={group.names} />);
+        const UserListGroupItem = alphabeticalContactGroupList.map((group, key) => <UserListGroup key={key} type="USER_LIST_GROUP" listType={props.listType} letter={group.letter} users={group.names} />);
         
         return (
             <div className="contact-list full-width col">
