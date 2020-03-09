@@ -16,17 +16,11 @@ const UserListItem = (props) => {
                 console.log(err);
             });
 
-<<<<<<< HEAD
-    const createChat = (username) => {
-        console.log('was clicked');
-
-=======
         createChat(props.name);
     };
 
     // Create a normal chat
     const createChat = (username) => {
->>>>>>> ffd8116b61d6be6a041bc91448ce573645696c54
         const data = {
             members: [
                 { username: username },
@@ -46,23 +40,11 @@ const UserListItem = (props) => {
             .catch(err => console.log(err));
     };
 
-<<<<<<< HEAD
-    const closePopup = () => {
-       console.log('clicked');
-    }
-
-    let addFriendButton;
-    if (props.alreadyAdded === "Already a friend") {
-        addFriendButton = "";
-    } else {
-        addFriendButton = <button onClick={apiCall} id={props.name}>Add friend</button>;
-=======
     // Add user to an array or users if the checkbox is checked
     const addUserToGroup = (event) => {
         if (event.target.checked === true) { 
             return props.name;   
         }
->>>>>>> ffd8116b61d6be6a041bc91448ce573645696c54
     }
 
     return (
