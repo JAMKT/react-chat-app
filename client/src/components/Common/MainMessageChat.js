@@ -53,7 +53,7 @@ const MainMessageChat = () => {
                 <ResponseMessage />
                 <Message />
             </div>
-            <form className="padding-16 chat-input-field-position" onEnter={sendMessage}>
+            <form className="padding-16 chat-input-field-position" onKeyDown={sendMessage}>
                 <input type="message" className="chat-input-field" placeholder="Type your message..." onInput={inputHandler} />
             </form>      
         </div>
