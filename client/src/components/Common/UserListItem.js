@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
 
-export default function UserListItem(props) {
+const UserListItem = (props) => {
     const userContext = useContext(AuthContext);
 
     // Add the selected user as a new contact and create a new chat with them
@@ -16,11 +16,17 @@ export default function UserListItem(props) {
                 console.log(err);
             });
 
+<<<<<<< HEAD
+    const createChat = (username) => {
+        console.log('was clicked');
+
+=======
         createChat(props.name);
     };
 
     // Create a normal chat
     const createChat = (username) => {
+>>>>>>> ffd8116b61d6be6a041bc91448ce573645696c54
         const data = {
             members: [
                 { username: username },
@@ -40,11 +46,23 @@ export default function UserListItem(props) {
             .catch(err => console.log(err));
     };
 
+<<<<<<< HEAD
+    const closePopup = () => {
+       console.log('clicked');
+    }
+
+    let addFriendButton;
+    if (props.alreadyAdded === "Already a friend") {
+        addFriendButton = "";
+    } else {
+        addFriendButton = <button onClick={apiCall} id={props.name}>Add friend</button>;
+=======
     // Add user to an array or users if the checkbox is checked
     const addUserToGroup = (event) => {
         if (event.target.checked === true) { 
             return props.name;   
         }
+>>>>>>> ffd8116b61d6be6a041bc91448ce573645696c54
     }
 
     return (
@@ -89,3 +107,5 @@ export default function UserListItem(props) {
         </div>
     )
 }
+
+export default UserListItem;
