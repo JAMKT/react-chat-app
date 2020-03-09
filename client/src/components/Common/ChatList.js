@@ -34,6 +34,8 @@ const ChatList = (props) => {
                             id={chat._id}
                             name={name} // TODO: Change name to dynamic value
                             lastUpdate={chat.lastUpdate}
+                            retrieveChatId={props.retrieveChatId}
+                           
                         />
                     })
                 }

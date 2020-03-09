@@ -1,6 +1,7 @@
-import React, {useContext} from 'react';
+import React, { useContext, useState } from 'react';
 import Input from '../Common/FormElements/Input';
 import Button from '../Common/Button/Button';
+import Popup from '../Common/SuccessErrorPopup/Popup';
 import { VALIDATOR_MINLENGTH, VALIDATOR_EMAIL } from '../util/validator';
 import { useForm } from '../hooks/formHook';
 import { Link } from 'react-router-dom';
@@ -10,6 +11,7 @@ import { AuthContext } from '../context/authContext';
 const Login = (props) => {
    
     const auth = useContext(AuthContext);
+    const [error, setError] = useState(null);
 
     const [formState, inputHandler] = useForm(
         //set inital input state + form validity state
@@ -47,6 +49,7 @@ const Login = (props) => {
                 console.log(foundUser)
                 if(foundUser.data.success === false){
                     console.log('Incorrect email incorrect');
+                    setError(true);
                 }
                 if (foundUser.data.foundUser) {
                     auth.login(foundUser.data.foundUser);
@@ -57,6 +60,20 @@ const Login = (props) => {
             })
             .catch(err => console.log(err));
     }
+
+    let errorMessage = 
+        error === true ? (
+            <Popup>
+                <h3>Login failed</h3>
+                <p>Incorrect email or password.</p>
+            </Popup> ) : null;
+    
+    if (error === true){
+        setTimeout(function(){
+            setError(null);
+        }, 8000)
+    }
+
 
     return (
         <div className="container">
@@ -95,8 +112,10 @@ const Login = (props) => {
                             btnStyle="Button margin-xs"
                             disabledBtn={!formState.isValid}>Log in</Button>
                     </form>
+                    {errorMessage}
                     <p className="margin-s link-text">Don't have an account yet? Register <Link to="/register">here!</Link></p>
                 </div>
+
 
                 <div className="col blue-bg full-height padding-32">
 

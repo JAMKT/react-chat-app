@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
 
-export default function UserListItem(props) {
+const UserListItem = (props) => {
     const userContext = useContext(AuthContext);
 
     // Add the selected user as a new contact and create a new chat with them
@@ -89,3 +89,5 @@ export default function UserListItem(props) {
         </div>
     )
 }
+
+export default UserListItem;

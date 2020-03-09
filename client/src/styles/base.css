@@ -371,10 +371,18 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
     align-items: center;
     z-index: 3000;
 }
-.add-group-member-btn {
-    
+.user-list-item{
+    position: relative;
 }
-
+.user-list-item-overlay{
+    z-index: 5000;
+    left: 0;
+    position: absolute;
+    top: 0;
+    height: 104px;
+    max-width: 640px;
+    width: 100%;
+}
 /* User List END */
 
 /* Main Message Chat START */
