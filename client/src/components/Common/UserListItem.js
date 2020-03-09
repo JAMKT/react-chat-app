@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
 
@@ -57,13 +57,6 @@ const UserListItem = (props) => {
             .catch(err => console.log(err));
     };
 
-    // Add user to an array or users if the checkbox is checked
-    const addUserToGroup = (event) => {
-        if (event.target.checked === true) {
-            return props.name;
-        }
-    }
-
     return (
         <div className="user-list-item padding-20 row">
             { /* Column just for the user image */}
@@ -93,8 +86,8 @@ const UserListItem = (props) => {
                     props.listType === "GROUP_CHAT" ? (
                         <div className="group-checkbox-col justify-center">
                             <div className="checkbox-wrap">
-                                <input className="checkbox" type="checkbox" id={"checkbox_" + props.index + props.name} onChange={addUserToGroup} />
-                                <label className="checkmark" htmlFor={"checkbox_" + props.index + props.name} ></label>
+                                <input className="checkbox" type="checkbox" id={props.name} onChange={props.checkedUser} />
+                                <label className="checkmark" htmlFor={props.name} ></label>
                             </div>
                         </div>
                     ) : null

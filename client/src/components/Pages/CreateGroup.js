@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import MainNavbar from '../Common/MainNavbar'
 import ContactList from '../Common/ContactList';
 import { AuthContext } from '../context/authContext';
@@ -6,29 +6,73 @@ import axios from 'axios';
 
 const CreateGroup = (props) => {
     const auth = useContext(AuthContext);
+    const [memberName, setMemberName] = useState(null);
+    const [users, setUsers] = useState(null);
+    const [members, setMembers] = useState(null);
 
     useEffect(() => {
         if (auth.currUser === false) {
             props.history.push('/login')
         }
-    })
+    });
+
+    useEffect(() => {
+        axios.get('/api/users')
+            .then(users => { setUsers(users); })
+            .catch(err => console.log(err));
+    }, []);
+
+    // Get username from UserListItem.js
+    const checkedUser = (event) => {
+        // getUsers();
+
+        // if (event.target.checked === true && users !== null) {
+        //     for (let user = 0; user < users.length; user++) {
+        //         if (event.target.id === user.username) {
+        //             setMemberName(user.username);
+        //             console.log(user.username);
+        //         }
+        //     }
+        // }
+
+        if (event.target.checked === true) {
+            console.log('-----');
+            console.log(event.target.id);
+            console.log('-----');
+
+            for (let user = 0; user < users.length; user++) {
+                if (event.target.id === user.username) {
+                    setMemberName(user.username);
+                    console.log(user.username);
+                }
+            }
+        }
+    }
 
     // Create a group chat
-    const createGroupChat = () => {
-        const data = {
-            members: [] // TODO: Get list of users selected
-        };
+    const createGroupChat = (event) => {
+        event.preventDefault();
 
-        const config = {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
+        let membersArray = [];
+        membersArray.push(memberName);
 
-        axios.post('/api/chats', data, config)
-            .then(() => {})
-            .catch(err => console.log(err));
+        setMembers(membersArray);
+        console.log(membersArray);
+
+        // const data = {
+        //     members: [members]
+        // };
+
+        // const config = {
+        //     withCredentials: true,
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // };
+
+        // axios.post('/api/chats', data, config)
+        //     .then(() => {})
+        //     .catch(err => console.log(err));
     };
 
     return (
@@ -56,11 +100,13 @@ const CreateGroup = (props) => {
                                     </div>
                                     <span className="user-group-remove">X</span>
                                 </div>
+
+                                <input type="submit" onClick={createGroupChat}/>
                             </div>
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <ContactList type="CREATE_GROUP" listType="GROUP_CHAT"/>
+                        <ContactList type="CREATE_GROUP" listType="GROUP_CHAT" checkedUser={checkedUser}/>
                     </div>
                     
                 </div>
