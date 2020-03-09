@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
     },
     avatarColor: {
         type: String,
-        required: false
+        required: false,
+        default: "#000000"
     },
     contacts: [
         {
