@@ -3,6 +3,7 @@ import MainNavbar from '../Common/MainNavbar'
 import ContactList from '../Common/ContactList';
 import MainMessageChat from '../Common/MainMessageChat';
 import { AuthContext } from '../context/authContext';
+import axios from 'axios';
 
 const CreateGroup = (props) => {
     const auth = useContext(AuthContext);
@@ -12,6 +13,24 @@ const CreateGroup = (props) => {
             props.history.push('/login')
         }
     })
+
+    // Create a group chat
+    const createGroupChat = () => {
+        const data = {
+            members: [] // TODO: Get list of users selected
+        };
+
+        const config = {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        axios.post('/api/chats', data, config)
+            .then(() => {})
+            .catch(err => console.log(err));
+    };
 
     return (
         <div className="container">
@@ -29,15 +48,8 @@ const CreateGroup = (props) => {
                                     <input className='hide-input-field' type="text" />
                                 </div>
                             </div>
+                            {/* TODO: Make this section dynamic */}
                             <div className="row margin-top-sm">
-
-                                <div className="user-added-to-group justify-center text-center">
-                                    <div>
-                                        <img src="https://via.placeholder.com/72" alt=""/>
-                                        <h5>Username</h5>
-                                    </div>
-                                    <span className="user-group-remove">X</span>
-                                </div>                                    
                                 <div className="user-added-to-group justify-center text-center">
                                     <div>
                                         <img src="https://via.placeholder.com/72" alt=""/>
@@ -45,12 +57,11 @@ const CreateGroup = (props) => {
                                     </div>
                                     <span className="user-group-remove">X</span>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <ContactList type="CREATE_GROUP"/>
+                        <ContactList type="CREATE_GROUP" listType="GROUP_CHAT"/>
                     </div>
                     
                 </div>
