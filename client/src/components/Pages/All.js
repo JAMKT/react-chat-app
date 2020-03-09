@@ -16,6 +16,7 @@ const All = (props) => {
 
     const [searching, setSearching] = useState(false);
     const [chats, setChats] = useState(null);
+    const [selectedChat, setSelectedChat] = useState(null);
 
     const loadChats = () => {
         // if (document.getElementById("username").value && document.getElementById("username").value !== ""){
@@ -32,12 +33,29 @@ const All = (props) => {
     }
 
     const renderChats = () => {
-        axios.get('/api/chats')
+        axios.get('/api/chats/')
             .then(chats => {
                 setChats(chats.data);
                 setSearching(false);
             })
             .catch(err => console.log(err));
+    }
+
+
+    
+    const retrieveChatId = (event) => {
+        event.preventDefault();
+        // filter through the chats in the chat state and find the one that has the matching id
+        console.log('was clicked');
+        console.log(chats);
+        console.log(event.target.id);
+    
+        var selected = chats.filter(function(chat) {
+            return chat._id === event.target.id;
+        });
+
+        setSelectedChat(selected[0]);
+        // set the matching chat as the selected chat state
     }
 
     useEffect(()=>{
@@ -63,11 +81,11 @@ const All = (props) => {
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <ChatList searching={searching} chats={chats}/>
+                        <ChatList retrieveChatId={retrieveChatId} searching={searching} chats={chats}/>
                     </div>
                 </div>
                 <div className="col hide-on-mobile">
-                    <MainMessageChat />
+                    <MainMessageChat chat={selectedChat}/>
                 </div>
             </div>
         </div>

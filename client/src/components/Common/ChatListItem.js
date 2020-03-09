@@ -34,6 +34,7 @@ const ChatListItem = (props) => {
                 :
                 null
             }
+            <div id={props.id} className="user-list-item-overlay" onClick={props.retrieveChatId}></div>
         </div>
     )
 }

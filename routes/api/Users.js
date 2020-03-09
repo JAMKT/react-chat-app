@@ -71,7 +71,6 @@ router.post('/login', (req, res, next) => {
                     success: false,
                     message: 'Incorrect credentials 1'
                 })
-               // res.send(!foundUser);
             } else {
                 bcrypt.compare(password, foundUser.password, (err, password) => {
                     if (password) {

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
 
-export default function UserListItem(props) {
+const UserListItem = (props) => {
     const userContext = useContext(AuthContext);
 
     const apiCall = (event) => {
@@ -17,8 +17,8 @@ export default function UserListItem(props) {
             });
     }
 
-
     const createChat = (username) => {
+        console.log('was clicked');
 
         const data = {
             members: [
@@ -39,6 +39,10 @@ export default function UserListItem(props) {
                 // ...
             })
             .catch(err => console.log(err));
+    }
+
+    const closePopup = () => {
+       console.log('clicked');
     }
 
     let addFriendButton;
@@ -76,3 +80,5 @@ export default function UserListItem(props) {
         </div>
     )
 }
+
+export default UserListItem;
