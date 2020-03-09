@@ -9,6 +9,7 @@ import axios from 'axios';
 const MainMessageChat = (props) => {
     const auth = useContext(AuthContext);
     const [message, setMessage] = useState(null);
+    const [receiverMessage, setReceiverMessage] = useState(null);
 
     const [formState, inputHandler] = useForm(
         //set inital input state + form validity state
@@ -62,7 +63,7 @@ const MainMessageChat = (props) => {
                     if (message.author.id === auth.currUser._id) {
                         setMessage(<Message text={message.content}/>);
                     } else {
-                        setMessage(<ResponseMessage text={message.content} username={message.author.username}/>)
+                        setReceiverMessage(<ResponseMessage text={message.content} username={message.author.username}/>)
                     }
 
                 });
@@ -81,6 +82,7 @@ const MainMessageChat = (props) => {
             <div className="col main-message-chat absolute-center-pin full-height">
                 <ChatHeader />
                 <div className="row padding-16 scrollable">
+                    {receiverMessage}
                     {message}
                 </div>
                 <form className="padding-16 chat-input-field-position" onSubmit={sendMessage}>
