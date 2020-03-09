@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ChatHeader from './ChatHeader';
 import ResponseMessage from './ResponseMessage';
 import Message from './Message';
@@ -8,6 +8,7 @@ import axios from 'axios';
 
 const MainMessageChat = (props) => {
     const auth = useContext(AuthContext);
+    const [message, setMessage] = useState(null);
 
     const [formState, inputHandler] = useForm(
         //set inital input state + form validity state
@@ -59,13 +60,9 @@ const MainMessageChat = (props) => {
             .then((messages) => {
                 messages.data.messages.forEach((message) => {
                     if (message.author.id === auth.currUser._id) {
-                        //TODO
-                        console.log("By Current User:")
-                        console.log(message.content);
+                        setMessage(<Message text={message.content}/>);
                     } else {
-                        //TODO
-                        console.log("By " + message.author.username);
-                        console.log(message.content);
+                        setMessage(<ResponseMessage text={message.content} username={message.author.username}/>)
                     }
 
                 });
@@ -84,10 +81,7 @@ const MainMessageChat = (props) => {
             <div className="col main-message-chat absolute-center-pin full-height">
                 <ChatHeader />
                 <div className="row padding-16 scrollable">
-                    <ResponseMessage />
-                    <ResponseMessage />
-                    <ResponseMessage />
-                    <Message />
+                    {message}
                 </div>
                 <form className="padding-16 chat-input-field-position" onSubmit={sendMessage}>
                     <input type="message" id="message" className="chat-input-field" placeholder="Type your message..." onInput={inputHandler} />
