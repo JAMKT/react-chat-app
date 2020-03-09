@@ -60,7 +60,6 @@ const MainMessageChat = (props) => {
                     <input type="message" className="chat-input-field" placeholder="Type your message..." onInput={inputHandler} />
                 </form>      
             </div>
-<<<<<<< HEAD
         );
     }else{
         return(
@@ -68,13 +67,6 @@ const MainMessageChat = (props) => {
         );
     }
     
-=======
-            <form className="padding-16 chat-input-field-position" onKeyDown={sendMessage}>
-                <input type="message" className="chat-input-field" placeholder="Type your message..." onInput={inputHandler} />
-            </form>      
-        </div>
-    );
->>>>>>> ffd8116b61d6be6a041bc91448ce573645696c54
 }
 
 export default MainMessageChat;
