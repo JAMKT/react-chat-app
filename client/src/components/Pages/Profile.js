@@ -18,7 +18,7 @@ const Profile = (props) => {
             <div className="row">
                 <div className="side-col grey-bg full-height">
                     <div className="row shadow">
-                        <div className="col padding-32">
+                        <div className="col padding-24">
                             <MainNavbar />
 
                             <div className="row">
