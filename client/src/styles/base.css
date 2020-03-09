@@ -362,6 +362,12 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
     height: 14px;
     border-radius: 50%;
 }
+.user-list-img-col svg{
+    border-radius: 50%;
+    margin-right: 20px;
+    max-width: 64px;
+    max-height: 64px;
+}
 .user-list-img-col img{
     border-radius: 50%;
     margin-right: 20px;

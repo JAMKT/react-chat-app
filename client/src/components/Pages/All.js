@@ -60,7 +60,7 @@ const All = (props) => {
 
     useEffect(()=>{
         renderChats();
-    }, [])
+    }, []);
 
     return (
         <div className="container">
