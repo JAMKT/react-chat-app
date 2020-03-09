@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ChatHeader from './ChatHeader';
 import ResponseMessage from './ResponseMessage';
 import Message from './Message';
 import { useForm } from '../hooks/formHook';
+import { AuthContext } from '../context/authContext';
 import axios from 'axios';
 
 const MainMessageChat = (props) => {
+    const auth = useContext(AuthContext);
 
     const [formState, inputHandler] = useForm(
         //set inital input state + form validity state
@@ -23,9 +25,17 @@ const MainMessageChat = (props) => {
     const sendMessage = (event) => {
         event.preventDefault();
 
+
         const data = {
-            content: formState.inputs.message.value
+            content: document.getElementById("message").value,
+            author: {
+                id: auth.currUser._id,
+                username: auth.currUser.username
+            }
         }
+        
+        document.getElementById("message").value = "";
+
         const config = {
             withCredentials: true,
             headers: {
@@ -33,17 +43,19 @@ const MainMessageChat = (props) => {
             },
         };
 
-        const chatId = ''; // TODO: Add chat id as value of this const
-        
+        const chatId = props.chat._id;
+
         axios.post('/api/chats/' + chatId + '/messages', data, config)
             .then((newMessage) => {
                 if (newMessage) {
-                    // ...
+                    console.log("Full Message");
+                    console.log(newMessage);
                 }
             })
             .catch(err => console.log(err));
     }
-    if(props.chat !== null){
+
+    if (props.chat !== null) {
         return (
             <div className="col main-message-chat absolute-center-pin full-height">
                 <ChatHeader />
@@ -56,17 +68,17 @@ const MainMessageChat = (props) => {
                 <div>
                     {props.chat.author.username}
                 </div>
-                <form className="padding-16 chat-input-field-position" onEnter={sendMessage}>
-                    <input type="message" className="chat-input-field" placeholder="Type your message..." onInput={inputHandler} />
-                </form>      
+                <form className="padding-16 chat-input-field-position" onSubmit={sendMessage}>
+                    <input type="message" id="message" className="chat-input-field" placeholder="Type your message..." onInput={inputHandler} />
+                </form>
             </div>
         );
-    }else{
-        return(
+    } else {
+        return (
             <div>Select a chat</div>
         );
     }
-    
+
 }
 
 export default MainMessageChat;
