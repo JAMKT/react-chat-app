@@ -168,6 +168,9 @@ router.post('/update-user', isLoggedIn, async (req, res) => {
         { new: true }, // Return the newly updated version of the document
         (err, user) => {
             if (err) { res.send('Could not update this user.'); }
+        })
+        .then((response) => {
+            res.send(response);
         });
 });
 
