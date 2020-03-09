@@ -1,15 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect  } from 'react';
 import UserListGroup from './UserListGroup';
 import AlphabeticalSlider from './AlphabeticalSlider';
 import { AuthContext } from '../context/authContext';
+import axios from 'axios';
 
 export default function ContactList(props) {
 
+    const [contacts, setContacts] = useState([]);
+
+    const getContactList = () => {
+        axios.get('/api/users/current-user')
+            .then(user => {
+                setContacts(user.data.contacts);
+            })
+            .catch(err => console.log(err));
+    }
+
+    useEffect(() => {
+        getContactList();
+    })
+
     function ContactHandler() {
-        const userContext = useContext(AuthContext);
         let unorderedContactList = [];
-        if (userContext.currUser.contacts){
-            userContext.currUser.contacts.forEach(contact => {
+        if (contacts){
+            contacts.forEach(contact => {
                 let contactObj = {
                     username: contact.username
                 }
