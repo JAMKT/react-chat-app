@@ -368,6 +368,10 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
     max-width: 64px;
     max-height: 64px;
 }
+.user-list-img-col img{
+    border-radius: 50%;
+    margin-right: 20px;
+}
 .user-list-button-col {
     display: flex;
     align-items: center;
