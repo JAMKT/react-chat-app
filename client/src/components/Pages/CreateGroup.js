@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import MainNavbar from '../Common/MainNavbar'
 import ContactList from '../Common/ContactList';
-import MainMessageChat from '../Common/MainMessageChat';
 import { AuthContext } from '../context/authContext';
 import axios from 'axios';
 
@@ -65,8 +64,8 @@ const CreateGroup = (props) => {
                     </div>
                     
                 </div>
-                <div className="col hide-on-mobile">
-                        <MainMessageChat />
+                <div className="col">
+                     
                 </div>
             </div>
         </div>
