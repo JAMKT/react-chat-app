@@ -7,7 +7,7 @@ import axios from 'axios';
 const CreateGroup = (props) => {
     const auth = useContext(AuthContext);
     const [memberName, setMemberName] = useState(null);
-    const [users, setUsers] = useState(null);
+    const [users, setUsers] = useState([]);
     const [members, setMembers] = useState(null);
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const CreateGroup = (props) => {
         //     }
         // }
 
-        if (event.target.checked === true) {
+        if (event.target.checked === true && users !== []) {
             console.log('-----');
             console.log(event.target.id);
             console.log('-----');
