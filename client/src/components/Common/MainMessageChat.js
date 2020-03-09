@@ -8,8 +8,7 @@ import axios from 'axios';
 
 const MainMessageChat = (props) => {
     const auth = useContext(AuthContext);
-    const [message, setMessage] = useState(null);
-    const [receiverMessage, setReceiverMessage] = useState(null);
+    const [messages, setMessages] = useState([]);
 
     const [formState, inputHandler] = useForm(
         //set inital input state + form validity state
@@ -43,9 +42,7 @@ const MainMessageChat = (props) => {
             },
         };
 
-        const chatId = props.chat._id;
-
-        axios.post('/api/chats/' + chatId + '/messages', data, config)
+        axios.post('/api/chats/' + props.chat._id + '/messages', data, config)
             .then((newMessage) => {
                 if (newMessage) {
                     console.log(newMessage);
@@ -55,18 +52,9 @@ const MainMessageChat = (props) => {
     }
 
     const getMessages = () => {
-        const chatId = props.chat._id;
-
-        axios.get('/api/chats/' + chatId + '/messages')
+        axios.get('/api/chats/' + props.chat._id + '/messages')
             .then((messages) => {
-                messages.data.messages.forEach((message) => {
-                    if (message.author.id === auth.currUser._id) {
-                        setMessage(<Message text={message.content}/>);
-                    } else {
-                        setReceiverMessage(<ResponseMessage text={message.content} username={message.author.username}/>)
-                    }
-
-                });
+                setMessages(messages.data.messages);
             })
             .catch(err => console.log(err));
     }
@@ -82,8 +70,16 @@ const MainMessageChat = (props) => {
             <div className="col main-message-chat absolute-center-pin full-height">
                 <ChatHeader />
                 <div className="row padding-16 scrollable">
-                    {receiverMessage}
-                    {message}
+                    {
+                        messages !== [] ?
+                            messages.map((msg, index) => {
+                                let text;
+                                msg.author.id === auth.currUser._id ?
+                                    text = (<Message text={msg.content} key={index}/>) :
+                                    text = (<ResponseMessage text={msg.content} username={msg.author.username} key={index}/>)
+                                return text;
+                            }) : null
+                    }
                 </div>
                 <form className="padding-16 chat-input-field-position" onSubmit={sendMessage}>
                     <input type="message" id="message" className="chat-input-field" placeholder="Type your message..." onInput={inputHandler} />
