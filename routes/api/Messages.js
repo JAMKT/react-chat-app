@@ -8,9 +8,9 @@ const Message = require('../../models/Message');
 // GET
 // Get all messages related to a specific chat
 router.get('/:id/messages', (req, res) => {
-    Chat.findById(req.params.id, (err, chat) => {
-        if (err) res.send('No chat found.');
-        res.send(chat.messages);
+    Chat.findById(req.params.id).populate("messages").sort({ "created": -1 }).exec((err, chat) => {
+        if (err) res.send('Chat not found.');
+        res.send(chat);
     });
 });
 
@@ -24,7 +24,7 @@ router.get('/:id/messages/:messageId', async (req, res) => {
 
     Chat.findById(req.params.id, (err, chat) => {
         if (err) res.send('No chat found.');
-    
+
         const messagesArray = chat.messages;
 
         if (messagesArray.length > 0) {
@@ -53,32 +53,42 @@ router.post('/:id/messages/', (req, res) => {
             }
         });
 
-        newMessage.save();
+        // newMessage.save();
 
         Chat.findById(req.params.id, (err, chat) => {
             if (err) res.send('Message not found.');
+
+            Message.create(newMessage, (err, message) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    message.save();
+                    chat.messages.push(message);
+                    chat.save();
+                }
+            });
 
             // Push new message to array
             messagesArray.push(newMessage);
         });
 
         // Update chat with new messages
-        Chat.findOneAndUpdate({ _id: req.params.id }, {
-            $addToSet: {
-                messages: messagesArray
-            },
-            $set: {
-                lastUpdate: newMessage.created
-            }
-        }, 
-        { new: true }, // Return the newly updated version of the document
-        (err, chat) => {
-            if (err) { res.send('Could not update this chat.'); }
-        });
-    } catch(err) {
+        // Chat.findOneAndUpdate({ _id: req.params.id }, {
+        //     $addToSet: {
+        //         messages: messagesArray
+        //     },
+        //     $set: {
+        //         lastUpdate: newMessage.created
+        //     }
+        // }, 
+        // { new: true }, // Return the newly updated version of the document
+        // (err, chat) => {
+        //     if (err) { res.send('Could not update this chat.'); }
+        // });
+    } catch (err) {
         res.send('Could not create this message.');
     }
-    
+
 });
 
 // DELETE
@@ -89,7 +99,7 @@ router.post('/:id/messages/:id', (req, res) => {
             if (err) console.log(err);
             res.send('Message has been deleted!');
         });
-    } catch(err) {
+    } catch (err) {
         res.send('Message could not be deleted. Try again.');
     }
 });

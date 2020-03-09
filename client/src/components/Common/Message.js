@@ -1,13 +1,15 @@
 import React from 'react'
 
-export default function Message() {
+const Message = (props) => {
     return (
         <div className="row margin-bot-s">
             <div className="col"> 
                 <div className="row justify-end">
-                    <p className="message-body">Message body goes here</p>
+                    <p className="message-body">{props.text}</p>
                 </div>
             </div>
         </div>
     )
 }
+
+export default Message;
