@@ -63,20 +63,26 @@ const MainMessageChat = (props) => {
         if (props.chat) {
             getMessages();
         }
-    });
+    },[]);
+
 
     if (props.chat !== null && typeof props.chat !== 'undefined') {
         let name;
+        let userId;
+        
         props.chat.members.forEach((member) => {
             if (member.username !== auth.currUser.username) {
+                console.log(member);
                 name = member.username;
+                userId = member.user;
             }
         });
 
 
         return (
             <div className="col main-message-chat absolute-center-pin full-height">
-                <ChatHeader name={name} />
+                {console.log(userId)}
+                <ChatHeader name={name} userId={userId}/>
                 <div className="row padding-16 scrollable">
                     {
                         messages !== [] ?
