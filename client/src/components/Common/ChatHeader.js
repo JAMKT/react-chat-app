@@ -1,12 +1,12 @@
 import React from 'react';
 
-export default function ChatHeader() {
+const ChatHeader = (props) => {
     return (
         <div className="row align-center padding-16 chat-header">
             <div className="col">
                  <div className="row align-center ">
                     <img className="chat-header-profile" src="https://via.placeholder.com/64" alt=""/>
-                    <h3>User or Group name</h3>
+                    <h3>{props.name}</h3>
                 </div>
             </div>
            
@@ -22,3 +22,5 @@ export default function ChatHeader() {
         </div>
     )
 }
+
+export default ChatHeader;

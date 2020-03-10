@@ -22,15 +22,18 @@ const UserListItem = (props) => {
 
     //Get user avatar
     const getAvatarColor = () => {
-        console.log(props.id)
-        axios.get('/api/users/' + props.id)
+        if (props.id !== undefined) {
+            axios.get('/api/users/' + props.id)
             .then((newContact) => {
-                //console.log(newContact);
-                setColor(newContact.data.avatarColor);
+                if (newContact.data.avatarColor !== null && newContact.data.avatarColor !== undefined){
+                    setColor(newContact.data.avatarColor);
+                }
             })
             .catch(err => {
                 console.log(err);
             });
+        }
+        
     }
 
     useEffect(() => {
