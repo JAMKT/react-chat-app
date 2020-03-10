@@ -15,8 +15,6 @@ const UserListItem = (props) => {
         // Get the user that was "Added as Friend" + update the current user's "contacts" in the database
         axios.get('/api/users/new-contact/' + event.target.id)
             .then((newContact) => {
-                console.log('hello');
-                console.log(newContact);
                 // Once the database has updated, call the "loadUsers()" function
                 // The "loadUsers()" will update the users-state with the updated data
                 props.loadUsers(); 
