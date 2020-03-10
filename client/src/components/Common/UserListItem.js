@@ -25,6 +25,7 @@ const UserListItem = (props) => {
         console.log(props.id)
         axios.get('/api/users/' + props.id)
             .then((newContact) => {
+                //console.log(newContact);
                 setColor(newContact.data.avatarColor);
             })
             .catch(err => {
