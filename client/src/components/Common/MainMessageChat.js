@@ -65,7 +65,7 @@ const MainMessageChat = (props) => {
         }
     });
 
-    if (props.chat !== null) {
+    if (props.chat !== null && typeof props.chat !== 'undefined') {
         let name;
         props.chat.members.forEach((member) => {
             if (member.username !== auth.currUser.username) {
@@ -73,17 +73,18 @@ const MainMessageChat = (props) => {
             }
         });
 
+
         return (
             <div className="col main-message-chat absolute-center-pin full-height">
-                <ChatHeader name={name}/>
+                <ChatHeader name={name} />
                 <div className="row padding-16 scrollable">
                     {
                         messages !== [] ?
                             messages.map((msg, index) => {
                                 let text;
                                 msg.author.id === auth.currUser._id ?
-                                    text = (<Message text={msg.content} key={index}/>) :
-                                    text = (<ResponseMessage text={msg.content} username={msg.author.username} key={index}/>)
+                                    text = (<Message text={msg.content} key={index} />) :
+                                    text = (<ResponseMessage text={msg.content} username={msg.author.username} key={index} />)
                                 return text;
                             }) : null
                     }
