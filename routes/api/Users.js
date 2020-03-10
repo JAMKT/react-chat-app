@@ -129,12 +129,14 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
                     contact.contacts.unshift({ user: req.user.id, username: req.user.username });
                     //Save user to the following user
                     contact.save().then(user => {
-                        return;
+                        res.send(user);
                     }
                     )
                 })
                 .catch(err => res.send(err))
         })
+        .then((data) => { return data})
+        .catch(err => res.send(err));
 });
 
 //Get the users that fit the search with regex

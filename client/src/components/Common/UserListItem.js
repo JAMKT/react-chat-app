@@ -5,19 +5,27 @@ import { AuthContext } from '../context/authContext';
 const UserListItem = (props) => {
     const userContext = useContext(AuthContext);
     const [color, setColor] = useState(null);
-
-    // Add the selected user as a new contact and create a new chat with them
+    
+    // Update the current user's "contacts" when "Add Friend" button is clicked
     const apiCall = (event) => {
         event.preventDefault();
+        console.log('button was clicked');
+        console.log(event.target.id);
 
+        // Get the user that was "Added as Friend" + update the current user's "contacts" in the database
         axios.get('/api/users/new-contact/' + event.target.id)
             .then((newContact) => {
+                console.log('hello');
+                console.log(newContact);
+                // Once the database has updated, call the "loadUsers()" function
+                // The "loadUsers()" will update the users-state with the updated data
+                props.loadUsers(); 
             })
             .catch(err => {
                 console.log(err);
             });
-
         createChat(props.name);
+        
     };
 
     //Get user avatar
@@ -38,7 +46,7 @@ const UserListItem = (props) => {
 
     useEffect(() => {
         getAvatarColor();
-    });
+    },[]);
 
     // Create a normal chat
     const createChat = (username) => {
@@ -104,7 +112,7 @@ const UserListItem = (props) => {
                     ) : null
                     : (
                         <div className="user-list-button-col">
-                            {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name}>Add friend</button>}
+                            {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name} >Add friend</button>}
                         </div>
                     )
             }

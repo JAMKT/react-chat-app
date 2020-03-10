@@ -4,7 +4,6 @@ import { AuthContext } from '../context/authContext';
 
 const ChatList = (props) => {
     const userContext = useContext(AuthContext);
-    console.log(userContext);
  
     if (props.searching === true) {
         return (
