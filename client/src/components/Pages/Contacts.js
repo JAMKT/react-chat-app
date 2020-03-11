@@ -8,7 +8,7 @@ import axios from 'axios';
 const Contacts = (props) => {
     const auth = useContext(AuthContext);
     const [contacts, setContacts] = useState(null);
-    const [groups, setGroups] = useState(null);
+    const [users, setUsers] = useState(null);
     const [searching, setSearching] = useState(false);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const Contacts = (props) => {
         if (auth.currUser === false) {
             props.history.push('/login')
         }
-        if (groups === null && contacts !== null) {
+        if (users === null && contacts !== null) {
             contactHandler();
         }
     })
@@ -71,7 +71,7 @@ const Contacts = (props) => {
                 names: []
             }
             alphabeticalContactGroup.letter = letter.toUpperCase();
-            if(groups === null){
+            if(users === null){
                 alphabeticalContactGroup.names = orderedContactList.filter(contact => contact.username.charAt(0).toUpperCase() === letter.toUpperCase());
             } else {
                 alphabeticalContactGroup.names = orderedContactList.filter(contact => contact.username.charAt(0).toUpperCase() === letter.toUpperCase() && contact.username.toUpperCase().indexOf((document.getElementById("contact-search").value.toUpperCase())) !== -1);
@@ -84,11 +84,10 @@ const Contacts = (props) => {
         });
 
         console.log(alphabeticalContactGroupList)
-        setGroups(alphabeticalContactGroupList);
+        setUsers(alphabeticalContactGroupList);
         setSearching(false);
     }
 
-    
     return (
         <div className="container">
             <div className="row">
@@ -108,7 +107,7 @@ const Contacts = (props) => {
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <ContactList listType="DEFAULT_CHAT" groups={ groups }/>
+                        <ContactList listType="DEFAULT_CHAT" users={ users }/>
                     </div>
                 </div>
                 <div className="col hide-on-mobile">

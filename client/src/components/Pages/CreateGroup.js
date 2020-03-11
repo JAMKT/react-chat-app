@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import MainNavbar from '../Common/MainNavbar'
 import ContactList from '../Common/ContactList';
 import { AuthContext } from '../context/authContext';
@@ -6,12 +6,86 @@ import axios from 'axios';
 
 const CreateGroup = (props) => {
     const auth = useContext(AuthContext);
+    const [contacts, setContacts] = useState(null);
+    const [users, setUsers] = useState(null);
+    const [searching, setSearching] = useState(false);
 
     useEffect(() => {
+        if(contacts === null){
+            getContactList();
+        }
         if (auth.currUser === false) {
             props.history.push('/login')
         }
+        if (users === null && contacts !== null) {
+            contactHandler();
+        }
     })
+
+    const getContactList = () => {
+        axios.get('/api/users/current-user')
+            .then(user => {
+                setContacts(user.data.contacts);
+            })
+            .catch(err => console.log(err));
+    }
+
+    function contactHandler() {
+        console.log("HANDLING CONTACTS")
+        setSearching(true);
+        let unorderedContactList = [];
+        if (contacts){
+            contacts.forEach(contact => {
+                let contactObj = {
+                    username: contact.username
+                }
+                unorderedContactList.push(contactObj);
+            })
+        }
+
+        /* Creating an ordered contact list */
+        let orderedContactList = unorderedContactList.sort(
+            function (a, b) {
+                let nameA = a.username.toUpperCase();
+                let nameB = b.username.toUpperCase();
+                return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
+            }
+        );
+
+        /* Creating a list of unique letters from the ordered list */
+        let uniqueLetterList = [];
+        orderedContactList.forEach(contact => {
+            
+            let character = contact.username.charAt(0);
+            if (!uniqueLetterList.includes(character)) {
+                uniqueLetterList.push(character);
+            }
+        })
+
+        let alphabeticalContactGroupList = [];
+
+        uniqueLetterList.forEach(letter => {
+            let alphabeticalContactGroup = {
+                letter: '',
+                names: []
+            }
+            alphabeticalContactGroup.letter = letter.toUpperCase();
+            if(users === null){
+                alphabeticalContactGroup.names = orderedContactList.filter(contact => contact.username.charAt(0).toUpperCase() === letter.toUpperCase());
+            } else {
+                alphabeticalContactGroup.names = orderedContactList.filter(contact => contact.username.charAt(0).toUpperCase() === letter.toUpperCase() && contact.username.toUpperCase().indexOf((document.getElementById("contact-search").value.toUpperCase())) !== -1);
+            }
+            
+            if(alphabeticalContactGroup.names.length > 0){
+                alphabeticalContactGroupList.push(alphabeticalContactGroup);
+            }
+            
+        });
+
+        console.log(alphabeticalContactGroupList)
+        setUsers(alphabeticalContactGroupList);
+        setSearching(false);
+    }
 
     // Create a group chat
     const createGroupChat = () => {
@@ -60,7 +134,7 @@ const CreateGroup = (props) => {
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <ContactList type="CREATE_GROUP" listType="GROUP_CHAT"/>
+                        <ContactList type="CREATE_GROUP" listType="GROUP_CHAT" users={ users }/>
                     </div>
                     
                 </div>
