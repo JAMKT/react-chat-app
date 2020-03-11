@@ -78,7 +78,9 @@ const All = (props) => {
     }
 
     useEffect(() => {
-        renderChats();
+        if(chats === null){
+            renderChats();
+        }
         if (auth.currUser === false) {
             props.history.push('/login')
         }
