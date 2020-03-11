@@ -37,6 +37,7 @@ export default function ContactList(props) {
                     letter={user.letter} 
                     users={user.names} 
                     getMembersData={getData}
+                    selectContact={ props.selectContact }
                 />
             );
         } else {
@@ -47,6 +48,7 @@ export default function ContactList(props) {
                     listType={props.listType} 
                     letter={user.letter} 
                     users={user.names}
+                    selectContact={ props.selectContact }
                 />
             );
         }

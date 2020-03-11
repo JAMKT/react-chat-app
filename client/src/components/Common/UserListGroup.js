@@ -2,6 +2,7 @@ import React from 'react'
 import UserListItem from './UserListItem';
 
 export default function UserListGroup(props) {
+
     const userArray = props.users.map((user, key, index )=> 
         <UserListItem 
             type={props.type} 
@@ -10,6 +11,8 @@ export default function UserListGroup(props) {
             index={key} 
             name={user.username}
             getMembersData={props.getMembersData}
+            id={user.id}
+            selectContact={ props.selectContact }
         />
     );
 

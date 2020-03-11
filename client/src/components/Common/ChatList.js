@@ -53,6 +53,7 @@ const ChatList = (props) => {
                             userId={userId}
                             name={name}
                             lastUpdate={chat.lastUpdate}
+                            created={chat.created}
                             retrieveChatId={props.retrieveChatId}
                         />
                     })

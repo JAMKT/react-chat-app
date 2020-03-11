@@ -38,6 +38,7 @@ app.use(session({
     secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
+    cookie: { httpOnly: false },
     expires: new Date(Date.now() + 3600000)
 }));
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Input from '../Common/FormElements/Input';
 import Button from '../Common/Button/Button';
 import Popup from '../Common/SuccessErrorPopup/Popup';
@@ -11,6 +11,7 @@ import { AuthContext } from '../context/authContext';
 const Login = (props) => {
    
     const auth = useContext(AuthContext);
+    console.log(auth);
     const [error, setError] = useState(null);
 
     const [formState, inputHandler] = useForm(
@@ -29,6 +30,12 @@ const Login = (props) => {
             isValid: false
         }
     );
+
+    useEffect(() => {
+        if (auth.loggedIn === true) {
+            props.history.push('/all');
+        }
+    });
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
