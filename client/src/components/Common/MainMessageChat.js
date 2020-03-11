@@ -69,13 +69,28 @@ const MainMessageChat = (props) => {
     if (props.chat !== null && typeof props.chat !== 'undefined') {
         let name;
         let userId;
-        
-        props.chat.members.forEach((member) => {
-            if (member.username !== auth.currUser.username) {
-                name = member.username;
-                userId = member.user;
-            }
-        });
+        let namesArray = [];
+
+        // Set chat name based on usernames 
+        if (props.chat.members.length > 2) {
+            props.chat.members.forEach((member) => {
+                if (member.username !== auth.currUser.username) {
+                    namesArray.push(member.username);
+                    
+                    let names = namesArray.join(', ');
+
+                    name = names;
+                    userId = member.user; // TODO: Fix
+                }
+            });
+        } else {
+            props.chat.members.forEach((member) => {
+                if (member.username !== auth.currUser.username) {
+                    name = member.username;
+                    userId = member.user;
+                }
+            });
+        }
 
 
         return (
