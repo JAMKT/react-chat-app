@@ -38,6 +38,7 @@ const Contacts = (props) => {
         if (contacts){
             contacts.forEach(contact => {
                 let contactObj = {
+                    id: contact.user,
                     username: contact.username
                 }
                 unorderedContactList.push(contactObj);
@@ -88,6 +89,12 @@ const Contacts = (props) => {
         setSearching(false);
     }
 
+    const selectContact = (id) => {
+        console.log(id);
+        auth.loadFromContacts = id
+        props.history.push('/all');
+    }
+
     
     return (
         <div className="container">
@@ -108,7 +115,7 @@ const Contacts = (props) => {
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <ContactList listType="DEFAULT_CHAT" groups={ groups }/>
+                        <ContactList listType="DEFAULT_CHAT" groups={ groups } selectContact={ selectContact } />
                     </div>
                 </div>
                 <div className="col hide-on-mobile">
