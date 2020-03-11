@@ -64,6 +64,7 @@ router.post('/:id/messages/', (req, res) => {
                 } else {
                     message.save();
                     chat.messages.push(message);
+                    chat.lastUpdate = message.created;
                     chat.save();
                 }
             });

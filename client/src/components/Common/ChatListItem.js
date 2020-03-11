@@ -39,7 +39,7 @@ const ChatListItem = (props) => {
                 <div className="row height-50 space-between align-center">
                     <p>
                         { 
-                            props.lastUpdate !== undefined ? props.lastUpdate : <span>Yesterday 6:32 PM</span>
+                            props.lastUpdate !== undefined ? props.lastUpdate : props.created
                         }
                     </p> 
                 </div>
