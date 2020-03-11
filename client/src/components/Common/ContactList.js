@@ -22,20 +22,34 @@ export default function ContactList(props) {
     };
 
     useEffect(() => {
-        props.getMembersData(members);
+        if (props.listType === "GROUP_CHAT") {
+            props.getMembersData(members);
+        }
     });
 
     if (props.users !== null && typeof props.users !== 'undefined') {
-        UserListGroupItem = props.users.map((user, key) => 
-            <UserListGroup 
-                key={key} 
-                type="USER_LIST_GROUP" 
-                listType={props.listType} 
-                letter={user.letter} 
-                users={user.names} 
-                getMembersData={getData}
-            />
-        );
+        if (props.listType === "GROUP_CHAT") {
+            UserListGroupItem = props.users.map((user, key) =>
+                <UserListGroup 
+                    key={key} 
+                    type="USER_LIST_GROUP" 
+                    listType={props.listType} 
+                    letter={user.letter} 
+                    users={user.names} 
+                    getMembersData={getData}
+                />
+            );
+        } else {
+            UserListGroupItem = props.users.map((user, key) =>
+                <UserListGroup 
+                    key={key} 
+                    type="USER_LIST_GROUP" 
+                    listType={props.listType} 
+                    letter={user.letter} 
+                    users={user.names}
+                />
+            );
+        }
     } else {
         UserListGroupItem = <div>Nothing here...</div>;
     }
