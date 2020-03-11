@@ -90,7 +90,6 @@ const CreateGroup = (props) => {
     // Get data from UserListItem
     const getMembersData = (data) => {
         setMembers(data);
-        console.log(members);
     }
 
     // Create a group chat

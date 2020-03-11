@@ -26,7 +26,6 @@ const ChatList = (props) => {
                         let userId;
                        
                         chat.members.forEach((member) => {
-                            //console.log(member);
                             if (member.username !== userContext.currUser.username) {
                                 name = member.username;
                                 userId = member.user;
