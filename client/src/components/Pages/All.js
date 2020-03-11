@@ -8,12 +8,13 @@ import axios from 'axios';
 const All = (props) => {
     const auth = useContext(AuthContext);
     console.log(auth);
-
+  
     useEffect(() => {
         if (auth.currUser === false) {
             props.history.push('/login')
         }
     });
+
 
     const [searching, setSearching] = useState(false);
     const [chats, setChats] = useState(null);
@@ -41,10 +42,33 @@ const All = (props) => {
             })
             .catch(err => console.log(err));
     }
-    
+
+
+    const automaticChatLoaderFromContactsPage = () => {
+        console.log('Loading selected chat')
+        var selected = undefined;
+        chats.forEach(chat => {
+            if(chat.members.length <= 2){
+                chat.members.forEach(member => {
+                    if (member.user === auth.loadFromContacts){
+                        console.log('HERE HERE HERE')
+                        console.log(chat)
+                        setSelectedChat(chat)
+                        return true;
+                    } else {
+                        return false
+                    }
+                })
+            } else {
+                return false
+            }
+        })
+    }
+
     const retrieveChatId = (event) => {
         event.preventDefault();
         // filter through the chats in the chat state and find the one that has the matching id
+    
         var selected = chats.filter(function(chat) {
             return chat._id === event.target.id;
         });
@@ -53,9 +77,15 @@ const All = (props) => {
         setSelectedChat(selected[0]);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         renderChats();
-    }, []);
+        if (auth.currUser === false) {
+            props.history.push('/login')
+        }
+        if (selectedChat === null && auth.loadFromContacts !== null && auth.loadFromContacts !== undefined && chats !== null) {
+            automaticChatLoaderFromContactsPage()
+        }
+    })
 
     return (
         <div className="container">

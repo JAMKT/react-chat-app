@@ -37,12 +37,11 @@ const ChatListItem = (props) => {
                     
                 </div>
                 <div className="row height-50 space-between align-center">
-                    <p>{props.id}</p>
-                    {
-                        props.lastUpdate !== undefined ? <span>Yesterday 6:32 PM</span> : null
-                    }
-
-                    
+                    <p>
+                        { 
+                            props.lastUpdate !== undefined ? props.lastUpdate : props.created
+                        }
+                    </p> 
                 </div>
             </div>
             {

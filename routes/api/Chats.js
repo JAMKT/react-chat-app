@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
         // Loop through the array of users taken from the client side
         // Push the users to the chatMembers array
         for (const member of membersList) {
-            await User.findOne({ "username": member.username })
+            await User.findOne({ "username": member })
                 .then(member => { 
                     chatMembers.push({
                         username: member.username,

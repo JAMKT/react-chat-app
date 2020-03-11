@@ -9,8 +9,6 @@ const UserListItem = (props) => {
     // Update the current user's "contacts" when "Add Friend" button is clicked
     const apiCall = (event) => {
         event.preventDefault();
-        console.log('button was clicked');
-        console.log(event.target.id);
 
         // Get the user that was "Added as Friend" + update the current user's "contacts" in the database
         axios.get('/api/users/new-contact/' + event.target.id)
@@ -67,15 +65,17 @@ const UserListItem = (props) => {
             .catch(err => console.log(err));
     };
 
-    // Add user to an array or users if the checkbox is checked
+    // Check if the checkbox was checked (and unchecked) and send the selected user to the parent component
     const addUserToGroup = (event) => {
         if (event.target.checked === true) {
-            return props.name;
+            props.getMembersData(props.name, true);
+        } else {
+            props.getMembersData(props.name, false);
         }
     }
 
     return (
-        <div className="user-list-item padding-20 row">
+        <div className="user-list-item padding-20 row" onClick={ () => props.selectContact(props.id) }>
             { /* Column just for the user image */}
             <div className="user-list-img-col">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" className="svg-inline--fa fa-user fa-w-14 svg-avatar-nav" role="img" viewBox="0 0 448 512"><path
