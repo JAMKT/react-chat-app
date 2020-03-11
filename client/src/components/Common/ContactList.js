@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect  } from 'react';
 import UserListGroup from './UserListGroup';
-import AlphabeticalSlider from './AlphabeticalSlider';
 
 export default function ContactList(props) {
     var UserListGroupItem = <div>Nothing here...</div>;
@@ -12,7 +11,6 @@ export default function ContactList(props) {
     return (
         <div className="contact-list full-width col">
             { UserListGroupItem }
-            <AlphabeticalSlider />
         </div>
     );
 }
