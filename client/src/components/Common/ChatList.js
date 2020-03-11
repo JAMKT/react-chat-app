@@ -22,21 +22,36 @@ const ChatList = (props) => {
             <div className="user-list col">
                 {
                     props.chats.map((chat, index) => {
-                        var name;
+                        let name;
                         let userId;
-                       
-                        chat.members.forEach((member) => {
-                            if (member.username !== userContext.currUser.username) {
-                                name = member.username;
-                                userId = member.user;
-                            }
-                        })
+                        let namesArray = [];
+
+                        // Set chat name based on usernames 
+                        if (chat.members.length > 2) {
+                            chat.members.forEach((member) => {
+                                if (member.username !== userContext.currUser.username) {
+                                    namesArray.push(member.username);
+                                    
+                                    let names = namesArray.join(', ');
+
+                                    name = names;
+                                    userId = member.user; // TODO: Fix
+                                }
+                            });
+                        } else {
+                            chat.members.forEach((member) => {
+                                if (member.username !== userContext.currUser.username) {
+                                    name = member.username;
+                                    userId = member.user;
+                                }
+                            });
+                        }
              
                         return <ChatListItem
                             key={index}
                             id={chat._id}
                             userId={userId}
-                            name={name} // TODO: Change name to dynamic value
+                            name={name}
                             lastUpdate={chat.lastUpdate}
                             retrieveChatId={props.retrieveChatId}
                         />
