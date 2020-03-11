@@ -32,7 +32,6 @@ const Contacts = (props) => {
     }
 
     function contactHandler() {
-        console.log("HANDLING CONTACTS")
         setSearching(true);
         let unorderedContactList = [];
         if (contacts){
@@ -83,7 +82,6 @@ const Contacts = (props) => {
             
         });
 
-        console.log(alphabeticalContactGroupList)
         setUsers(alphabeticalContactGroupList);
         setSearching(false);
     }

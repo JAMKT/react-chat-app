@@ -9,8 +9,6 @@ const UserListItem = (props) => {
     // Update the current user's "contacts" when "Add Friend" button is clicked
     const apiCall = (event) => {
         event.preventDefault();
-        console.log('button was clicked');
-        console.log(event.target.id);
 
         // Get the user that was "Added as Friend" + update the current user's "contacts" in the database
         axios.get('/api/users/new-contact/' + event.target.id)
@@ -67,7 +65,6 @@ const UserListItem = (props) => {
             .catch(err => console.log(err));
     };
 
-    // Add user to an array or users if the checkbox is checked
     const addUserToGroup = (event) => {
         if (event.target.checked === true) {
             return props.name;
