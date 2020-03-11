@@ -1,8 +1,10 @@
 import React, { useContext, useState, useEffect  } from 'react';
 import UserListGroup from './UserListGroup';
+import { AuthContext } from '../context/authContext';
 
 export default function ContactList(props) {
-    const [members, setMembers] = useState([]);
+    const auth = useContext(AuthContext);
+    const [members, setMembers] = useState([auth.currUser.username]);
 
     let UserListGroupItem;
 
