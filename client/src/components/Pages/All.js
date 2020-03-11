@@ -7,8 +7,14 @@ import axios from 'axios';
 
 const All = (props) => {
     const auth = useContext(AuthContext);
+    console.log(auth);
+  
+    useEffect(() => {
+        if (auth.currUser === false) {
+            props.history.push('/login')
+        }
+    });
 
-    
 
     const [searching, setSearching] = useState(false);
     const [chats, setChats] = useState(null);
@@ -36,6 +42,7 @@ const All = (props) => {
             })
             .catch(err => console.log(err));
     }
+
 
     const automaticChatLoaderFromContactsPage = () => {
         console.log('Loading selected chat')
@@ -66,8 +73,8 @@ const All = (props) => {
             return chat._id === event.target.id;
         });
 
-        setSelectedChat(selected[0]);
         // set the matching chat as the selected chat state
+        setSelectedChat(selected[0]);
     }
 
     useEffect(() => {
