@@ -16,6 +16,7 @@ import Error404 from './components/Pages/Error404';
 import axios from 'axios';
 import './styles/base.css'
 import { AuthContext } from './components/context/authContext';
+import { connect } from 'mongoose';
 
 function App() {
 
@@ -26,10 +27,12 @@ function App() {
     setLoggedIn(true);
     setCurrUser(user);
   }, []);
+ 
 
   const logout = useCallback(() => {
-    setLoggedIn(false);
+    login();
   }, []);
+
 
   function getCurrentUser(){
     axios.get('/api/users/current-user')
@@ -37,7 +40,8 @@ function App() {
         if (currentUser.data.username) {
           const loggedInUser = currentUser.data;
           login(loggedInUser);
-          return true;
+       
+          return true;  
         } else {
           return false;
         }
@@ -47,10 +51,6 @@ function App() {
         return false;
       });
   };
-
-useEffect(() => {
-  console.log("USE EFFECT");
-}, []);
 
   async function userStatus() {
     let userStatus = false;
@@ -68,6 +68,13 @@ useEffect(() => {
     }
     return userStatus;
   }
+
+  // If session cookie exists, keep the user logged in
+  useEffect(() => {
+    if(document.cookie.sid){
+      getCurrentUser();
+    }
+  }, []);
 
 
   const PrivateRoute = ({ component: Component, ...rest }) => (
