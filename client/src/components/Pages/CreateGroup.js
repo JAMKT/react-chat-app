@@ -8,6 +8,7 @@ const CreateGroup = (props) => {
     const auth = useContext(AuthContext);
     const [contacts, setContacts] = useState(null);
     const [users, setUsers] = useState(null);
+    const [members, setMembers] = useState([]);
     const [searching, setSearching] = useState(false);
 
     useEffect(() => {
@@ -20,6 +21,7 @@ const CreateGroup = (props) => {
         if (users === null && contacts !== null) {
             contactHandler();
         }
+        
     })
 
     const getContactList = () => {
@@ -85,10 +87,16 @@ const CreateGroup = (props) => {
         setSearching(false);
     }
 
+    // Get data from UserListItem
+    const getMembersData = (data) => {
+        setMembers(data);
+        console.log(members);
+    }
+
     // Create a group chat
     const createGroupChat = () => {
         const data = {
-            members: [] // TODO: Get list of users selected
+            members: members
         };
 
         const config = {
@@ -119,8 +127,8 @@ const CreateGroup = (props) => {
                                     <input className='hide-input-field' type="text" />
                                 </div>
                             </div>
-                            {/* TODO: Make this section dynamic */}
                             <div className="row margin-top-sm">
+                                {/* TODO: Make this section dynamic */}
                                 <div className="user-added-to-group justify-center text-center">
                                     <div>
                                         <img src="https://via.placeholder.com/72" alt=""/>
@@ -128,11 +136,13 @@ const CreateGroup = (props) => {
                                     </div>
                                     <span className="user-group-remove">X</span>
                                 </div>
+
+                                <input type="submit" value="Create group" onClick={createGroupChat}/>
                             </div>
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <ContactList type="CREATE_GROUP" listType="GROUP_CHAT" users={ users }/>
+                        <ContactList type="CREATE_GROUP" listType="GROUP_CHAT" users={ users } getMembersData={getMembersData}/>
                     </div>
                     
                 </div>

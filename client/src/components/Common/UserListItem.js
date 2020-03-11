@@ -65,9 +65,12 @@ const UserListItem = (props) => {
             .catch(err => console.log(err));
     };
 
+    // Check if the checkbox was checked (and unchecked) and send the selected user to the parent component
     const addUserToGroup = (event) => {
         if (event.target.checked === true) {
-            return props.name;
+            props.getMembersData(props.name, true);
+        } else {
+            props.getMembersData(props.name, false);
         }
     }
 
