@@ -28,6 +28,11 @@ const All = (props) => {
         }
     }
 
+    const unselectChat = () => {
+        removeActiveUserItem(selectedChat._id);
+        setSelectedChat(null)
+    }
+
     const renderChats = () => {
         axios.get('/api/chats/')
             .then(chats => {
@@ -120,7 +125,10 @@ const All = (props) => {
                     </div>
                 </div>
                 <div className="col hide-on-mobile">
-                    <MainMessageChat chat={selectedChat}/>
+                    {selectedChat === null ? 
+                        null:
+                        <MainMessageChat chat={selectedChat} unselectChat={unselectChat} />
+                    }
                 </div>
             </div>
         </div>
