@@ -11,7 +11,7 @@ const UserListItem = (props) => {
         event.preventDefault();
 
         // Get the user that was "Added as Friend" + update the current user's "contacts" in the database
-        axios.get('/api/users/new-contact/' + event.target.id)
+        axios.get('/api/users/new-contact/' + props.name)
             .then((newContact) => {
                 // Once the database has updated, call the "loadUsers()" function
                 // The "loadUsers()" will update the users-state with the updated data
@@ -20,22 +20,22 @@ const UserListItem = (props) => {
             .catch(err => {
                 console.log(err);
             });
+
         createChat(props.name);
-        
     };
 
     //Get user avatar
     const getAvatarColor = () => {
         if (props.id !== undefined) {
             axios.get('/api/users/' + props.id)
-            .then((newContact) => {
-                if (newContact.data.avatarColor !== null && newContact.data.avatarColor !== undefined){
-                    setColor(newContact.data.avatarColor);
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            });
+                .then((newContact) => {
+                    if (newContact.data.avatarColor !== null && newContact.data.avatarColor !== undefined){
+                        setColor(newContact.data.avatarColor);
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
         
     }
@@ -72,11 +72,17 @@ const UserListItem = (props) => {
         } else {
             props.getMembersData(props.name, false);
         }
-    }
+    };
+
+    const removeContact = () => {
+        axios.get('/api/users/remove-contact/' + props.name)
+            .then(() => {})
+            .catch(err => console.log(err));
+    };
 
     if(props.selectContact !== undefined){
         return (
-            <div className="user-list-item padding-20 row" onClick={ () => props.selectContact(props.id) }>
+            <div className="user-list-item padding-20 row clickable" onClick={ () => props.selectContact(props.id) }>
                 { /* Column just for the user image */}
                 <div className="user-list-img-col">
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" className="svg-inline--fa fa-user fa-w-14 svg-avatar-nav" role="img" viewBox="0 0 448 512"><path
@@ -108,12 +114,16 @@ const UserListItem = (props) => {
                                     <label className="checkmark" htmlFor={"checkbox_" + props.index + props.name} ></label>
                                 </div>
                             </div>
-                        ) : null
-                        : (
-                            <div className="user-list-button-col">
-                                {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name} >Add friend</button>}
+                        ) : (
+                            <div className="remove-contact-button">
+                                <button onClick={removeContact}>Delete</button>
                             </div>
                         )
+                    : (
+                        <div className="user-list-button-col">
+                            {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name}>Add friend</button>}
+                        </div>
+                    )
                 }
 
             </div>
@@ -153,12 +163,16 @@ const UserListItem = (props) => {
                                     <label className="checkmark" htmlFor={"checkbox_" + props.index + props.name} ></label>
                                 </div>
                             </div>
-                        ) : null
-                        : (
-                            <div className="user-list-button-col">
-                                {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name} >Add friend</button>}
+                        ) : (
+                            <div className="remove-contact-button">
+                                <button onClick={removeContact(props.id)}>Delete</button>
                             </div>
                         )
+                    : (
+                        <div className="user-list-button-col">
+                            {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name} >Add friend</button>}
+                        </div>
+                    )
                 }
 
             </div>
