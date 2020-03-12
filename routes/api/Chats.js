@@ -42,7 +42,7 @@ router.get('/:id', (req, res) => {
 
 // POST
 // Create chat
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     let chatMembers = [];
     let membersList = req.body.members;
 
@@ -50,12 +50,12 @@ router.post('/', (req, res) => {
         // Loop through the array of users taken from the client side
         // Push the users to the chatMembers array
         for (const member of membersList) {
-            User.findOne({ "username": member.username })
+            await User.findOne({ "username": member })
                 .then(user => { 
                     chatMembers.push({
                         username: user.username,
                         user: user._id
-                    }); 
+                    });
                 })
                 .catch(err => console.log(err));
         }

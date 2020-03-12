@@ -49,8 +49,8 @@ const UserListItem = (props) => {
     const createChat = () => {
         const data = {
             members: [
-                { username: props.name },
-                { username: userContext.currUser.username }
+                props.name,
+                userContext.currUser.username
             ]
         };
 
