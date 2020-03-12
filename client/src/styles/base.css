@@ -214,6 +214,9 @@
 .d-flex{
     display: flex;
 }
+.cursor-pointer{
+    cursor: pointer;
+}
 /* Utility END */
 
 
@@ -498,6 +501,9 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
 }
 svg.svg-inline--fa.fa-user.fa-w-14{
     width: 80px;
+}
+.svg-inline--fa.fa-sign-out-alt.fa-w-16{
+    width: 30px;
 }
 .avatar-border{
     width: 148px;
