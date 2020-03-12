@@ -110,7 +110,7 @@ router.get('/searching/:username', (req, res) => {
         // Declaring the regular expression of the search
         const regex = new RegExp(escapeRegex(req.params.username), 'gi');
         // Looking for chat where the member's username matches with the regular expression
-        Chat.find({ "author._id": req.user._id, $or: [{ members: { $elemMatch: { username: regex } } }] }, function (err, chats) {
+        Chat.find({ "author.id": req.user._id, $or: [{ members: { $elemMatch: { username: regex } } }] }, function (err, chats) {
             if (err) {
                 console.log(err);
             } else {

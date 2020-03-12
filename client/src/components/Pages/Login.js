@@ -11,9 +11,7 @@ import { AuthContext } from '../context/authContext';
 const Login = (props) => {
    
     const auth = useContext(AuthContext);
-    console.log(auth);
     const [error, setError] = useState(null);
-
     const [formState, inputHandler] = useForm(
         //set inital input state + form validity state
         {
@@ -53,7 +51,6 @@ const Login = (props) => {
         
         axios.post('/api/users/login', data, config)
             .then((foundUser) => {
-                console.log(foundUser)
                 if(foundUser.data.success === false){
                     console.log('Incorrect email incorrect');
                     setError(true);
