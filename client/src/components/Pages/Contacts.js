@@ -117,7 +117,7 @@ const Contacts = (props) => {
                     </div>
                 </div>
                 <div className="col hide-on-mobile">
-                        <MainMessageChat />
+                        
                 </div>
             </div>
         </div>
