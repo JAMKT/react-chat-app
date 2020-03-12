@@ -16,9 +16,9 @@ const Profile = (props) => {
     return (
             <div className="container">
             <div className="row">
-                <div className="side-col grey-bg full-height">
+                <div className="side-col white-bg full-height">
                     <div className="row shadow">
-                        <div className="col padding-24">
+                        <div className="col padding-24 shadow">
                             <MainNavbar />
 
                             <div className="row">
