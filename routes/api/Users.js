@@ -129,13 +129,12 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
                         return;
                     }
                     user.contacts.unshift({ user: contact.id, username: contact.username });
-                    user.save()
+                    user.save();
                     contact.contacts.unshift({ user: req.user.id, username: req.user.username });
                     //Save user to the following user
                     contact.save().then(user => {
                         res.send(user);
-                    }
-                    )
+                    });
                 })
                 .catch(err => res.send(err))
         })
@@ -143,7 +142,8 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
         .catch(err => res.send(err));
 });
 
-//Get the users that fit the search with regex
+// GET
+// Get the users that fit the search with regex
 router.get('/searching/:username', isLoggedIn, (req, res) => {
     if (req.params.username) {
         console.log(req.params.username)
@@ -158,8 +158,7 @@ router.get('/searching/:username', isLoggedIn, (req, res) => {
                 //Rendering the index template with the found users
                 res.send(response);
             }
-        }
-        )
+        });
     }
 });
 
@@ -173,13 +172,44 @@ router.post('/update-user', isLoggedIn, async (req, res) => {
             avatarColor: req.body.avatarColor
         }
     },
-        { new: true }, // Return the newly updated version of the document
+    { new: true }, // Return the newly updated version of the document
+    (err, user) => {
+        if (err) { res.send('Could not update this user.'); }
+    })
+    .then((response) => {
+        res.send(response);
+    });
+});
+
+// DELETE
+// Remove user from contact list
+router.get('/remove-contact/:username', isLoggedIn, (req, res) => {
+    // Find contact in current user's contacts and remove them
+    User.updateOne({ "_id": req.user._id }, {
+        $pull: {
+            "contacts": {
+                "username": req.params.username
+            }
+        }
+    }, 
+    { multi: true },
+    (err, user) => {
+        if (err) { res.send('Could not remove this contact.'); };
+    })
+    .then(() => {
+        // Find old contact and remove the current user from their contacts
+        User.updateOne({ "username": req.params.username }, {
+            $pull: {
+                "contacts": {
+                    "user": req.user._id
+                }
+            }
+        }, 
+        { multi: true },
         (err, user) => {
-            if (err) { res.send('Could not update this user.'); }
-        })
-        .then((response) => {
-            res.send(response);
+            if (err) { res.send("Could not remove user from this user's contacts."); };
         });
+    });
 });
 
 
