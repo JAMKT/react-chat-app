@@ -34,9 +34,8 @@ const ChatHeader = (props) => {
            
             <div className="col">
                 <div className="row justify-end">
-                    <button className="chat-setting-btn">
-                        <img src={process.env.PUBLIC_URL + '/icons/cog-solid.svg'} alt=""/>
-                        <div>Chat settings</div>
+                    <button onClick={props.unselectChat} className="back-to-messages">
+                        Back to messages
                     </button>
                 </div>
                 
