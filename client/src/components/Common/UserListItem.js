@@ -12,16 +12,17 @@ const UserListItem = (props) => {
 
         // Get the user that was "Added as Friend" + update the current user's "contacts" in the database
         axios.get('/api/users/new-contact/' + props.name)
+            .then(() => {
+                createChat();
+            })
             .then((newContact) => {
                 // Once the database has updated, call the "loadUsers()" function
                 // The "loadUsers()" will update the users-state with the updated data
-                props.loadUsers(); 
+                props.loadUsers();
             })
             .catch(err => {
                 console.log(err);
             });
-
-        createChat(props.name);
     };
 
     //Get user avatar
@@ -42,13 +43,13 @@ const UserListItem = (props) => {
 
     useEffect(() => {
         getAvatarColor();
-    },[]);
+    });
 
     // Create a normal chat
-    const createChat = (username) => {
+    const createChat = () => {
         const data = {
             members: [
-                { username: username },
+                { username: props.name },
                 { username: userContext.currUser.username }
             ]
         };

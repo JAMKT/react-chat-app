@@ -120,7 +120,6 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
             User.findOne({ "username": req.params.username })
                 .then(contact => {
                     if (req.user.id == contact.id) {
-                        console.log("You cannot follow yourself");
                         return;
                     }
                     // // check if the requested user is already in follower list of other user then 
@@ -146,7 +145,6 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
 // Get the users that fit the search with regex
 router.get('/searching/:username', isLoggedIn, (req, res) => {
     if (req.params.username) {
-        console.log(req.params.username)
         //Declaring the regular expression of the search
         
         const regex = new RegExp(escapeRegex(req.params.username), 'gi');
