@@ -4,8 +4,15 @@ import axios from 'axios';
 const ChatHeader = (props) => {
     const [color, setColor] = useState(null);
 
-    //Get user avatar
+    const clearChat = () => {
+        axios.get('/api/chats/clear-chat/' + props.chatId)
+            .then(() => {})
+            .catch(err => {
+                console.log(err);
+            });
+    };
 
+    // Get user avatar
     const getAvatarColor = () => {
         axios.get('/api/users/' + props.userId)
             .then((newContact) => {
@@ -14,7 +21,7 @@ const ChatHeader = (props) => {
             .catch(err => {
                 console.log(err);
             });
-    }
+    };
 
     useEffect(() => {
         getAvatarColor();
@@ -34,6 +41,9 @@ const ChatHeader = (props) => {
            
             <div className="col">
                 <div className="row justify-end">
+                    <button onClick={clearChat} className="back-to-messages">
+                        Clear chat
+                    </button>
                     <button onClick={props.unselectChat} className="back-to-messages">
                         Back to messages
                     </button>

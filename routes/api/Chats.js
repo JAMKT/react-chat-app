@@ -138,6 +138,23 @@ router.get('/searching/:username', (req, res) => {
     }
 });
 
+// GET
+// Clear chat
+router.get('/clear-chat/:id', (req, res) => {
+    Chat.findOneAndUpdate({ _id: req.params.id }, {
+        $set: {
+            messages: []
+        }
+    },
+    { new: true }, // Return the newly updated version of the document
+    (err, chat) => {
+        if (err) { res.send('Could not update this chat.'); }
+    })
+    .then((response) => {
+        res.send(response);
+    });
+});
+
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
