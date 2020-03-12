@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
 const ChatListItem = (props) => {
     
@@ -39,7 +40,7 @@ const ChatListItem = (props) => {
                 <div className="row height-50 space-between align-center">
                     <p>
                         { 
-                            props.lastUpdate !== undefined ? props.lastUpdate : props.created
+                            props.lastUpdate !== undefined ? moment(props.lastUpdate).calendar() : moment(props.created).calendar()
                         }
                     </p> 
                 </div>
