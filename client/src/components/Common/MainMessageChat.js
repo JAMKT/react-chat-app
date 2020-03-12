@@ -115,7 +115,7 @@ const MainMessageChat = (props) => {
         );
     } else {
         return (
-            <div>Select a chat</div>
+            <div></div>
         );
     }
 
