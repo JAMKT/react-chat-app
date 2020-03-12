@@ -105,7 +105,7 @@ const Contacts = (props) => {
                                 <h1 className="margin-sm">Contacts</h1>
                             </div>
                             <div className="row">
-                                <div className="search-field shadow">
+                                <div className="search-field">
                                     <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input id="contact-search" className='hide-input-field' type="text" onChange={ contactHandler } />
                                 </div>
