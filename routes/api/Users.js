@@ -146,7 +146,9 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
 //Get the users that fit the search with regex
 router.get('/searching/:username', isLoggedIn, (req, res) => {
     if (req.params.username) {
+        console.log(req.params.username)
         //Declaring the regular expression of the search
+        
         const regex = new RegExp(escapeRegex(req.params.username), 'gi');
         //Looking for users where the username matches with the regular expression
         User.find({ $or: [{ username: regex }] }, function (err, response) {
