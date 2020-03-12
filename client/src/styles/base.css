@@ -426,19 +426,22 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
     margin-right: 16px;
     border-radius: 50%;
 }
-.chat-setting-btn{
+.back-to-messages {
     display: flex;
     justify-content: center;
     align-items: flex-end;
     color: #6363FF;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     background: transparent;
     border: none;
-    padding: 16px 36px;
+    padding: 16px;
     cursor: pointer;
     text-align: center;
     white-space: nowrap;
+}
+.back-to-messages:hover{
+    text-decoration: underline;
 }
 .chat-setting-btn img{
     max-width: 22px;
@@ -606,7 +609,12 @@ svg.svg-inline--fa.fa-user.fa-w-14{
 
 @media(max-width: 1000px){
     .hide-on-mobile {
-        display: none;
+        z-index: 100000;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        max-width: 600px;
     }
 }
 
