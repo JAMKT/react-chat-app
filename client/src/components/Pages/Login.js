@@ -11,7 +11,6 @@ import { AuthContext } from '../context/authContext';
 const Login = (props) => {
    
     const auth = useContext(AuthContext);
-    console.log(auth);
     const [error, setError] = useState(null);
 
     const [formState, inputHandler] = useForm(

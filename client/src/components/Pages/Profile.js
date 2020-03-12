@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import MainNavbar from '../Common/MainNavbar';
 import SettingItem from '../Common/SettingItem';
 import { AuthContext } from '../context/authContext';
-
+import logoutSVG from '../images/sign-out-alt-solid.svg';
 
 const Profile = (props) => {
     const auth = useContext(AuthContext);
@@ -21,8 +21,13 @@ const Profile = (props) => {
                         <div className="col padding-24">
                             <MainNavbar />
 
-                            <div className="row">
+                            <div className="row space-between">
                                 <h1 className="margin-sm">Profile</h1>
+                                <div className="text-center cursor-pointer margin-sm" onClick={() => auth.logout()}>
+                                    <img  className="svg-inline--fa fa-sign-out-alt fa-w-16" src={logoutSVG}/>
+                                    <p>Logout</p>
+                                </div>
+                               
                             </div>
                         </div>
                     </div>

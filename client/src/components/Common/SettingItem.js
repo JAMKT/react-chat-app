@@ -38,11 +38,9 @@ const SettingItem = (props) => {
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
 
-   
+    // On submit => update user info + update success/errro state
     const onSubmitHandler = (event) => {
         event.preventDefault();
-        
-        console.log('submit button pressed');
         
          const data = {
             email: formState.inputs.email.value,
@@ -60,16 +58,22 @@ const SettingItem = (props) => {
         
         axios.post('/api/users/update-user', data, config)
         .then((data) => {
+            // get current user
             let user = auth.currUser;
-            console.log(data.data.avatarColor, data.data.username);
 
+            // check if current user's color is the same as the color selected by the user
             if(user.avatarColor !== data.data.avatarColor){
+                // set the selected/new color if it's different from the current user's color
                 user.avatarColor = data.data.avatarColor;
             }
+            // check if current user's email is the same as the new email
             if(user.email !== data.data.email){
+                // set the new email if it's different from the current user's email
                 user.email = data.data.email;
             }
+             // check if current user's name is the same as the new name
             if(user.name !== data.data.name){
+                // set the new name if it's different from the current user's name
                 user.name = data.data.name;
             }
             history.push('/profile');
@@ -89,6 +93,7 @@ const SettingItem = (props) => {
         setAvatarColor(event.target.value);
     }
     
+    // If success, display success popup
     let successMessage = 
         success === true ? (
             <Popup>
@@ -96,6 +101,7 @@ const SettingItem = (props) => {
                 <p>Profile Updated</p>
             </Popup> ) : null;
 
+    // If error, display error popup
     let errorMessage = 
         error === true ? (
             <Popup>
@@ -103,15 +109,15 @@ const SettingItem = (props) => {
                 <p>Something went wrong. Please try again.</p>
             </Popup> ) : null;
     
+    // Set timeout for success popup
     if (success === true){
         setTimeout(function(){
             setSuccess(null);
         }, 5000)
     }
 
-    console.log(success);
     return (
-        <div className="row padding-32">
+        <div className="row padding-32 scrollable">
             <div className="col">
                 <div className="row justify-center padding-20 settings-wrap">
                     <div className="avatar-border">
