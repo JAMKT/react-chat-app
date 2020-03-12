@@ -51,11 +51,12 @@ router.post('/', async (req, res) => {
         // Push the users to the chatMembers array
         for (const member of membersList) {
             await User.findOne({ "username": member })
-                .then(member => { 
+                .then(user => { 
                     chatMembers.push({
-                        username: member.username,
-                        user: member
-                    }); })
+                        username: user.username,
+                        user: user._id
+                    });
+                })
                 .catch(err => console.log(err));
         }
 
