@@ -290,11 +290,11 @@ ul{
 
 .search-field{
     position: relative;
-    background-color: #FFFFFF;
+    background-color: #EFEEF2;
     border-radius: 80px;
     color: #C5C5C5;
     width: 100%;
-    padding: 12px;
+    padding: 0;
     border: none;
 }
 .search-field img{
@@ -306,10 +306,16 @@ ul{
     max-height: 22px;
 }
 .hide-input-field{
+    height: 100%;
     background: transparent;
     border: none;
+    padding: 12px;
     margin-left: 42px;
     font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: 700;
+    outline: none;
 }
 .border-bottom{
     border-bottom: 1px solid #DBDBDB;

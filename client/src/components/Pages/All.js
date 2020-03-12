@@ -114,7 +114,7 @@ const All = (props) => {
                                 <h1 className="margin-sm">Messages</h1>
                             </div>
                             <div className="row">
-                                <div className="search-field shadow">
+                                <div className="search-field">
                                     <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input onChange={loadChats} id="username" className='hide-input-field' type="text" />
                                 </div>
