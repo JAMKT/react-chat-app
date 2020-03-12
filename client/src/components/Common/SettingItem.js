@@ -211,7 +211,7 @@ const SettingItem = (props) => {
                             validator={[VALIDATOR_REQUIRE()]}
                             onInput={inputHandler}
                             inputStyle="hide-text-input-field"
-                            inputContainerStyle="margin-s input-field white-bg"
+                            inputContainerStyle="margin-s input-field grey-bg"
                             labelStyle="input-field-label-active"
                             errorStyle="error-border"
                             />
@@ -225,7 +225,7 @@ const SettingItem = (props) => {
                             validator={[VALIDATOR_EMAIL()]}
                             onInput={inputHandler}
                             inputStyle="hide-text-input-field"
-                            inputContainerStyle="margin-s input-field white-bg"
+                            inputContainerStyle="margin-s input-field grey-bg"
                             labelStyle="input-field-label-active"
                             errorStyle="error-border"
                             />

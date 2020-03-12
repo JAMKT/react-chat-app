@@ -92,15 +92,15 @@ const All = (props) => {
     return (
         <div className="container">
             <div className="row">
-                <div className="side-col grey-bg full-height">
+                <div className="side-col white-bg full-height">
                     <div className="row shadow">
-                        <div className="col padding-24">
+                        <div className="col padding-24 shadow">
                             <MainNavbar />
                             <div className="row">
                                 <h1 className="margin-sm">Messages</h1>
                             </div>
                             <div className="row">
-                                <div className="search-field">
+                                <div className="search-field shadow">
                                     <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input onChange={loadChats} id="username" className='hide-input-field' type="text" />
                                 </div>
