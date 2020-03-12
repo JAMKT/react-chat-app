@@ -188,7 +188,8 @@
     text-decoration: none;
 }
 .shadow{
-    box-shadow: -2px 2px 6px #c9c9c9;
+    box-shadow: -2px 2px 6px #d4d4d4;
+    z-index: 1;
 }
 .space-between{
     justify-content: space-between;
@@ -213,6 +214,9 @@
 }
 .d-flex{
     display: flex;
+}
+.cursor-pointer{
+    cursor: pointer;
 }
 /* Utility END */
 
@@ -251,7 +255,6 @@
     display: flex;
     max-width: 600px;
     width: 100%;
-   
     flex-flow: column nowrap;
     box-sizing: border-box;
 }
@@ -313,6 +316,7 @@ ul{
 }
 .scrollable{
     overflow: scroll;
+    z-index: 0;
 }
 .clickable {
     cursor: pointer;
@@ -373,15 +377,29 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
 .user-list-img-col img{
     border-radius: 50%;
     margin-right: 20px;
+    background-color: #fff;
 }
 .user-list-button-col {
     display: flex;
     align-items: center;
     z-index: 3000;
 }
+.user-list{
+    background-color: #fff;
+    
+}
 .user-list-item{
     position: relative;
 }
+.user-list-item-active{
+    border-right: 4px solid #6363FF;
+}
+.user-list-item:hover{
+    box-sizing: border-box;
+    border-right: 4px solid #6363FF;
+    color: #6363FF;
+}
+
 .user-list-item-overlay{
     z-index: 5000;
     left: 0;
@@ -428,6 +446,7 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
 }
 .main-message-chat{
     background-color: #fff;
+    box-shadow:inset -4px -4px 8px 3px #c9c9c9;
 }
 .message-profile-icon{
     align-self: flex-end;
@@ -498,6 +517,9 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
 }
 svg.svg-inline--fa.fa-user.fa-w-14{
     width: 80px;
+}
+.svg-inline--fa.fa-sign-out-alt.fa-w-16{
+    width: 30px;
 }
 .avatar-border{
     width: 148px;

@@ -26,8 +26,12 @@ router.get('/current-user', isLoggedIn, (req, res) => {
 // Get single user by its id
 router.get('/:id', isLoggedIn, (req, res) => {
     User.findById(req.params.id, (err, user) => {
-        if (err) res.send('User not found.');
-        res.send(user);
+        if(err){
+            res.send('User not found.');
+        } else {
+            res.send(user);
+        }
+        
     });
 });
 

@@ -39,15 +39,15 @@ const AddContact = (props) => {
     return (
         <div className="container">
             <div className="row">
-                <div className="side-col absolute-center-pin grey-bg full-height">
+                <div className="side-col absolute-center-pin white-bg full-height">
                     <div className="row shadow">
-                        <div className="col padding-24">
+                        <div className="col padding-24 shadow">
                             <MainNavbar />
                             <div className="row">
                                 <h1 className="margin-sm">Find Friends</h1>
                             </div>
                             <div className="row">
-                                <div className="search-field">
+                                <div className="search-field shadow">
                                     <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input onChange={loadUsers} id="username" className='hide-input-field' type="text" />
                                 </div>

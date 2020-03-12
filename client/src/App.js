@@ -29,9 +29,11 @@ function App() {
   }, []);
  
 
-  const logout = useCallback(() => {
-    login();
-  }, []);
+  const logout = () => {
+    setLoggedIn(false);
+    setCurrUser(null);
+    window.location.href = '/login';
+  };
 
 
   function getCurrentUser(){
