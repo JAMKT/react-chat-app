@@ -12,7 +12,7 @@ const middleware = require('../../middleware/isLoggedIn');
 router.get('/', (req, res) => {
     Chat.find({ members: { $elemMatch: { user: req.user._id } } }, (err, chats) => {
         res.send(chats);
-    });
+    }).sort({ "lastUpdate": -1 });
 });
 
 // GET
