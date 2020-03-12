@@ -392,6 +392,7 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
     position: relative;
 }
 .user-list-item-active{
+    background-color: #EFEEF2;
     border-right: 4px solid #6363FF;
 }
 .user-list-item:hover{

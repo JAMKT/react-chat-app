@@ -7,31 +7,25 @@ import axios from 'axios';
 
 const All = (props) => {
     const auth = useContext(AuthContext);
-    console.log(auth);
-  
-    useEffect(() => {
-        if (auth.currUser === false) {
-            props.history.push('/login')
-        }
-    });
-
-
     const [searching, setSearching] = useState(false);
     const [chats, setChats] = useState(null);
     const [selectedChat, setSelectedChat] = useState(null);
 
     const loadChats = () => {
-        // if (document.getElementById("username").value && document.getElementById("username").value !== ""){
-        //     setSearching(true);
+        if (document.getElementById("username").value){
+            console.log(document.getElementById("username").value);
+            setSearching(true);
 
-        //     axios.get('/api/chats/searching/' + document.getElementById("username").value)
-        //         .then((response) => {
-        //             console.log(response);
-        //             setChats(response.data);
-        //             setSearching(false);
-        //         })
-        //         .catch(err => console.log(err));
-        // }
+            axios.get('/api/chats/searching/' + document.getElementById("username").value)
+                .then((response) => {
+                    console.log(response);
+                    setChats(response.data);
+                    setSearching(false);
+                })
+                .catch(err => console.log(err));
+        } else {
+            renderChats()
+        }
     }
 
     const renderChats = () => {
@@ -45,7 +39,9 @@ const All = (props) => {
 
 
     const automaticChatLoaderFromContactsPage = () => {
-        console.log('Loading selected chat')
+        if (selectedChat !== null) {
+            removeActiveUserItem(selectedChat._id)
+        }
         var selected = undefined;
         chats.forEach(chat => {
             if(chat.members.length <= 2){
@@ -53,7 +49,8 @@ const All = (props) => {
                     if (member.user === auth.loadFromContacts){
                         console.log('HERE HERE HERE')
                         console.log(chat)
-                        setSelectedChat(chat)
+                        setSelectedChat(chat);
+                        applyActiveUserItem(chat._id);
                         return true;
                     } else {
                         return false
@@ -69,14 +66,25 @@ const All = (props) => {
         event.preventDefault();
         // filter through the chats in the chat state and find the one that has the matching id
     
+        if (selectedChat !== null){
+            removeActiveUserItem(selectedChat._id)
+        }
         var selected = chats.filter(function(chat) {
             return chat._id === event.target.id;
         });
 
         // set the matching chat as the selected chat state
         setSelectedChat(selected[0]);
+        applyActiveUserItem(selected[0]._id)
     }
 
+    const applyActiveUserItem = (id) => {
+        document.getElementById("chat-item-"+id).classList.add('user-list-item-active');
+    }
+    const removeActiveUserItem = (id) => {
+        document.getElementById("chat-item-" + id).classList.remove('user-list-item-active');
+    }
+    
     useEffect(() => {
         if(chats === null){
             renderChats();

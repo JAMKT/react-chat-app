@@ -21,7 +21,7 @@ const ChatListItem = (props) => {
     },[]);
 
     return (
-        <div className="user-list-item padding-20 row clickable">
+        <div className="user-list-item padding-20 row clickable" id={"chat-item-"+props.id}>
            { /* Column just for the user image */}
             <div className="user-list-img-col">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" className="svg-inline--fa fa-user fa-w-14 svg-avatar-nav" role="img" viewBox="0 0 448 512"><path
