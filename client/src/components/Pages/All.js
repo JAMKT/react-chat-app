@@ -29,6 +29,7 @@ const All = (props) => {
     }
 
     const unselectChat = () => {
+        auth.loadFromContacts = null;
         removeActiveUserItem(selectedChat._id);
         setSelectedChat(null)
     }
