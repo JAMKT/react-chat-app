@@ -128,9 +128,9 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
                         contacts.user.toString() === contact.id).length > 0) {
                         return;
                     }
-                    user.contacts.unshift({ user: contact.id, username: contact.username });
+                    user.contacts.unshift({ user: contact.id, username: contact.username, nickname: '' });
                     user.save();
-                    contact.contacts.unshift({ user: req.user.id, username: req.user.username });
+                    contact.contacts.unshift({ user: req.user.id, username: req.user.username, nickname: '' });
                     //Save user to the following user
                     contact.save().then(user => {
                         res.send(user);
@@ -140,6 +140,23 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
         })
         .then((data) => { return data })
         .catch(err => res.send(err));
+});
+
+// Update user's contact
+router.post('/update-contact/:username', (req, res) => {
+    const nickname = req.body;
+
+    User.updateOne({ "_id": req.user._id, "contacts.username": req.params.username }, {
+        $set: {
+            "contacts": {
+                "nickname": nickname
+            }
+        }
+    }, 
+    { new: true }, // Return the newly updated version of the document
+    (err, user) => {
+        if (err) { res.send('Could not update this contact.'); };
+    })
 });
 
 // GET
@@ -262,8 +279,6 @@ router.get("/:id/delete", isLoggedIn, (req, res) => {
             }
         })
     });
-    res.send("okay");
-
 });
 
 

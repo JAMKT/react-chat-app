@@ -420,6 +420,29 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
     max-width: 640px;
     width: 100%;
 }
+
+.contact-button-edit,
+.contact-button-delete {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.contact-button-edit {
+    margin-right: 10px;
+    background-color: #d4d4d4;
+}
+.contact-button-edit:hover {
+    background-color: #c5c5c5;
+}
+.contact-button-delete {
+    color: #fff;
+    background-color: rgba(229, 0, 0, 0.5);
+}
+.contact-button-delete:hover {
+    background-color: rgba(229, 0, 0, 0.7);
+}
+
 /* User List END */
 
 /* Main Message Chat START */
@@ -589,6 +612,10 @@ svg.svg-inline--fa.fa-user.fa-w-14{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> bde11099ab4b4f24d5ddd08b1c62f3f1643c34c1
 .delete-user-btn {
     margin-top: 20px;
     padding: 10px 20px;
