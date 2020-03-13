@@ -12,7 +12,7 @@ const middleware = require('../../middleware/isLoggedIn');
 router.get('/', (req, res) => {
     Chat.find({ members: { $elemMatch: { user: req.user._id } } }, (err, chats) => {
         res.send(chats);
-    });
+    }).sort({ "lastUpdate": -1 });
 });
 
 // GET
@@ -51,11 +51,12 @@ router.post('/', async (req, res) => {
         // Push the users to the chatMembers array
         for (const member of membersList) {
             await User.findOne({ "username": member })
-                .then(member => { 
+                .then(user => { 
                     chatMembers.push({
-                        username: member.username,
-                        user: member
-                    }); })
+                        username: user.username,
+                        user: user._id
+                    });
+                })
                 .catch(err => console.log(err));
         }
 
@@ -135,6 +136,23 @@ router.get('/searching/:username', (req, res) => {
         });
         res.send(chats);
     }
+});
+
+// GET
+// Clear chat
+router.get('/clear-chat/:id', (req, res) => {
+    Chat.findOneAndUpdate({ _id: req.params.id }, {
+        $set: {
+            messages: []
+        }
+    },
+    { new: true }, // Return the newly updated version of the document
+    (err, chat) => {
+        if (err) { res.send('Could not update this chat.'); }
+    })
+    .then((response) => {
+        res.send(response);
+    });
 });
 
 function escapeRegex(text) {

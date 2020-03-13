@@ -28,6 +28,12 @@ const All = (props) => {
         }
     }
 
+    const unselectChat = () => {
+        auth.loadFromContacts = null;
+        removeActiveUserItem(selectedChat._id);
+        setSelectedChat(null)
+    }
+
     const renderChats = () => {
         axios.get('/api/chats/')
             .then(chats => {
@@ -108,7 +114,7 @@ const All = (props) => {
                                 <h1 className="margin-sm">Messages</h1>
                             </div>
                             <div className="row">
-                                <div className="search-field shadow">
+                                <div className="search-field">
                                     <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input onChange={loadChats} id="username" className='hide-input-field' type="text" />
                                 </div>
@@ -120,7 +126,10 @@ const All = (props) => {
                     </div>
                 </div>
                 <div className="col hide-on-mobile">
-                    <MainMessageChat chat={selectedChat}/>
+                    {selectedChat === null ? 
+                        null:
+                        <MainMessageChat chat={selectedChat} unselectChat={unselectChat} />
+                    }
                 </div>
             </div>
         </div>

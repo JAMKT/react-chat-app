@@ -5,6 +5,7 @@ const passport = require("passport");
 
 //User Model
 const User = require('../../models/User');
+const Chat = require('../../models/Chat');
 
 const isLoggedIn = require('../../middleware/isLoggedIn');
 
@@ -120,7 +121,6 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
             User.findOne({ "username": req.params.username })
                 .then(contact => {
                     if (req.user.id == contact.id) {
-                        console.log("You cannot follow yourself");
                         return;
                     }
                     // // check if the requested user is already in follower list of other user then 
@@ -138,7 +138,7 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
                 })
                 .catch(err => res.send(err))
         })
-        .then((data) => { return data})
+        .then((data) => { return data })
         .catch(err => res.send(err));
 });
 
@@ -146,7 +146,6 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
 // Get the users that fit the search with regex
 router.get('/searching/:username', isLoggedIn, (req, res) => {
     if (req.params.username) {
-        console.log(req.params.username)
         //Declaring the regular expression of the search
         
         const regex = new RegExp(escapeRegex(req.params.username), 'gi');
@@ -216,5 +215,47 @@ router.get('/remove-contact/:username', isLoggedIn, (req, res) => {
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
+
+// GET
+// Delete User Account
+router.get("/:id/delete", isLoggedIn, (req, res) => {
+    req.user.contacts.forEach(contact => {
+        User.findOne({ username: contact.username }, (err, foundContact) => {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                foundContact.contacts.forEach(contactToDelete => {
+                    if (contactToDelete.username === req.user.username) {
+                        const index = foundContact.contacts.indexOf(contactToDelete);
+                        if (index > -1) {
+                            foundContact.contacts.splice(index, 1);
+                            foundContact.save();
+                        }
+                    }
+
+                });
+                Chat.deleteMany({ members: { $elemMatch: { user: req.user._id } } }, (err) => {
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        //Finding user to delete by id
+                        User.findByIdAndRemove({ _id: req.user._id }, (err) => {
+                            if (err) {
+                                res.send(err);
+
+                            } else {
+                                res.send("User deleted succesfully!")
+                            }
+                        });
+                    }
+                });
+            }
+        })
+    });
+    res.send("okay");
+
+});
+
 
 module.exports = router;

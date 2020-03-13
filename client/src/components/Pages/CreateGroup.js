@@ -121,7 +121,7 @@ const CreateGroup = (props) => {
                                 <h1 className="margin-sm">Create a Group</h1>
                             </div>
                             <div className="row">
-                                <div className="search-field shadow">
+                                <div className="search-field">
                                     <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input className='hide-input-field' type="text" />
                                 </div>
