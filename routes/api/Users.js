@@ -219,10 +219,7 @@ function escapeRegex(text) {
 // GET
 // Delete User Account
 router.get("/:id/delete", isLoggedIn, (req, res) => {
-    console.log("User to delete: " + req.user.username);
     req.user.contacts.forEach(contact => {
-        console.log("contact---------------------");
-        console.log(contact.username);
         User.findOne({ username: contact.username }, (err, foundContact) => {
             if (err) {
                 res.send(err);
@@ -230,14 +227,8 @@ router.get("/:id/delete", isLoggedIn, (req, res) => {
             else {
                 foundContact.contacts.forEach(contactToDelete => {
                     if (contactToDelete.username === req.user.username) {
-                        console.log("--------------contactToDelete");
-                        console.log(contactToDelete.username);
                         const index = foundContact.contacts.indexOf(contactToDelete);
                         if (index > -1) {
-                            console.log("index: " + index);
-                            // console.log(foundContact.contacts[index]);
-                            console.log(foundContact.contacts);
-                            console.log("-----------------------");
                             foundContact.contacts.splice(index, 1);
                             foundContact.save();
                         }

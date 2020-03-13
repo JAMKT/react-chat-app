@@ -92,6 +92,15 @@ const SettingItem = (props) => {
     const setColorHandler = (event) => {
         setAvatarColor(event.target.value);
     }
+
+    // Delete user
+    const deleteUser = () => {
+        axios.get('/api/users/' + auth.currUser._id + '/delete')
+            .then(() => {
+                history.push('/');
+            })
+            .catch(err => console.log(err))
+    }
     
     // If success, display success popup
     let successMessage = 
@@ -235,6 +244,8 @@ const SettingItem = (props) => {
                             btnStyle="Button margin-xs"
                             disabledBtn={!formState.isValid}>Submit</Button>
                     </form>
+
+                    <button className="delete-user-btn" onClick={deleteUser}>Delete account</button>
                 </div>
             </div>
         </div>

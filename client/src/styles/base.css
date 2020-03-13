@@ -571,6 +571,18 @@ svg.svg-inline--fa.fa-user.fa-w-14{
     transform: rotate(40deg);
 }
 
+.delete-user-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: #fff;
+    background-color: rgba(229, 0, 0, 0.9);
+    border: none;
+    cursor: pointer;
+}
+.delete-user-btn:hover {
+    background-color: #E50000;
+}
 
 /* Setting | Profile END */
 
