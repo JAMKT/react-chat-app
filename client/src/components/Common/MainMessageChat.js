@@ -95,7 +95,7 @@ const MainMessageChat = (props) => {
 
         return (
             <div className="col main-message-chat absolute-center-pin full-height">
-                <ChatHeader name={name} userId={userId}/>
+                <ChatHeader name={name} userId={userId} chatId={props.chat._id} unselectChat={props.unselectChat} />
                 <div className="row padding-16 scrollable">
                     {
                         messages !== [] ?
@@ -115,7 +115,7 @@ const MainMessageChat = (props) => {
         );
     } else {
         return (
-            <div>Select a chat</div>
+            <div></div>
         );
     }
 

@@ -20,14 +20,12 @@ const AddContact = (props) => {
     // Update "users" the state with users found in the search
     // Load function when input field changes + when the "Add Friend" button is clicked
     const loadUsers = () => {
-        console.log('load users function');
         if (document.getElementById("username").value && document.getElementById("username").value !== ""){
             setSearching(true);
             
             // get users that have matching letters in the search field
             axios.get('/api/users/searching/' + document.getElementById("username").value)
                 .then((response) => {
-                    console.log(response.data);
                     // update "users" the state with the users that have matching letters/are found by the search result
                     setUsers(response.data);
                     setSearching(false);
@@ -47,7 +45,7 @@ const AddContact = (props) => {
                                 <h1 className="margin-sm">Find Friends</h1>
                             </div>
                             <div className="row">
-                                <div className="search-field shadow">
+                                <div className="search-field">
                                     <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input onChange={loadUsers} id="username" className='hide-input-field' type="text" />
                                 </div>

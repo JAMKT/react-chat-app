@@ -11,17 +11,18 @@ const UserListItem = (props) => {
         event.preventDefault();
 
         // Get the user that was "Added as Friend" + update the current user's "contacts" in the database
-        axios.get('/api/users/new-contact/' + event.target.id)
+        axios.get('/api/users/new-contact/' + props.name)
+            .then(() => {
+                createChat();
+            })
             .then((newContact) => {
                 // Once the database has updated, call the "loadUsers()" function
                 // The "loadUsers()" will update the users-state with the updated data
-                props.loadUsers(); 
+                props.loadUsers();
             })
             .catch(err => {
                 console.log(err);
             });
-        createChat(props.name);
-        
     };
 
     // Get user avatar
@@ -43,14 +44,14 @@ const UserListItem = (props) => {
 
     useEffect(() => {
         getAvatarColor();
-    },[]);
+    });
 
     // Create a normal chat
-    const createChat = (username) => {
+    const createChat = () => {
         const data = {
             members: [
-                { username: username },
-                { username: userContext.currUser.username }
+                props.name,
+                userContext.currUser.username
             ]
         };
 
@@ -74,12 +75,18 @@ const UserListItem = (props) => {
         } else {
             props.getMembersData(props.name, false, color, props.index);
         }
-    }
+    };
+
+    const removeContact = () => {
+        axios.get('/api/users/remove-contact/' + props.name)
+            .then(() => {})
+            .catch(err => console.log(err));
+    };
 
     // If Contacts(Contacts.js) page (only the Contact.js has a selectedContacts prop)
     if(props.selectContact !== undefined){
         return (
-            <div className="user-list-item padding-20 row" onClick={ () => props.selectContact(props.id) }>
+            <div className="user-list-item padding-20 row clickable" onClick={ () => props.selectContact(props.id) }>
                 { /* Column just for the user image */}
                 <div className="user-list-img-col">
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" className="svg-inline--fa fa-user fa-w-14 svg-avatar-nav" role="img" viewBox="0 0 448 512"><path
@@ -140,9 +147,12 @@ const UserListItem = (props) => {
                                     </label>
                                 </div>
                             </div>
-                        ) : null
+                          ) : (
+                              <div className="remove-contact-button">
+                                  <button onClick={removeContact(props.id)}>Delete</button>
+                              </div>
+                        ) : (
 
-                    ) : (
                         // Determine whether or not this particular user is already one of the curren user's friends
                         // If it isn't, display a button to allow the user to add the contact as a friend
                         <div className="user-list-button-col">

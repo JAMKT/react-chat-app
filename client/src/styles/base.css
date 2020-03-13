@@ -289,14 +289,17 @@ ul{
 .blue-bg {
     background-color: #6363FF;
 }
+.blue-shadow{
+    box-shadow: 0px 0px 8px 4px #6363FF !important;
+}
 
 .search-field{
     position: relative;
-    background-color: #FFFFFF;
+    background-color: #EFEEF2;
     border-radius: 80px;
     color: #C5C5C5;
     width: 100%;
-    padding: 12px;
+    padding: 0;
     border: none;
 }
 .search-field img{
@@ -308,10 +311,16 @@ ul{
     max-height: 22px;
 }
 .hide-input-field{
+    height: 100%;
     background: transparent;
     border: none;
+    padding: 12px;
     margin-left: 42px;
     font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: 700;
+    outline: none;
 }
 .border-bottom{
     border-bottom: 1px solid #DBDBDB;
@@ -393,6 +402,7 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
     position: relative;
 }
 .user-list-item-active{
+    background-color: #EFEEF2;
     border-right: 4px solid #6363FF;
 }
 .user-list-item:hover{
@@ -426,19 +436,22 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
     margin-right: 16px;
     border-radius: 50%;
 }
-.chat-setting-btn{
+.back-to-messages {
     display: flex;
     justify-content: center;
     align-items: flex-end;
     color: #6363FF;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     background: transparent;
     border: none;
-    padding: 16px 36px;
+    padding: 16px;
     cursor: pointer;
     text-align: center;
     white-space: nowrap;
+}
+.back-to-messages:hover{
+    text-decoration: underline;
 }
 .chat-setting-btn img{
     max-width: 22px;
@@ -559,6 +572,7 @@ svg.svg-inline--fa.fa-user.fa-w-14{
     transform: rotate(40deg);
 }
 
+
 .svg-container{
     width: 68px;
     height: 68px;
@@ -574,6 +588,19 @@ svg.svg-inline--fa.fa-user.fa-w-14{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+.delete-user-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: #fff;
+    background-color: rgba(229, 0, 0, 0.9);
+    border: none;
+    cursor: pointer;
+}
+.delete-user-btn:hover {
+    background-color: #E50000;
+
 }
 
 /* Setting | Profile END */
@@ -622,7 +649,12 @@ svg.svg-inline--fa.fa-user.fa-w-14{
 
 @media(max-width: 1000px){
     .hide-on-mobile {
-        display: none;
+        z-index: 100000;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        max-width: 600px;
     }
 }
 
