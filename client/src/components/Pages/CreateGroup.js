@@ -3,6 +3,7 @@ import MainNavbar from '../Common/MainNavbar'
 import ContactList from '../Common/ContactList';
 import { AuthContext } from '../context/authContext';
 import axios from 'axios';
+import Button from '../Common/Button/Button';
 
 const CreateGroup = (props) => {
     const auth = useContext(AuthContext);
@@ -21,9 +22,9 @@ const CreateGroup = (props) => {
         if (users === null && contacts !== null) {
             contactHandler();
         }
-        
     })
 
+    // Get Contact List + update "contacts" state
     const getContactList = () => {
         axios.get('/api/users/current-user')
             .then(user => {
@@ -38,7 +39,8 @@ const CreateGroup = (props) => {
         if (contacts){
             contacts.forEach(contact => {
                 let contactObj = {
-                    username: contact.username
+                    username: contact.username,
+                    userId: contact.user
                 }
                 unorderedContactList.push(contactObj);
             })
@@ -87,17 +89,48 @@ const CreateGroup = (props) => {
         setSearching(false);
     }
 
-    // Get data from UserListItem
+    // Get data from UserListItem.js
     const getMembersData = (data) => {
+        // Update members state with new data
         setMembers(data);
     }
+    
+    // Display members selected to be in the group chat
+    // Loop through members-state and display each member
+    let displayMembers = members.map((member, key) => {
+        return (
+            <div className="user-list-img-col side-padding-8" key={key}>
+                <div className="svg-container">
+                    <div className="checkbox-wrap">
+                        <label 
+                            className="checkmark checkmark-checked" 
+                            htmlFor={"checkbox_" + member.key + member.name}>
+                        </label>
+                    </div>
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" className="svg-inline--fa fa-user fa-w-14 svg-avatar-nav svg-group-avatar" role="img" viewBox="0 0 448 512"><path
+                        fill={member.color}
+                        d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"></path>
+                    </svg>
+                </div>
+                <h5 className="text-center margin-xs">{member.username}</h5>
+            </div>
+        )
+    });
+    
 
     // Create a group chat
     const createGroupChat = () => {
-        const data = {
-            members: members
+        // Loop through members-state and return the username of each user
+        const memb = members.map((member) => {
+            return member.username;
+        });
+        // Push the current user's username to the array
+        memb.push(auth.currUser.username);
+       
+       const data = {
+            members: memb
         };
-
+        
         const config = {
             withCredentials: true,
             headers: {
@@ -106,7 +139,9 @@ const CreateGroup = (props) => {
         };
 
         axios.post('/api/chats', data, config)
-            .then(() => {})
+            .then((createdChat) => {
+                console.log(createdChat);
+            })
             .catch(err => console.log(err));
     };
 
@@ -117,29 +152,36 @@ const CreateGroup = (props) => {
                     <div className="row shadow">
                         <div className="col padding-24 shadow">
                             <MainNavbar />
+
                             <div className="row">
                                 <h1 className="margin-sm">Create a Group</h1>
                             </div>
+
                             <div className="row">
                                 <div className="search-field">
                                     <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
                                     <input className='hide-input-field' type="text" />
                                 </div>
                             </div>
-                            <div className="row margin-top-sm">
-                                {/* TODO: Make this section dynamic */}
-                                <div className="user-added-to-group justify-center text-center">
-                                    <div>
-                                        <img src="https://via.placeholder.com/72" alt=""/>
-                                        <h5>Username</h5>
-                                    </div>
-                                    <span className="user-group-remove">X</span>
-                                </div>
-
-                                <input type="submit" value="Create group" onClick={createGroupChat}/>
+                            
+                            <div className="row margin-top-sm selected-members-wrap">
+                                {members.length === 0 ? (
+                                    <p className="bold-font text-center margin-bot-sm full-width">
+                                        Please select members for the group chat
+                                    </p>
+                                ) : displayMembers}
                             </div>
+                     
+                            <Button
+                                type="submit"
+                                value="Create group"
+                                btnStyle="Button margin-xs button-submit"
+                                disabledBtn={members.length === 0}
+                                click={createGroupChat}> Greate group
+                            </Button>
                         </div>
                     </div>
+                    
                     <div className="row scrollable">
                         <ContactList type="CREATE_GROUP" listType="GROUP_CHAT" users={ users } getMembersData={getMembersData}/>
                     </div>
