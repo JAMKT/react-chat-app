@@ -35,7 +35,9 @@
 .text-center {
     text-align: center;
 }
-
+.bold-font{
+    font-weight: bold;
+}
 .margin-xs {
     margin: 8px 0;
 }
@@ -369,7 +371,6 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
     border-radius: 50%;
 }
 .user-list-img-col svg{
-    border-radius: 50%;
     margin-right: 20px;
     max-width: 64px;
     max-height: 64px;
@@ -558,6 +559,22 @@ svg.svg-inline--fa.fa-user.fa-w-14{
     transform: rotate(40deg);
 }
 
+.svg-container{
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    box-shadow: 1px 1px 6px #c9c9c9;
+    position: relative;
+}
+.svg-group-avatar{
+    max-width: 36px !important;
+    max-height: 36px !important;
+    border-radius: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 /* Setting | Profile END */
 
@@ -670,23 +687,29 @@ svg.svg-inline--fa.fa-user.fa-w-14{
     width: 25px;
     background-color: transparent;
     border: 1px solid #797979;
+    cursor: pointer;
 }
 .checkbox-wrap:hover input~.checkmark {
     background-color: #c9c9c9;
 }
-.checkbox-wrap input:checked~.checkmark {
+.checkbox-wrap input:checked~.checkmark, .checkmark-checked {
     background-color: #6363FF;
     border: 1px solid #6363FF;
 }
-.checkmark:after {
+.checkmark:after{
     content: "";
     position: absolute;
     display: none;
 }
+.checkmark-checked:after {
+    content: "";
+    position: absolute;
+    display: block;
+}
 .checkbox-wrap input:checked~.checkmark:after {
     display: block;
 }
-.checkbox-wrap .checkmark:after {
+.checkbox-wrap .checkmark:after, .checkbox-wrap .checkmark-checked:after {
     left: 9px;
     top: 5px;
     width: 5px;
@@ -694,6 +717,33 @@ svg.svg-inline--fa.fa-user.fa-w-14{
     border: solid white;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
+}
+
+.checkbox-wrap .checkmark-checked:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkmark-checked{
+    height: 20px;
+    width: 20px;
+}
+
+.submit-input{
+    background-color: #6363FF;
+    border: none;
+    color: white;
+    outline: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 0 12px;
+    border-radius: 25px;
+    max-height: 33px;
 }
 
 /* Create Group END */

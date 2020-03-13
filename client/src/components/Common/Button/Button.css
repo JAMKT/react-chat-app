@@ -15,10 +15,7 @@
     cursor: auto;
 }
 
-.Success {
-    color: #5C9210;
-}
-
-.Danger {
-    color: #944317;
+.button-submit{
+    max-width: 230px;
+    margin: 0 auto !important;
 }

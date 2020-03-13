@@ -24,10 +24,12 @@ const UserListItem = (props) => {
         
     };
 
-    //Get user avatar
+    // Get user avatar
     const getAvatarColor = () => {
-        if (props.id !== undefined) {
-            axios.get('/api/users/' + props.id)
+        let avatarId = props.userId !== undefined ? props.userId : props.id;
+    
+        if (props.userId !== undefined || props.id !== undefined) {
+            axios.get('/api/users/' + avatarId)
             .then((newContact) => {
                 if (newContact.data.avatarColor !== null && newContact.data.avatarColor !== undefined){
                     setColor(newContact.data.avatarColor);
@@ -37,7 +39,6 @@ const UserListItem = (props) => {
                 console.log(err);
             });
         }
-        
     }
 
     useEffect(() => {
@@ -65,15 +66,17 @@ const UserListItem = (props) => {
             .catch(err => console.log(err));
     };
 
-    // Check if the checkbox was checked (and unchecked) and send the selected user to the parent component
+    // Check if the checkbox was checked (and unchecked)
+    // Send the selected user data to the parent component(ContactList.js) via getMembersData function
     const addUserToGroup = (event) => {
         if (event.target.checked === true) {
-            props.getMembersData(props.name, true);
+            props.getMembersData(props.name, true, color, props.index);
         } else {
-            props.getMembersData(props.name, false);
+            props.getMembersData(props.name, false, color, props.index);
         }
     }
 
+    // If Contacts(Contacts.js) page (only the Contact.js has a selectedContacts prop)
     if(props.selectContact !== undefined){
         return (
             <div className="user-list-item padding-20 row" onClick={ () => props.selectContact(props.id) }>
@@ -94,32 +97,10 @@ const UserListItem = (props) => {
                         <p>{props.alreadyAdded}</p>
                     </div>
                 </div>
-                {
-                    // Determine whether or not this particular user is already one of the curren user's friends
-                    // If it is, check where the component is being rendered
-                    // If it isn't, display a button to allow the user to add the contact as a friend
-                    props.type === "USER_LIST_GROUP" ?
-                        // Determine whether or not this component is rendered in CreateGroup.js or Contacts.js
-                        // If it is rendered in CreateGroup.js, display a checkbox next to the user's info
-                        props.listType === "GROUP_CHAT" ? (
-                            <div className="group-checkbox-col justify-center">
-                                <div className="checkbox-wrap">
-                                    <input className="checkbox" type="checkbox" id={"checkbox_" + props.index + props.name} onChange={addUserToGroup} />
-                                    <label className="checkmark" htmlFor={"checkbox_" + props.index + props.name} ></label>
-                                </div>
-                            </div>
-                        ) : null
-                        : (
-                            <div className="user-list-button-col">
-                                {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name} >Add friend</button>}
-                            </div>
-                        )
-                }
-
             </div>
         )
     } else {
-        
+        // If CreateGroup page or AddContact page
         return (
             <div className="user-list-item padding-20 row" >
                 { /* Column just for the user image */}
@@ -140,25 +121,34 @@ const UserListItem = (props) => {
                     </div>
                 </div>
                 {
-                    // Determine whether or not this particular user is already one of the curren user's friends
-                    // If it is, check where the component is being rendered
-                    // If it isn't, display a button to allow the user to add the contact as a friend
-                    props.type === "USER_LIST_GROUP" ?
-                        // Determine whether or not this component is rendered in CreateGroup.js or Contacts.js
-                        // If it is rendered in CreateGroup.js, display a checkbox next to the user's info
+                    // Check where the component is being rendered 
+                    // UserListGroup.js(CreateGroup/AddConact pages) or UserList.js(Contacts page)
+                    props.type === "USER_LIST_GROUP" ? (
+                        // Determine whether or not this component is rendered in CreateGroup.js or AddContact.js
+                        // If rendered in CreateGroup.js, display a checkbox next to the user's info
                         props.listType === "GROUP_CHAT" ? (
                             <div className="group-checkbox-col justify-center">
                                 <div className="checkbox-wrap">
-                                    <input className="checkbox" type="checkbox" id={"checkbox_" + props.index + props.name} onChange={addUserToGroup} />
-                                    <label className="checkmark" htmlFor={"checkbox_" + props.index + props.name} ></label>
+                                    <input 
+                                        className="checkbox" 
+                                        type="checkbox" 
+                                        id={"checkbox_" + props.index + props.name} 
+                                        onChange={addUserToGroup} />
+                                    <label 
+                                        className="checkmark" 
+                                        htmlFor={"checkbox_" + props.index + props.name} >
+                                    </label>
                                 </div>
                             </div>
                         ) : null
-                        : (
-                            <div className="user-list-button-col">
-                                {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name} >Add friend</button>}
-                            </div>
-                        )
+
+                    ) : (
+                        // Determine whether or not this particular user is already one of the curren user's friends
+                        // If it isn't, display a button to allow the user to add the contact as a friend
+                        <div className="user-list-button-col">
+                            {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name} >Add friend</button>}
+                        </div>
+                    )
                 }
 
             </div>

@@ -12,6 +12,7 @@ export default function UserListGroup(props) {
             name={user.username}
             getMembersData={props.getMembersData}
             id={user.id}
+            userId={user.userId}
             selectContact={ props.selectContact }
         />
     );
@@ -21,7 +22,6 @@ export default function UserListGroup(props) {
             <div className="alphabet-letter-col margin-sm">
                 <div>{props.letter}</div>
             </div>
-            
             <ul className="col">
                 { userArray }
             </ul>

@@ -70,7 +70,7 @@ router.post('/', async (req, res) => {
         });
 
         newChat.save();
-        res.status(200).send("Chat created.");
+        res.status(200).send(newChat);
     } catch (err) {
         // If there are errors: send an error
         res.status(500)
