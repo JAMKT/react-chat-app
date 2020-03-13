@@ -5,6 +5,7 @@ import { AuthContext } from '../context/authContext';
 const UserListItem = (props) => {
     const userContext = useContext(AuthContext);
     const [color, setColor] = useState(null);
+    const [visible, setVisibility] = useState(false);
     
     // Update the current user's "contacts" when "Add Friend" button is clicked
     const apiCall = (event) => {
@@ -77,16 +78,24 @@ const UserListItem = (props) => {
         }
     };
 
+    // Edit contact
+    const editContact = () => {
+        setVisibility(true);
+
+        // TODO: Get value of the input and make a post request with axios
+    };
+
+    // Remove contact from your contacts list
     const removeContact = () => {
         axios.get('/api/users/remove-contact/' + props.name)
             .then(() => {})
             .catch(err => console.log(err));
     };
 
-    // If Contacts(Contacts.js) page (only the Contact.js has a selectedContacts prop)
-    if(props.selectContact !== undefined){
+    // if (props.selectContact !== undefined) => render content for the Contacts.js page
+    if (props.selectContact !== undefined){
         return (
-            <div className="user-list-item padding-20 row clickable" onClick={ () => props.selectContact(props.id) }>
+            <div className="user-list-item padding-20 row clickable" onClick={ () => props.selectContact(props.id)}>
                 { /* Column just for the user image */}
                 <div className="user-list-img-col">
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" className="svg-inline--fa fa-user fa-w-14 svg-avatar-nav" role="img" viewBox="0 0 448 512"><path
@@ -101,13 +110,25 @@ const UserListItem = (props) => {
                     </div>
                     { /* Bottom part of the column */}
                     <div className="row height-50 space-between align-center">
-                        <p>{props.alreadyAdded}</p>
+                        {
+                            props.nickname !== undefined ? 
+                                props.nickname : 
+                                visible === true ?
+                                    <input id="nickname" placeholder="Add a nickname..."/> :
+                                    null
+                        }
                     </div>
                 </div>
+                {
+                    
+                    <div className="contact-buttons">
+                        <button className="contact-button-edit" onClick={editContact}>Edit</button>
+                        <button className="contact-button-delete" onClick={removeContact}>Delete</button>
+                    </div>
+                }
             </div>
         )
     } else {
-        // If CreateGroup page or AddContact page
         return (
             <div className="user-list-item padding-20 row" >
                 { /* Column just for the user image */}
@@ -147,14 +168,9 @@ const UserListItem = (props) => {
                                     </label>
                                 </div>
                             </div>
-                          ) : (
-                              <div className="remove-contact-button">
-                                  <button onClick={removeContact(props.id)}>Delete</button>
-                              </div>
-                        ) : (
-
-                        // Determine whether or not this particular user is already one of the curren user's friends
-                        // If it isn't, display a button to allow the user to add the contact as a friend
+                        ) : null
+                    )
+                    : (
                         <div className="user-list-button-col">
                             {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name} >Add friend</button>}
                         </div>

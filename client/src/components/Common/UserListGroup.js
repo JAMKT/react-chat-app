@@ -14,6 +14,7 @@ export default function UserListGroup(props) {
             id={user.id}
             userId={user.userId}
             selectContact={ props.selectContact }
+            nickname={user.nickname}
         />
     );
 
