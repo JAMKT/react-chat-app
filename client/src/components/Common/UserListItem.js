@@ -5,6 +5,7 @@ import { AuthContext } from '../context/authContext';
 const UserListItem = (props) => {
     const userContext = useContext(AuthContext);
     const [color, setColor] = useState(null);
+    const [visible, setVisibility] = useState(false);
     
     // Update the current user's "contacts" when "Add Friend" button is clicked
     const apiCall = (event) => {
@@ -79,7 +80,9 @@ const UserListItem = (props) => {
 
     // Edit contact
     const editContact = () => {
+        setVisibility(true);
 
+        // TODO: Get value of the input and make a post request with axios
     };
 
     // Remove contact from your contacts list
@@ -92,7 +95,7 @@ const UserListItem = (props) => {
     // if (props.selectContact !== undefined) => render content for the Contacts.js page
     if (props.selectContact !== undefined){
         return (
-            <div className="user-list-item padding-20 row clickable" onClick={ () => props.selectContact(props.id) }>
+            <div className="user-list-item padding-20 row clickable" onClick={ () => props.selectContact(props.id)}>
                 { /* Column just for the user image */}
                 <div className="user-list-img-col">
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" className="svg-inline--fa fa-user fa-w-14 svg-avatar-nav" role="img" viewBox="0 0 448 512"><path
@@ -108,15 +111,19 @@ const UserListItem = (props) => {
                     { /* Bottom part of the column */}
                     <div className="row height-50 space-between align-center">
                         {
-                            props.nickname !== undefined ? props.nickname : null
+                            props.nickname !== undefined ? 
+                                props.nickname : 
+                                visible === true ?
+                                    <input id="nickname" placeholder="Add a nickname..."/> :
+                                    null
                         }
                     </div>
                 </div>
                 {
                     
-                    <div className="remove-contact-button">
-                        <button onClick={editContact}>Edit</button>
-                        <button onClick={removeContact}>Delete</button>
+                    <div className="contact-buttons">
+                        <button className="contact-button-edit" onClick={editContact}>Edit</button>
+                        <button className="contact-button-delete" onClick={removeContact}>Delete</button>
                     </div>
                 }
             </div>
@@ -162,6 +169,7 @@ const UserListItem = (props) => {
                                 </div>
                             </div>
                         ) : null
+                    )
                     : (
                         <div className="user-list-button-col">
                             {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name} >Add friend</button>}
