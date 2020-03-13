@@ -1,9 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react'
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
+import { useHistory } from 'react-router-dom';
 
 const UserListItem = (props) => {
     const userContext = useContext(AuthContext);
+    const history = useHistory();
     const [color, setColor] = useState(null);
     const [visible, setVisibility] = useState(false);
     
@@ -79,10 +81,30 @@ const UserListItem = (props) => {
     };
 
     // Edit contact
-    const editContact = () => {
+    const openEditInput = () => {
+        // Make input visible
         setVisibility(true);
+    };
 
-        // TODO: Get value of the input and make a post request with axios
+    const editContact = (event) => {
+        event.preventDefault();
+
+        const nickname = document.getElementById("nickname").value;
+
+        const data = { nickname };
+
+        const config = {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        axios.post('/api/users/update-contact/' + props.name, data, config)
+            .then(() => {
+                history.push('/all');
+            })
+            .catch(err => console.log(err));
     };
 
     // Remove contact from your contacts list
@@ -95,9 +117,9 @@ const UserListItem = (props) => {
     // if (props.selectContact !== undefined) => render content for the Contacts.js page
     if (props.selectContact !== undefined){
         return (
-            <div className="user-list-item padding-20 row clickable" onClick={ () => props.selectContact(props.id)}>
+            <div className="user-list-item padding-20 row">
                 { /* Column just for the user image */}
-                <div className="user-list-img-col">
+                <div className="user-list-img-col clickable" onClick={() => props.selectContact(props.id)}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" className="svg-inline--fa fa-user fa-w-14 svg-avatar-nav" role="img" viewBox="0 0 448 512"><path
                         fill={color}
                         d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"></path></svg>
@@ -105,7 +127,7 @@ const UserListItem = (props) => {
                 { /* Column for the main body of the user item */}
                 <div className="col">
                     { /* Top part of the column */}
-                    <div className="row height-50 space-between align-center">
+                    <div className="row height-50 space-between align-center clickable" onClick={() => props.selectContact(props.id)}>
                         <h3>{props.name}</h3>
                     </div>
                     { /* Bottom part of the column */}
@@ -114,7 +136,12 @@ const UserListItem = (props) => {
                             props.nickname !== undefined ? 
                                 props.nickname : 
                                 visible === true ?
-                                    <input id="nickname" placeholder="Add a nickname..."/> :
+                                    (
+                                        <form onSubmit={editContact}>
+                                            <input id="nickname" placeholder="Add a nickname..."/>
+                                            <input type="submit" value="Add"/>
+                                        </form>
+                                    ) :
                                     null
                         }
                     </div>
@@ -122,7 +149,7 @@ const UserListItem = (props) => {
                 {
                     
                     <div className="contact-buttons">
-                        <button className="contact-button-edit" onClick={editContact}>Edit</button>
+                        <button className="contact-button-edit" onClick={openEditInput}>Edit</button>
                         <button className="contact-button-delete" onClick={removeContact}>Delete</button>
                     </div>
                 }

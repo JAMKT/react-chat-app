@@ -144,19 +144,20 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
 
 // Update user's contact
 router.post('/update-contact/:username', (req, res) => {
-    const nickname = req.body;
+    const nickname = req.body.nickname;
 
-    User.updateOne({ "_id": req.user._id, "contacts.username": req.params.username }, {
+    User.updateOne({ "_id": req.user._id, "contacts": { $elemMatch: { username: req.params.username }} }, {
         $set: {
-            "contacts": {
-                "nickname": nickname
-            }
+            "contacts.$.nickname": nickname
         }
     }, 
     { new: true }, // Return the newly updated version of the document
     (err, user) => {
         if (err) { res.send('Could not update this contact.'); };
     })
+    .then((response) => {
+        res.send(response);
+    });
 });
 
 // GET
