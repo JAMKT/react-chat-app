@@ -38,7 +38,8 @@ const Contacts = (props) => {
             contacts.forEach(contact => {
                 let contactObj = {
                     id: contact.user,
-                    username: contact.username
+                    username: contact.username,
+                    nickname: contact.nickname
                 }
                 unorderedContactList.push(contactObj);
             })
