@@ -183,30 +183,39 @@ router.post('/update-user', isLoggedIn, async (req, res) => {
 // DELETE
 // Remove user from contact list
 router.get('/remove-contact/:username', isLoggedIn, (req, res) => {
-    // Find contact in current user's contacts and remove them
-    User.updateOne({ "_id": req.user._id }, {
-        $pull: {
-            "contacts": {
-                "username": req.params.username
-            }
-        }
-    }, 
-    { multi: true },
-    (err, user) => {
-        if (err) { res.send('Could not remove this contact.'); };
-    })
+    // Find chat with contact and delete it
+    Chat.findOneAndRemove({ members: { 
+        $elemMatch: { username: req.user.username },
+        $elemMatch: { username: req.params.username }
+    }}, (err, chat) => {
+        if (err) { res.send('Could not remove this chat.'); };
+    }) 
     .then(() => {
-        // Find old contact and remove the current user from their contacts
-        User.updateOne({ "username": req.params.username }, {
+        // Find contact in current user's contacts and remove them
+        User.updateOne({ "_id": req.user._id }, {
             $pull: {
                 "contacts": {
-                    "user": req.user._id
+                    "username": req.params.username
                 }
             }
         }, 
         { multi: true },
         (err, user) => {
-            if (err) { res.send("Could not remove user from this user's contacts."); };
+            if (err) { res.send('Could not remove this contact.'); };
+        })
+        .then(() => {
+            // Find old contact and remove the current user from their contacts
+            User.updateOne({ "username": req.params.username }, {
+                $pull: {
+                    "contacts": {
+                        "user": req.user._id
+                    }
+                }
+            }, 
+            { multi: true },
+            (err, user) => {
+                if (err) { res.send("Could not remove user from this user's contacts."); };
+            });
         });
     });
 });
