@@ -5,6 +5,7 @@ const passport = require("passport");
 
 //User Model
 const User = require('../../models/User');
+const Chat = require('../../models/Chat');
 
 const isLoggedIn = require('../../middleware/isLoggedIn');
 
@@ -135,7 +136,7 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
                 })
                 .catch(err => res.send(err))
         })
-        .then((data) => { return data})
+        .then((data) => { return data })
         .catch(err => res.send(err));
 });
 
@@ -180,5 +181,56 @@ router.post('/update-user', isLoggedIn, async (req, res) => {
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
+
+// GET
+// Delete User Account
+router.get("/:id/delete", isLoggedIn, (req, res) => {
+    console.log("User to delete: " + req.user.username);
+    req.user.contacts.forEach(contact => {
+        console.log("contact---------------------");
+        console.log(contact.username);
+        User.findOne({ username: contact.username }, (err, foundContact) => {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                foundContact.contacts.forEach(contactToDelete => {
+                    if (contactToDelete.username === req.user.username) {
+                        console.log("--------------contactToDelete");
+                        console.log(contactToDelete.username);
+                        const index = foundContact.contacts.indexOf(contactToDelete);
+                        if (index > -1) {
+                            console.log("index: " + index);
+                            // console.log(foundContact.contacts[index]);
+                            console.log(foundContact.contacts);
+                            console.log("-----------------------");
+                            foundContact.contacts.splice(index, 1);
+                            foundContact.save();
+                        }
+                    }
+
+                });
+                Chat.deleteMany({ members: { $elemMatch: { user: req.user._id } } }, (err) => {
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        //Finding user to delete by id
+                        User.findByIdAndRemove({ _id: req.user._id }, (err) => {
+                            if (err) {
+                                res.send(err);
+
+                            } else {
+                                res.send("User deleted succesfully!")
+                            }
+                        });
+                    }
+                });
+            }
+        })
+    });
+    res.send("okay");
+
+});
+
 
 module.exports = router;
