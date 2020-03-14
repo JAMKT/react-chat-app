@@ -1,10 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const http = require('http');
 const passport = require("passport");
 const session = require("express-session");
-const socketio = require('socket.io');
 const sessionSecret = require('./config/sessionConfig').secret;
 
 const users = require('./routes/api/Users');
@@ -12,13 +10,10 @@ const chats = require('./routes/api/Chats');
 const messages = require('./routes/api/Messages');
 
 const app = express();
-const server = http.createServer(app);
-const io = socketio(server);
 
 //BodyParser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 
 // Passport Config
 require('./config/passport')(passport);
@@ -57,17 +52,5 @@ app.use((req, res, next) => {
     next();
 });
 
-
-// Testing connection with sockets
-io.on('connection', socket => {
-    socket.on('join', () => {
-        console.log('User connected!');
-    });
-
-    socket.on('disconnect', () => {
-        console.log('User disconnected.');
-    });
-});
-
 const port = require('./config/env').serverPORT;
-server.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, () => console.log(`Server started on port ${port}`));
