@@ -447,6 +447,24 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
     background-color: rgba(229, 0, 0, 0.7);
 }
 
+.add-nickname-input {
+    border: none;
+    border-bottom: 1px solid #6363FF;
+}
+.add-nickname-edit,
+.add-nickname-cancel {
+    margin-left: 5px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    padding: 3px 6px;
+    background-color: #d4d4d4;
+}
+.add-nickname-edit:hover,
+.add-nickname-cancel:hover {
+    background-color: #c5c5c5;
+}
+
 /* User List END */
 
 /* Main Message Chat START */
@@ -488,6 +506,8 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
 .main-message-chat{
     background-color: #fff;
     box-shadow:inset -4px -4px 8px 3px #c9c9c9;
+    padding-bottom: 56px !important;
+    box-sizing: border-box;
 }
 .message-profile-icon{
     align-self: flex-end;
