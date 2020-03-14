@@ -89,8 +89,11 @@ const Contacts = (props) => {
     }
 
     const selectContact = (id) => {
-        console.log(id);
-        auth.loadFromContacts = id
+        let redirectObj = {
+            id: id,
+            location: "CONTACT_PAGE"
+        }
+        auth.loadFromRedirect = redirectObj;
         props.history.push('/all');
     }
 

@@ -141,9 +141,19 @@ const CreateGroup = (props) => {
         axios.post('/api/chats', data, config)
             .then((createdChat) => {
                 console.log(createdChat);
+                selectContact(createdChat.data._id)
             })
             .catch(err => console.log(err));
     };
+
+    const selectContact = (id) => {
+        let redirectObj = {
+            id: id,
+            location: "CREATE_GROUP_PAGE"
+        }
+        auth.loadFromRedirect = redirectObj;
+        props.history.push('/all');
+    }
 
     return (
         <div className="container">

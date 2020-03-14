@@ -7,5 +7,5 @@ export const AuthContext = createContext({
     login: () => {},
     logout: () => {},
     currUser: null,
-    loadFromContacts: null
+    loadFromRedirect: null
 });
