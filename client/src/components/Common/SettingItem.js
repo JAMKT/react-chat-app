@@ -37,6 +37,7 @@ const SettingItem = (props) => {
     const [avatarColor, setAvatarColor ] = useState(null);
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
+    const [deleteCurrUser, setDeleteCurrUser] = useState(null);
 
     // On submit => update user info + update success/errro state
     const onSubmitHandler = (event) => {
@@ -93,14 +94,33 @@ const SettingItem = (props) => {
         setAvatarColor(event.target.value);
     }
 
+    // Set "deleteCurrUser" state to true if user clicks "delete account" button
+    const deleteUserHandler = () => {
+        setDeleteCurrUser(true);
+    }
+
+    // If "deleteCurrUser" state is true, display Popup
+    let deleteUserPopup = 
+        deleteCurrUser === true ? (
+            <Popup>
+                <h3>Delete Account</h3>
+                <p>Are you sure you want to delete this account?</p>
+                <button className="delete-user-btn" onClick={() => deleteUser()}>Delete account</button>
+            </Popup> ) : null;
+
     // Delete user
     const deleteUser = () => {
+        console.log('delete user');
         axios.get('/api/users/' + auth.currUser._id + '/delete')
             .then(() => {
+                auth.loggedIn = false;
+                auth.currUser = null;
                 history.push('/');
             })
             .catch(err => console.log(err))
     }
+
+     
     
     // If success, display success popup
     let successMessage = 
@@ -117,16 +137,28 @@ const SettingItem = (props) => {
                 <h3>Error!</h3>
                 <p>Something went wrong. Please try again.</p>
             </Popup> ) : null;
+
+   
     
     // Set timeout for success popup
     if (success === true){
         setTimeout(function(){
             setSuccess(null);
-        }, 5000)
+        }, 6000)
+    }
+
+     // Set timeout for deleteUser popup
+     if (deleteCurrUser === true){
+        setTimeout(function(){
+            setDeleteCurrUser(null);   
+        }, 6000)
     }
 
     return (
         <div className="row padding-32 scrollable">
+            {deleteUserPopup}
+            {successMessage}
+            {errorMessage}
             <div className="col">
                 <div className="row justify-center padding-20 settings-wrap">
                     <div className="avatar-border">
@@ -204,8 +236,6 @@ const SettingItem = (props) => {
 
                 <div className="row column">
                     <h4>Edit Profile</h4>
-                   {successMessage}
-                   {errorMessage}
                 </div>
 
                 <div className="align-center row margin-top-s">
@@ -245,7 +275,7 @@ const SettingItem = (props) => {
                             disabledBtn={!formState.isValid}>Submit</Button>
                     </form>
 
-                    <button className="delete-user-btn" onClick={deleteUser}>Delete account</button>
+                    <button className="delete-user-btn" onClick={deleteUserHandler}>Delete account</button>
                 </div>
             </div>
         </div>
