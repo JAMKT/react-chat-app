@@ -9,21 +9,11 @@ import axios from 'axios';
 const MainMessageChat = (props) => {
     const auth = useContext(AuthContext);
     const [messages, setMessages] = useState([]);
-
-    const [formState, inputHandler] = useForm(
-        //set inital input state + form validity state
-        {
-            message: {
-                value: '',
-                isValid: false
-            }
-        },
-        {
-            isValid: false
-        }
-    );
+    const [lastChatId, setLastChatId] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const sendMessage = (event) => {
+        setLoading(true);
         event.preventDefault();
         const data = {
             content: document.getElementById("message").value,
@@ -45,23 +35,47 @@ const MainMessageChat = (props) => {
         axios.post('/api/chats/' + props.chat._id + '/messages', data, config)
             .then((newMessage) => {
                 if (newMessage) {
-                    console.log(newMessage);
+                    getMessages();
                 }
+            }).then(() => {
+                setLoading(false);
             })
             .catch(err => console.log(err));
     }
 
     const getMessages = () => {
+        setLoading(true);
+        console.log("GETTING MESSAGES")
+        setLastChatId(props.chat._id)
         axios.get('/api/chats/' + props.chat._id + '/messages')
-            .then((messages) => {
-                setMessages(messages.data.messages);
+            .then((newMessages) => {
+                setMessages(newMessages.data.messages);
+                
+            }).then(() => {
+                setLoading(false);
             })
             .catch(err => console.log(err));
     }
 
     useEffect(() => {
-        if (props.chat) {
-            getMessages();
+        if(loading === false){
+            console.log(props.chat.messages)
+            console.log(messages)
+            if (lastChatId !== props.chat._id) {
+                console.log("MISS MATCH CHAT ID")
+                getMessages();
+                return;
+            }
+            /*
+            Somehow work without this, but maybe we will need it later... Don't delete
+            if (props.chat.messages.length > 0 && messages.length > 0) {
+                if (props.chat.messages[0] !== messages[0]._id) {
+                    console.log("DIFFERENT CHATS")
+                    getMessages();
+                    return;
+                }
+            }
+            */
         }
     });
 
@@ -109,7 +123,7 @@ const MainMessageChat = (props) => {
                     }
                 </div>
                 <form className="padding-16 chat-input-field-position" onSubmit={sendMessage}>
-                    <input type="message" id="message" className="chat-input-field" placeholder="Type your message..." onInput={inputHandler} />
+                    <input type="message" id="message" className="chat-input-field" placeholder="Type your message..." />
                 </form>
             </div>
         );

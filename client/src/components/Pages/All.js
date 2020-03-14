@@ -45,9 +45,11 @@ const All = (props) => {
 
 
     const automaticChatLoaderFromContactsPage = () => {
+        
         if (selectedChat !== null) {
             removeActiveUserItem(selectedChat._id)
         }
+        setSearching(true);
         if (auth.loadFromRedirect.location === "CONTACT_PAGE"){
             chats.forEach(chat => {
                 if(chat.members.length <= 2){
@@ -57,12 +59,15 @@ const All = (props) => {
                             console.log(chat)
                             setSelectedChat(chat);
                             applyActiveUserItem(chat._id);
+                            setSearching(false);
                             return true;
                         } else {
+                            setSearching(false);
                             return false
                         }
                     })
                 } else {
+                    setSearching(false);
                     return false
                 }
             })
@@ -77,6 +82,9 @@ const All = (props) => {
             if(selected !== undefined){
                 setSelectedChat(selected[0]);
                 applyActiveUserItem(selected[0]._id);
+                setSearching(false);
+            } else {
+                setSearching(true);
             }
         }
         

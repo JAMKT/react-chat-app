@@ -67,11 +67,14 @@ router.post('/:id/messages/', (req, res) => {
                     chat.lastUpdate = message.created;
                     chat.save();
                 }
-            });
+            })
 
             // Push new message to array
             messagesArray.push(newMessage);
+        }).then((chat) => {
+            res.send(chat)
         });
+        
 
         // Update chat with new messages
         // Chat.findOneAndUpdate({ _id: req.params.id }, {
