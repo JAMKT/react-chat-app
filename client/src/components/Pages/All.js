@@ -29,7 +29,7 @@ const All = (props) => {
     }
 
     const unselectChat = () => {
-        auth.loadFromContacts = null;
+        auth.loadFromRedirect = null;
         removeActiveUserItem(selectedChat._id);
         setSelectedChat(null)
     }
@@ -48,24 +48,38 @@ const All = (props) => {
         if (selectedChat !== null) {
             removeActiveUserItem(selectedChat._id)
         }
-        var selected = undefined;
-        chats.forEach(chat => {
-            if(chat.members.length <= 2){
-                chat.members.forEach(member => {
-                    if (member.user === auth.loadFromContacts){
-                        console.log('HERE HERE HERE')
-                        console.log(chat)
-                        setSelectedChat(chat);
-                        applyActiveUserItem(chat._id);
-                        return true;
-                    } else {
-                        return false
-                    }
-                })
-            } else {
-                return false
+        if (auth.loadFromRedirect.location === "CONTACT_PAGE"){
+            chats.forEach(chat => {
+                if(chat.members.length <= 2){
+                    chat.members.forEach(member => {
+                        if (member.user === auth.loadFromRedirect.id) {
+                            console.log('HERE HERE HERE')
+                            console.log(chat)
+                            setSelectedChat(chat);
+                            applyActiveUserItem(chat._id);
+                            return true;
+                        } else {
+                            return false
+                        }
+                    })
+                } else {
+                    return false
+                }
+            })
+        }
+        if(auth.loadFromRedirect.location === "CREATE_GROUP_PAGE"){
+            //Get chat based on chat id
+            var selected = undefined;
+            console.log(auth.loadFromRedirect);
+            
+            selected = chats.filter( chat => chat._id === auth.loadFromRedirect.id )
+            console.log(selected);
+            if(selected !== undefined){
+                setSelectedChat(selected[0]);
+                applyActiveUserItem(selected[0]._id);
             }
-        })
+        }
+        
     }
 
     const retrieveChatId = (event) => {
@@ -98,7 +112,7 @@ const All = (props) => {
         if (auth.currUser === false) {
             props.history.push('/login')
         }
-        if (selectedChat === null && auth.loadFromContacts !== null && auth.loadFromContacts !== undefined && chats !== null) {
+        if (selectedChat === null && auth.loadFromRedirect !== null && auth.loadFromRedirect !== undefined && chats !== null) {
             automaticChatLoaderFromContactsPage()
         }
     })
