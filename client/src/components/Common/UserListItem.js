@@ -2,14 +2,16 @@ import React, { useContext, useState, useEffect } from 'react'
 import axios from 'axios';
 import { AuthContext } from '../context/authContext';
 import { useHistory } from 'react-router-dom';
+import Popup from '../Common/SuccessErrorPopup/Popup';
 
 const UserListItem = (props) => {
     const userContext = useContext(AuthContext);
     const history = useHistory();
     const [color, setColor] = useState(null);
     const [visible, setVisibility] = useState(false);
+    const [deleteUserPopup, setDeleteUserPopup] = useState(null);
     
-    // Update the current user's "contacts" when "Add Friend" button is clicked
+    // Update the current user's "contacts" in ""AddContacts"" page when "Add Friend" button is clicked
     const apiCall = (event) => {
         event.preventDefault();
 
@@ -27,6 +29,13 @@ const UserListItem = (props) => {
                 console.log(err);
             });
     };
+
+    // Update the current user's "Contacts" page when a user is deleted
+    const updateContacts = () => {
+        console.log('update contacts function was called');
+        props.getContactList();
+        //props.history.push('/')
+    }
 
     // Get user avatar
     const getAvatarColor = () => {
@@ -102,10 +111,37 @@ const UserListItem = (props) => {
             .catch(err => console.log(err));
     };
 
+
+    
+    // Delet user popup
+   const deletePopupHandler = () => {
+       console.log('was clicked')
+        setDeleteUserPopup(true);
+   }
+
+   // Delete User Popup
+   let deletePopup = 
+        deleteUserPopup === true ? (
+            <Popup>
+                <h3>Delete Contact</h3>
+                <p className="p-popup">Are you sure you want to delete this contact?</p>
+               <button className="contact-button-delete margin-xs" onClick={() => removeContact()}>Delete</button>
+            </Popup> ) : null;
+  
+    if (deleteUserPopup === true){
+        setTimeout(() => {
+            setDeleteUserPopup(null);
+        }, 6000)
+    }
+
     // Remove contact from your contacts list
     const removeContact = () => {
         axios.get('/api/users/remove-contact/' + props.name)
-            .then(() => {})
+            .then((deletedUser) => {
+                console.log(deletedUser);
+                updateContacts();
+                
+            })
             .catch(err => console.log(err));
     };
 
@@ -113,6 +149,7 @@ const UserListItem = (props) => {
     if (props.selectContact !== undefined){
         return (
             <div className="user-list-item padding-20 row">
+                {deletePopup}
                 { /* Column just for the user image */}
                 <div className="user-list-img-col clickable" onClick={() => props.selectContact(props.id)}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" className="svg-inline--fa fa-user fa-w-14 svg-avatar-nav" role="img" viewBox="0 0 448 512"><path
@@ -142,8 +179,9 @@ const UserListItem = (props) => {
                     </div>
                 </div>
                 <div className="contact-buttons">
+                    
                     <button className="contact-button-edit" onClick={() => setVisibility(true)}>Edit</button>
-                    <button className="contact-button-delete" onClick={removeContact}>Delete</button>
+                    <button className="contact-button-delete" onClick={deletePopupHandler}>Delete</button>
                 </div>
             </div>
         )

@@ -13,7 +13,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
+.z-index--1{
+    position: relative;
+}
 .full-width {
     width: 100%;
 }
@@ -242,6 +244,8 @@
     flex-flow: row wrap;
     width: 100%;
     box-sizing: border-box;
+    position: relative;
+    z-index: 0;
 }
 
 .col {
@@ -615,7 +619,9 @@ svg.svg-inline--fa.fa-user.fa-w-14{
     transform: rotate(40deg);
 }
 
-
+.p-popup{
+    color: #000;
+}
 .svg-container{
     width: 68px;
     height: 68px;

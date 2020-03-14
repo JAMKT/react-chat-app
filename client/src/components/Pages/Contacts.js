@@ -24,9 +24,12 @@ const Contacts = (props) => {
     })
 
     const getContactList = () => {
+        console.log('getContactList funciton in Contacts.js was called');
         axios.get('/api/users/current-user')
             .then(user => {
+                console.log(user.data.contacts);
                 setContacts(user.data.contacts);
+                setUsers(null);
             })
             .catch(err => console.log(err));
     }
@@ -117,7 +120,7 @@ const Contacts = (props) => {
                         </div>
                     </div>
                     <div className="row scrollable">
-                        <ContactList listType="DEFAULT_CHAT" users={ users } selectContact={ selectContact }/>
+                        <ContactList listType="DEFAULT_CHAT" users={ users } selectContact={ selectContact } getContactList={ getContactList }/>
                     </div>
                 </div>
                 <div className="col hide-on-mobile">

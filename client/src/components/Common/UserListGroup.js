@@ -15,11 +15,12 @@ export default function UserListGroup(props) {
             userId={user.userId}
             selectContact={ props.selectContact }
             nickname={user.nickname}
+            getContactList={props.getContactList}
         />
     );
 
     return (
-        <div className="row full-width border-bottom">
+        <div className="row full-width border-bottom z-index--1">
             <div className="alphabet-letter-col margin-sm">
                 <div>{props.letter}</div>
             </div>

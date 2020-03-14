@@ -233,6 +233,9 @@ router.get('/remove-contact/:username', isLoggedIn, (req, res) => {
             { multi: true },
             (err, user) => {
                 if (err) { res.send("Could not remove user from this user's contacts."); };
+            })
+            .then((response) => {
+                res.send(response);
             });
         });
     });

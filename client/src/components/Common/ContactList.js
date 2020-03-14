@@ -62,7 +62,8 @@ export default function ContactList(props) {
                     listType={props.listType} 
                     letter={user.letter} 
                     users={user.names}
-                    selectContact={ props.selectContact }/>
+                    selectContact={ props.selectContact }
+                    getContactList={ props.getContactList }/>
             );
         }
     } else {
