@@ -63,8 +63,6 @@ const Message = require('./models/Message');
 // Socket.io connection
 io.on('connection', socket => {
     socket.on('send-message', (data, chatId) => {
-        console.log(data.content);
-        console.log(chatId);
         try {
             const newMessage = new Message({
                 content: data.content,
@@ -87,12 +85,19 @@ io.on('connection', socket => {
                         chat.save();
                     }
                 });
-            }).then((chat) => {
-                console.log(chat);
-            });
+            }).then(chat => {}).catch(err => console.log(err));
         } catch (err) {
             console.log('Could not create this message.');
         }
+
+        Chat.findById(chatId).populate("messages").sort({ "created": -1 }).exec((err, chat) => {
+            if (err) res.send('Chat not found.');
+            socket.emit('get-messages', chat.messages);
+        });
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Disconnected.');
     });
 });
 

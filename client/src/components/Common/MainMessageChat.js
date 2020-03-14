@@ -12,31 +12,33 @@ const MainMessageChat = (props) => {
     const [messages, setMessages] = useState([]);
     const [lastChatId, setLastChatId] = useState(null);
     const [loading, setLoading] = useState(false);
-    const socket = io(process.env.ENDPOINT || 'localhost:3000', {transports: ['websocket']});
+    const socket = io(process.env.ENDPOINT || 'localhost:5000', {transports: ['websocket']});
 
     const sendMessage = (event) => {
         event.preventDefault();
         setLoading(true);
-
-        try {
-            const data = {
-                content: document.getElementById("message").value,
-                author: {
-                    id: auth.currUser._id,
-                    username: auth.currUser.username
-                }
+        
+        const data = {
+            content: document.getElementById("message").value,
+            author: {
+                id: auth.currUser._id,
+                username: auth.currUser.username
             }
-    
-            const chatId = props.chat._id;
-            socket.emit("send-message", data, chatId);
-    
-            getMessages();
-            setLoading(false);
-    
-            document.getElementById("message").value = "";
-        } catch(err) {
-            console.log(err);
         }
+
+        const chatId = props.chat._id;
+        socket.emit("send-message", data, chatId);
+
+        socket.on('get-messages', messages => {
+            setLastChatId(props.chat._id);
+            setMessages(messages);
+        });
+
+        console.log('outside');
+
+        setLoading(false);
+
+        document.getElementById("message").value = "";
     }
 
     const getMessages = () => {
@@ -47,7 +49,6 @@ const MainMessageChat = (props) => {
         axios.get('/api/chats/' + props.chat._id + '/messages')
             .then((newMessages) => {
                 setMessages(newMessages.data.messages);
-                
             }).then(() => {
                 setLoading(false);
             })
