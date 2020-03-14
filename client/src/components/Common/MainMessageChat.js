@@ -72,6 +72,9 @@ const MainMessageChat = (props) => {
             }
             */
         }
+
+        const chatContainer = document.getElementById('scrollable-div');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
     });
 
 
@@ -105,7 +108,7 @@ const MainMessageChat = (props) => {
         return (
             <div className="col main-message-chat absolute-center-pin full-height">
                 <ChatHeader name={name} userId={userId} chatId={props.chat._id} unselectChat={props.unselectChat} />
-                <div className="row padding-16 scrollable">
+                <div className="row padding-16 scrollable" id="scrollable-div">
                     {
                         messages !== [] ?
                             messages.map((msg, index) => {
