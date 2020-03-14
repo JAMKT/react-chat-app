@@ -484,6 +484,8 @@ svg.svg-inline--fa.fa-user.fa-w-14.svg-avatar-nav{
 .main-message-chat{
     background-color: #fff;
     box-shadow:inset -4px -4px 8px 3px #c9c9c9;
+    padding-bottom: 56px !important;
+    box-sizing: border-box;
 }
 .message-profile-icon{
     align-self: flex-end;
