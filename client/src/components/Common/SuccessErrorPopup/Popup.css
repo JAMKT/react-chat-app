@@ -13,6 +13,7 @@
     opacity: 1;
     display: block;
     cursor: pointer;
+    min-height: 100vh;
   }
   .close-modal{
     display: none;
@@ -28,6 +29,7 @@
     max-width: 400px;
     z-index: 9;
     cursor: auto;
+    
   }
   .modal-container h3{
     color: #6363FF;
