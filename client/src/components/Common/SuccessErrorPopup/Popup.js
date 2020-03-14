@@ -5,6 +5,7 @@ const Popup = (props) => {
     const [close, setClose] = useState(false);
 
     const closePopup = () => {
+        console.log('was clicked');
         setClose(true);
         document.getElementById("modal").classList.add("close-modal");
     }
