@@ -39,62 +39,6 @@ router.get('/:id/messages/:messageId', async (req, res) => {
     });
 });
 
-// POST
-// Create new message
-router.post('/:id/messages/', (req, res) => {
-    try {
-        let messagesArray = [];
-
-        const newMessage = new Message({
-            content: req.body.content,
-            author: {
-                id: req.user._id,
-                username: req.user.username
-            }
-        });
-
-        // newMessage.save();
-
-        Chat.findById(req.params.id, (err, chat) => {
-            if (err) res.send('Message not found.');
-
-            Message.create(newMessage, (err, message) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    message.save();
-                    chat.messages.push(message);
-                    chat.lastUpdate = message.created;
-                    chat.save();
-                }
-            })
-
-            // Push new message to array
-            messagesArray.push(newMessage);
-        }).then((chat) => {
-            res.send(chat)
-        });
-        
-
-        // Update chat with new messages
-        // Chat.findOneAndUpdate({ _id: req.params.id }, {
-        //     $addToSet: {
-        //         messages: messagesArray
-        //     },
-        //     $set: {
-        //         lastUpdate: newMessage.created
-        //     }
-        // }, 
-        // { new: true }, // Return the newly updated version of the document
-        // (err, chat) => {
-        //     if (err) { res.send('Could not update this chat.'); }
-        // });
-    } catch (err) {
-        res.send('Could not create this message.');
-    }
-
-});
-
 // DELETE
 // Delete message
 router.post('/:id/messages/:id', (req, res) => {

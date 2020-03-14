@@ -10,6 +10,10 @@ const chats = require('./routes/api/Chats');
 const messages = require('./routes/api/Messages');
 
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const socketio = require('socket.io');
+const io = socketio(server);
 
 //BodyParser Middleware
 app.use(bodyParser.json());
@@ -42,6 +46,7 @@ app.use(passport.initialize());
 // Initialize passport session
 app.use(passport.session());
 
+
 //User Routes
 app.use('/api/users', users);
 app.use('/api/chats', chats);
@@ -52,5 +57,44 @@ app.use((req, res, next) => {
     next();
 });
 
+// Models used for socket.io feature
+const Chat = require('./models/Chat');
+const Message = require('./models/Message');
+// Socket.io connection
+io.on('connection', socket => {
+    socket.on('send-message', (data, chatId) => {
+        console.log(data.content);
+        console.log(chatId);
+        try {
+            const newMessage = new Message({
+                content: data.content,
+                author: {
+                    id: data.author.id,
+                    username: data.author.username
+                }
+            });
+    
+            Chat.findById(chatId, (err, chat) => {
+                if (err) console.log('Message not found.');
+    
+                Message.create(newMessage, (err, message) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        message.save();
+                        chat.messages.push(message);
+                        chat.lastUpdate = message.created;
+                        chat.save();
+                    }
+                });
+            }).then((chat) => {
+                console.log(chat);
+            });
+        } catch (err) {
+            console.log('Could not create this message.');
+        }
+    });
+});
+
 const port = require('./config/env').serverPORT;
-app.listen(port, () => console.log(`Server started on port ${port}`));
+server.listen(port, () => console.log(`Server started on port ${port}`));

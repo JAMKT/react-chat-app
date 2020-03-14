@@ -5,48 +5,45 @@ import Message from './Message';
 import { useForm } from '../hooks/formHook';
 import { AuthContext } from '../context/authContext';
 import axios from 'axios';
+import io from 'socket.io-client';
 
 const MainMessageChat = (props) => {
     const auth = useContext(AuthContext);
     const [messages, setMessages] = useState([]);
     const [lastChatId, setLastChatId] = useState(null);
     const [loading, setLoading] = useState(false);
+    const socket = io(process.env.ENDPOINT || 'localhost:3000', {transports: ['websocket']});
 
     const sendMessage = (event) => {
-        setLoading(true);
         event.preventDefault();
-        const data = {
-            content: document.getElementById("message").value,
-            author: {
-                id: auth.currUser._id,
-                username: auth.currUser.username
-            }
-        }
+        setLoading(true);
 
-        document.getElementById("message").value = "";
-
-        const config = {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-
-        axios.post('/api/chats/' + props.chat._id + '/messages', data, config)
-            .then((newMessage) => {
-                if (newMessage) {
-                    getMessages();
+        try {
+            const data = {
+                content: document.getElementById("message").value,
+                author: {
+                    id: auth.currUser._id,
+                    username: auth.currUser.username
                 }
-            }).then(() => {
-                setLoading(false);
-            })
-            .catch(err => console.log(err));
+            }
+    
+            const chatId = props.chat._id;
+            socket.emit("send-message", data, chatId);
+    
+            getMessages();
+            setLoading(false);
+    
+            document.getElementById("message").value = "";
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     const getMessages = () => {
         setLoading(true);
-        console.log("GETTING MESSAGES")
-        setLastChatId(props.chat._id)
+
+        setLastChatId(props.chat._id);
+
         axios.get('/api/chats/' + props.chat._id + '/messages')
             .then((newMessages) => {
                 setMessages(newMessages.data.messages);
@@ -59,10 +56,7 @@ const MainMessageChat = (props) => {
 
     useEffect(() => {
         if(loading === false){
-            console.log(props.chat.messages)
-            console.log(messages)
             if (lastChatId !== props.chat._id) {
-                console.log("MISS MATCH CHAT ID")
                 getMessages();
                 return;
             }
@@ -94,7 +88,7 @@ const MainMessageChat = (props) => {
                     let names = namesArray.join(', ');
 
                     name = names;
-                    userId = member.user; // TODO: Fix
+                    userId = member.user;
                 }
             });
         } else {
