@@ -133,26 +133,22 @@ const UserListItem = (props) => {
                     { /* Bottom part of the column */}
                     <div className="row height-50 space-between align-center">
                         {
-                            props.nickname !== undefined ? 
-                                props.nickname : 
-                                visible === true ?
-                                    (
-                                        <form onSubmit={editContact}>
-                                            <input id="nickname" placeholder="Add a nickname..."/>
-                                            <input type="submit" value="Add"/>
-                                        </form>
-                                    ) :
-                                    null
+                            visible === true ?
+                            (
+                                <form onSubmit={editContact}>
+                                    <input id="nickname" placeholder="Add a nickname..."/>
+                                    <input type="submit" value="Add"/>
+                                </form>
+                            ) : (
+                                <span>{ props.nickname !== "" && props.nickname !== null && props.nickname !== undefined ? props.nickname : null }</span>
+                            )
                         }
                     </div>
                 </div>
-                {
-                    
-                    <div className="contact-buttons">
-                        <button className="contact-button-edit" onClick={openEditInput}>Edit</button>
-                        <button className="contact-button-delete" onClick={removeContact}>Delete</button>
-                    </div>
-                }
+                <div className="contact-buttons">
+                    <button className="contact-button-edit" onClick={openEditInput}>Edit</button>
+                    <button className="contact-button-delete" onClick={removeContact}>Delete</button>
+                </div>
             </div>
         )
     } else {
