@@ -170,7 +170,7 @@ const CreateGroup = (props) => {
                             <div className="row">
                                 <div className="search-field">
                                     <img src={process.env.PUBLIC_URL + '/icons/search-solid.svg'} alt=""/>
-                                    <input className='hide-input-field' type="text" />
+                                    <input id="contact-search" className='hide-input-field' type="text" onChange={ contactHandler }/>
                                 </div>
                             </div>
                             
