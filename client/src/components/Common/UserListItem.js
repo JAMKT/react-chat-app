@@ -81,11 +81,6 @@ const UserListItem = (props) => {
     };
 
     // Edit contact
-    const openEditInput = () => {
-        // Make input visible
-        setVisibility(true);
-    };
-
     const editContact = (event) => {
         event.preventDefault();
 
@@ -136,8 +131,9 @@ const UserListItem = (props) => {
                             visible === true ?
                             (
                                 <form onSubmit={editContact}>
-                                    <input id="nickname" placeholder="Add a nickname..."/>
-                                    <input type="submit" value="Add"/>
+                                    <input id="nickname" placeholder="Add a nickname..." className="add-nickname-input"/>
+                                    <input type="submit" value="Add" className="add-nickname-edit"/>
+                                    <button onClick={() => setVisibility(false)} className="add-nickname-cancel">Cancel</button>
                                 </form>
                             ) : (
                                 <span>{ props.nickname !== "" && props.nickname !== null && props.nickname !== undefined ? props.nickname : null }</span>
@@ -146,7 +142,7 @@ const UserListItem = (props) => {
                     </div>
                 </div>
                 <div className="contact-buttons">
-                    <button className="contact-button-edit" onClick={openEditInput}>Edit</button>
+                    <button className="contact-button-edit" onClick={() => setVisibility(true)}>Edit</button>
                     <button className="contact-button-delete" onClick={removeContact}>Delete</button>
                 </div>
             </div>
