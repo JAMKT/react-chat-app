@@ -249,40 +249,53 @@ function escapeRegex(text) {
 // GET
 // Delete User Account
 router.get("/:id/delete", isLoggedIn, (req, res) => {
-    req.user.contacts.forEach(contact => {
-        User.findOne({ username: contact.username }, (err, foundContact) => {
+    console.log(req.user.contacts);
+    if(req.user.contacts == null && req.user.contacts !== undefined && req.user.contacts.length !== 0){
+        req.user.contacts.forEach(contact => {
+            User.findOne({ username: contact.username }, (err, foundContact) => {
+                if (err) {
+                    res.send(err);
+                }
+                else {
+                    foundContact.contacts.forEach(contactToDelete => {
+                        if (contactToDelete.username === req.user.username) {
+                            const index = foundContact.contacts.indexOf(contactToDelete);
+                            if (index > -1) {
+                                foundContact.contacts.splice(index, 1);
+                                foundContact.save();
+                            }
+                        }
+    
+                    });
+                    Chat.deleteMany({ members: { $elemMatch: { user: req.user._id } } }, (err) => {
+                        if (err) {
+                            res.send(err);
+                        } else {
+                            //Finding user to delete by id
+                            User.findByIdAndRemove({ _id: req.user._id }, (err) => {
+                                if (err) {
+                                    res.send(err);
+    
+                                } else {
+                                    res.send("User deleted succesfully!")
+                                }
+                            });
+                        }
+                    });
+                }
+            })
+        });
+    }else{
+         User.findByIdAndRemove({ _id: req.user._id }, (err) => {
             if (err) {
                 res.send(err);
-            }
-            else {
-                foundContact.contacts.forEach(contactToDelete => {
-                    if (contactToDelete.username === req.user.username) {
-                        const index = foundContact.contacts.indexOf(contactToDelete);
-                        if (index > -1) {
-                            foundContact.contacts.splice(index, 1);
-                            foundContact.save();
-                        }
-                    }
 
-                });
-                Chat.deleteMany({ members: { $elemMatch: { user: req.user._id } } }, (err) => {
-                    if (err) {
-                        res.send(err);
-                    } else {
-                        //Finding user to delete by id
-                        User.findByIdAndRemove({ _id: req.user._id }, (err) => {
-                            if (err) {
-                                res.send(err);
-
-                            } else {
-                                res.send("User deleted succesfully!")
-                            }
-                        });
-                    }
-                });
+            } else {
+                res.send("User deleted succesfully!");
             }
-        })
-    });
+        });
+    }
+    
 });
 
 
