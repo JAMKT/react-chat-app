@@ -56,13 +56,12 @@ const MainMessageChat = (props) => {
             .catch(err => console.log(err));
     }
 
-    useEffect(() => {
+    useEffect(() => { 
         setLastChatId(props.chat._id)
         if (loading === false) {
             console.log(props.chat.messages)
             console.log(messages)
             if (lastChatId !== props.chat._id) {
-                console.log("MISS MATCH CHAT ID")
                 getMessages();
                 return;
             } else {
