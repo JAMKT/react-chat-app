@@ -45,7 +45,7 @@ const MainMessageChat = (props) => {
 
     const getMessages = () => {
         setLoading(true);
-        console.log("GETTING MESSAGES")
+        setLastChatId(props.chat._id);
         axios.get('/api/chats/' + props.chat._id + '/messages')
             .then((newMessages) => {
                 setMessages(newMessages.data.messages);
@@ -56,24 +56,27 @@ const MainMessageChat = (props) => {
             .catch(err => console.log(err));
     }
 
-    useEffect(() => { 
-        setLastChatId(props.chat._id)
-        if (loading === false) {
-            console.log(props.chat.messages)
-            console.log(messages)
+    useEffect(() => {
+        if(loading === false){
             if (lastChatId !== props.chat._id) {
                 getMessages();
                 return;
             } else {
-                // Somehow work without this, but maybe we will need it later... Don't delete
                 if (props.chat.messages.length > 0 && messages.length > 0) {
-                    // if (props.chat.messages[0] !== messages[0]._id) {
-                        console.log("DIFFERENT CHATS")
-                        getMessages();
-                        return;
-                    // }
+                    getMessages();
+                    return;
                 }
             }
+            /*
+            Somehow work without this, but maybe we will need it later... Don't delete
+            if (props.chat.messages.length > 0 && messages.length > 0) {
+                if (props.chat.messages[0] !== messages[0]._id) {
+                    console.log("DIFFERENT CHATS")
+                    getMessages();
+                    return;
+                }
+            }
+            */
         }
 
         const chatContainer = document.getElementById('scrollable-div');
