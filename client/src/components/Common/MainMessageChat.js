@@ -46,11 +46,10 @@ const MainMessageChat = (props) => {
     const getMessages = () => {
         setLoading(true);
         console.log("GETTING MESSAGES")
-        setLastChatId(props.chat._id)
         axios.get('/api/chats/' + props.chat._id + '/messages')
             .then((newMessages) => {
                 setMessages(newMessages.data.messages);
-                
+
             }).then(() => {
                 setLoading(false);
             })
@@ -58,24 +57,24 @@ const MainMessageChat = (props) => {
     }
 
     useEffect(() => {
-        if(loading === false){
+        setLastChatId(props.chat._id)
+        if (loading === false) {
             console.log(props.chat.messages)
             console.log(messages)
             if (lastChatId !== props.chat._id) {
                 console.log("MISS MATCH CHAT ID")
                 getMessages();
                 return;
-            }
-            /*
-            Somehow work without this, but maybe we will need it later... Don't delete
-            if (props.chat.messages.length > 0 && messages.length > 0) {
-                if (props.chat.messages[0] !== messages[0]._id) {
-                    console.log("DIFFERENT CHATS")
-                    getMessages();
-                    return;
+            } else {
+                // Somehow work without this, but maybe we will need it later... Don't delete
+                if (props.chat.messages.length > 0 && messages.length > 0) {
+                    // if (props.chat.messages[0] !== messages[0]._id) {
+                        console.log("DIFFERENT CHATS")
+                        getMessages();
+                        return;
+                    // }
                 }
             }
-            */
         }
 
         const chatContainer = document.getElementById('scrollable-div');
@@ -93,7 +92,7 @@ const MainMessageChat = (props) => {
             props.chat.members.forEach((member) => {
                 if (member.username !== auth.currUser.username) {
                     namesArray.push(member.username);
-                    
+
                     let names = namesArray.join(', ');
 
                     name = names;
@@ -112,7 +111,7 @@ const MainMessageChat = (props) => {
 
         return (
             <div className="col main-message-chat absolute-center-pin full-height">
-                <ChatHeader name={name} userId={userId} chatId={props.chat._id} unselectChat={props.unselectChat} getMessages={getMessages}/>
+                <ChatHeader name={name} userId={userId} chatId={props.chat._id} unselectChat={props.unselectChat} getMessages={getMessages} />
                 <div className="row padding-16 scrollable" id="scrollable-div">
                     {
                         messages.length > 0 ?
