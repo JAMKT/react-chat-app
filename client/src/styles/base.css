@@ -709,6 +709,7 @@ svg.svg-inline--fa.fa-user.fa-w-14{
 
     .mobile-full-height{
         height: 85vh;
+        min-height: 80vh;
     }
     .mobile-hide{
         display: none;
@@ -725,6 +726,10 @@ svg.svg-inline--fa.fa-user.fa-w-14{
         max-width: 30px;
         max-height: 30px;
     }
+    .no-padding-mobile{
+        padding: 0;
+    }
+  
 }
 
 
