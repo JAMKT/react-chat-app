@@ -14,6 +14,7 @@
     display: block;
     cursor: pointer;
     min-height: 100vh;
+    z-index: 8;
   }
   .close-modal{
     display: none;

@@ -112,10 +112,10 @@ const MainMessageChat = (props) => {
 
         return (
             <div className="col main-message-chat absolute-center-pin full-height">
-                <ChatHeader name={name} userId={userId} chatId={props.chat._id} unselectChat={props.unselectChat} />
+                <ChatHeader name={name} userId={userId} chatId={props.chat._id} unselectChat={props.unselectChat} getMessages={getMessages}/>
                 <div className="row padding-16 scrollable" id="scrollable-div">
                     {
-                        messages !== [] ?
+                        messages.length > 0 ?
                             messages.map((msg, index) => {
                                 let text;
                                 msg.author.id === auth.currUser._id ?
