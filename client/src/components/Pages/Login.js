@@ -67,17 +67,15 @@ const Login = (props) => {
 
     let errorMessage = 
         error === true ? (
-            <Popup>
+            <Popup clearPopupState={() => clearPopuState()}>
                 <h3>Login failed</h3>
                 <p>Incorrect email or password.</p>
             </Popup> ) : null;
-    
-    if (error === true){
-        setTimeout(function(){
-            setError(null);
-        }, 8000)
-    }
 
+    // Clear Popup state function for when the Popup is closed
+    const clearPopuState = () => {
+        setError(null);
+    }
 
     return (
         <div className="container">

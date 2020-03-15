@@ -102,7 +102,7 @@ const SettingItem = (props) => {
     // If "deleteCurrUser" state is true, display Popup
     let deleteUserPopup = 
         deleteCurrUser === true ? (
-            <Popup>
+            <Popup clearPopupState={() => clearPopuState()}>
                 <h3>Delete Account</h3>
                 <p>Are you sure you want to delete this account?</p>
                 <button className="delete-user-btn" onClick={() => deleteUser()}>Delete account</button>
@@ -120,12 +120,10 @@ const SettingItem = (props) => {
             .catch(err => console.log(err))
     }
 
-     
-    
     // If success, display success popup
     let successMessage = 
         success === true ? (
-            <Popup>
+            <Popup clearPopupState={() => clearPopuState()}>
                 <h3>Success!</h3>
                 <p>Profile Updated</p>
             </Popup> ) : null;
@@ -133,26 +131,19 @@ const SettingItem = (props) => {
     // If error, display error popup
     let errorMessage = 
         error === true ? (
-            <Popup>
+            <Popup clearPopupState={() => clearPopuState()}>
                 <h3>Error!</h3>
                 <p>Something went wrong. Please try again.</p>
             </Popup> ) : null;
-
-   
     
-    // Set timeout for success popup
-    if (success === true){
-        setTimeout(function(){
-            setSuccess(null);
-        }, 6000)
+     // Clear Popup state function for when the Popup is closed
+     const clearPopuState = () => {
+        setError(null);
+        setDeleteCurrUser(null);   
+        setSuccess(null);
     }
-
-     // Set timeout for deleteUser popup
-     if (deleteCurrUser === true){
-        setTimeout(function(){
-            setDeleteCurrUser(null);   
-        }, 6000)
-    }
+     
+    
 
     return (
         <div className="row padding-32 scrollable">

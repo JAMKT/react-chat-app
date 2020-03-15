@@ -122,16 +122,15 @@ const UserListItem = (props) => {
    // Delete User Popup
    let deletePopup = 
         deleteUserPopup === true ? (
-            <Popup>
+            <Popup clearPopupState={() => clearPopuState()}>
                 <h3>Delete Contact</h3>
                 <p className="p-popup">Are you sure you want to delete this contact?</p>
                <button className="contact-button-delete margin-xs" onClick={() => removeContact()}>Delete</button>
             </Popup> ) : null;
-  
-    if (deleteUserPopup === true){
-        setTimeout(() => {
-            setDeleteUserPopup(null);
-        }, 6000)
+    
+     // Clear Popup state function for when the Popup is closed
+     const clearPopuState = () => {
+        setDeleteUserPopup(null);
     }
 
     // Remove contact from your contacts list
