@@ -36,6 +36,7 @@ const MainMessageChat = (props) => {
             .then((newMessage) => {
                 if (newMessage) {
                     getMessages();
+                    setLoading(true);
                 }
             }).then(() => {
                 setLoading(false);
@@ -57,26 +58,20 @@ const MainMessageChat = (props) => {
     }
 
     useEffect(() => {
-        if(loading === false){
+        if (loading === false) {
             if (lastChatId !== props.chat._id) {
                 getMessages();
+                setLoading(true);
                 return;
             } else {
                 if (props.chat.messages.length > 0 && messages.length > 0) {
-                    getMessages();
-                    return;
+                    if (props.chat.messages[0].id !== messages[0]._id && props.chat.messages.length !== messages.length) {
+                        getMessages();
+                        setLoading(true);
+                        return;
+                    }
                 }
             }
-            /*
-            Somehow work without this, but maybe we will need it later... Don't delete
-            if (props.chat.messages.length > 0 && messages.length > 0) {
-                if (props.chat.messages[0] !== messages[0]._id) {
-                    console.log("DIFFERENT CHATS")
-                    getMessages();
-                    return;
-                }
-            }
-            */
         }
 
         const chatContainer = document.getElementById('scrollable-div');
