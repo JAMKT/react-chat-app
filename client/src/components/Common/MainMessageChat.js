@@ -59,12 +59,14 @@ const MainMessageChat = (props) => {
 
     useEffect(() => {
         if(loading === false){
-            console.log(props.chat.messages)
-            console.log(messages)
             if (lastChatId !== props.chat._id) {
-                console.log("MISS MATCH CHAT ID")
                 getMessages();
                 return;
+            } else {
+                if (props.chat.messages.length > 0 && messages.length > 0) {
+                    getMessages();
+                    return;
+                }
             }
             /*
             Somehow work without this, but maybe we will need it later... Don't delete
