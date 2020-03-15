@@ -53,4 +53,5 @@ app.use((req, res, next) => {
 });
 
 const port = require('./config/env').serverPORT;
+
 app.listen(port, () => console.log(`Server started on port ${port}`));
