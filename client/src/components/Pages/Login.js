@@ -80,7 +80,7 @@ const Login = (props) => {
     return (
         <div className="container">
             <div className="row">
-                <div className="padding-32 side-col white-bg">
+                <div className="padding-32 side-col white-bg mobile-full-height">
                     <h1 className="margin-s text-center">Log in</h1>
                     <form onSubmit={onSubmitHandler}>
                         <Input
@@ -119,7 +119,7 @@ const Login = (props) => {
                 </div>
 
 
-                <div className="col blue-bg full-height padding-32">
+                <div className="col blue-bg full-height padding-32 mobile-hide">
 
                 </div>
             </div>
