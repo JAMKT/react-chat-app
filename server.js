@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require("passport");
 const session = require("express-session");
 const sessionSecret = require('./config/sessionConfig').secret;
+const path = require('path');
 
 const users = require('./routes/api/Users');
 const chats = require('./routes/api/Chats');
@@ -51,6 +52,16 @@ app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     next();
 });
+
+//Serve static assets if we are in production
+if(process.env.NODE_ENV === 'production'){
+    //Set static folder
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 const port = require('./config/env').serverPORT;
 
