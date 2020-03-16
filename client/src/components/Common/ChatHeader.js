@@ -24,7 +24,6 @@ const ChatHeader = (props) => {
     const clearChat = () => {
         axios.get('/api/chats/clear-chat/' + props.chatId)
             .then((response) => {
-                console.log(response);
                 props.getMessages();
                 setClearChatPopup(null);
             })
