@@ -1,6 +1,9 @@
 {
   "name": "react-chat-app",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.14.1"
+  },
   "description": "Chat application developed using the MERN stack (MongoDB, Express.js, React.js and Node.js).",
   "main": "server.js",
   "scripts": {
