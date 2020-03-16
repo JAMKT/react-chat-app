@@ -32,9 +32,7 @@ const UserListItem = (props) => {
 
     // Update the current user's "Contacts" page when a user is deleted
     const updateContacts = () => {
-        console.log('update contacts function was called');
         props.getContactList();
-        //props.history.push('/')
     }
 
     // Get user avatar
@@ -105,17 +103,16 @@ const UserListItem = (props) => {
         };
 
         axios.post('/api/users/update-contact/' + props.name, data, config)
-            .then(() => {
+            .then((response) => {
                 history.push('/all');
             })
             .catch(err => console.log(err));
-    };
+        };
 
 
     
     // Delet user popup
    const deletePopupHandler = () => {
-       console.log('was clicked')
         setDeleteUserPopup(true);
    }
 
@@ -128,16 +125,29 @@ const UserListItem = (props) => {
                <button className="contact-button-delete margin-xs" onClick={() => removeContact()}>Delete</button>
             </Popup> ) : null;
     
+
      // Clear Popup state function for when the Popup is closed
      const clearPopuState = () => {
         setDeleteUserPopup(null);
+        setVisibility(false);
     }
+
+     // Delete User Popup
+    let editPopup = 
+    visible === true ? (
+        <Popup clearPopupState={() => clearPopuState()}>
+            <h3>Add a nickname...</h3>
+            <form onSubmit={editContact}>
+                <input id="nickname" placeholder="Add a nickname..." className="add-nickname-input"/>
+                <input type="submit" value="Add" className="add-nickname-edit"/>
+                <button onClick={() => setVisibility(false)} className="add-nickname-cancel">Cancel</button>
+            </form>
+        </Popup> ) : null;
 
     // Remove contact from your contacts list
     const removeContact = () => {
         axios.get('/api/users/remove-contact/' + props.name)
             .then((deletedUser) => {
-                console.log(deletedUser);
                 updateContacts();
                 
             })
@@ -148,6 +158,7 @@ const UserListItem = (props) => {
     if (props.selectContact !== undefined){
         return (
             <div className="user-list-item padding-20 row">
+                {editPopup}
                 {deletePopup}
                 { /* Column just for the user image */}
                 <div className="user-list-img-col clickable" onClick={() => props.selectContact(props.id)}>
@@ -163,18 +174,8 @@ const UserListItem = (props) => {
                     </div>
                     { /* Bottom part of the column */}
                     <div className="row height-50 space-between align-center">
-                        {
-                            visible === true ?
-                            (
-                                <form onSubmit={editContact}>
-                                    <input id="nickname" placeholder="Add a nickname..." className="add-nickname-input"/>
-                                    <input type="submit" value="Add" className="add-nickname-edit"/>
-                                    <button onClick={() => setVisibility(false)} className="add-nickname-cancel">Cancel</button>
-                                </form>
-                            ) : (
-                                <span>{ props.nickname !== "" && props.nickname !== null && props.nickname !== undefined ? props.nickname : null }</span>
-                            )
-                        }
+                        { /* Display nickname if user has one */}
+                        <span>{ props.nickname !== "" && props.nickname !== null && props.nickname !== undefined ? props.nickname : null }</span>
                     </div>
                 </div>
                 <div className="contact-buttons">
@@ -228,7 +229,7 @@ const UserListItem = (props) => {
                     )
                     : (
                         <div className="user-list-button-col">
-                            {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name} >Add friend</button>}
+                            {props.alreadyAdded === "Already a friend" ? "" : <button onClick={apiCall} id={props.name} className="contact-button-edit">Add friend</button>}
                         </div>
                     )
                 }

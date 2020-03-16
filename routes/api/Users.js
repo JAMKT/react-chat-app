@@ -143,7 +143,7 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
 });
 
 // Update user's contact
-router.post('/update-contact/:username', (req, res) => {
+router.post('/update-contact/:username', isLoggedIn, (req, res) => {
     const nickname = req.body.nickname;
 
     User.updateOne({ "_id": req.user._id, "contacts": { $elemMatch: { username: req.params.username }} }, {
@@ -249,7 +249,6 @@ function escapeRegex(text) {
 // GET
 // Delete User Account
 router.get("/:id/delete", isLoggedIn, (req, res) => {
-    console.log(req.user.contacts);
     if(req.user.contacts !== null && req.user.contacts !== undefined && req.user.contacts.length !== 0){
         req.user.contacts.forEach(contact => {
             User.findOne({ username: contact.username }, (err, foundContact) => {

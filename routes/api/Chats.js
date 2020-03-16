@@ -5,11 +5,11 @@ const router = express.Router();
 const Chat = require('../../models/Chat');
 const User = require('../../models/User');
 
-const middleware = require('../../middleware/isLoggedIn');
+const isLoggedIn = require('../../middleware/isLoggedIn');
 
 // GET
 // Get all chats
-router.get('/', (req, res) => {
+router.get('/', isLoggedIn, (req, res) => {
     Chat.find({ members: { $elemMatch: { user: req.user._id } } }, (err, chats) => {
         res.send(chats);
     }).sort({ "lastUpdate": -1 });
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
 // GET
 // Get normal/default chats
-router.get('/default', (req, res) => {
+router.get('/default', isLoggedIn, (req, res) => {
     Chat.find({ $where: "this.members.length === 2" }, (err, chats) => {
         res.send(chats);
     });
@@ -25,7 +25,7 @@ router.get('/default', (req, res) => {
 
 // GET
 // Get group chats
-router.get('/group', (req, res) => {
+router.get('/group', isLoggedIn, (req, res) => {
     Chat.find({ $where: "this.members.length > 2" }, (err, chats) => {
         res.send(chats);
     });
@@ -33,7 +33,7 @@ router.get('/group', (req, res) => {
 
 // GET
 // Get single chat by its id
-router.get('/:id', (req, res) => {
+router.get('/:id', isLoggedIn, (req, res) => {
     Chat.findById(req.params.id, (err, chat) => {
         if (err) res.send('Chat not found.');
         res.send(chat);
@@ -42,7 +42,7 @@ router.get('/:id', (req, res) => {
 
 // POST
 // Create chat
-router.post('/', async (req, res) => {
+router.post('/', isLoggedIn, async (req, res) => {
     let chatMembers = [];
     let membersList = req.body.members;
 
@@ -81,7 +81,7 @@ router.post('/', async (req, res) => {
 
 // DELETE
 // Delete group chat
-router.post('/:id', (req, res) => {
+router.post('/:id', isLoggedIn, (req, res) => {
     try {
         Chat.findByIdAndRemove({ _id: req.params.id }, (err) => {
             if (err) console.log(err);
@@ -94,7 +94,7 @@ router.post('/:id', (req, res) => {
 
 //GET
 //Get last 10 chats
-router.get('/last-ten', middleware, (req, res) => {
+router.get('/last-ten', isLoggedIn, (req, res) => {
     Chat.find({ "members": { $elemMatch: { "user": req.user.id } } }).sort({ "lastUpdate": -1 }).limit(10).exec((err, lastChats) => {
         if (err) {
             console.log(err);
@@ -106,7 +106,7 @@ router.get('/last-ten', middleware, (req, res) => {
 
 // GET
 // Get the chats that fit the search with regex
-router.get('/searching/:username', (req, res) => {
+router.get('/searching/:username', isLoggedIn, (req, res) => {
     if (req.params.username) {
         // Declaring the regular expression of the search
         const regex = new RegExp(escapeRegex(req.params.username), 'gi');
@@ -140,7 +140,7 @@ router.get('/searching/:username', (req, res) => {
 
 // GET
 // Clear chat
-router.get('/clear-chat/:id', (req, res) => {
+router.get('/clear-chat/:id', isLoggedIn, (req, res) => {
     Chat.findOneAndUpdate({ _id: req.params.id }, {
         $set: {
             messages: []
