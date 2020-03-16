@@ -5,9 +5,11 @@ const router = express.Router();
 const Chat = require('../../models/Chat');
 const Message = require('../../models/Message');
 
+const isLoggedIn = require('../../middleware/isLoggedIn');
+
 // GET
 // Get all messages related to a specific chat
-router.get('/:id/messages', (req, res) => {
+router.get('/:id/messages', isLoggedIn, (req, res) => {
     Chat.findById(req.params.id).populate("messages").sort({ "created": -1 }).exec((err, chat) => {
         if (err) res.send('Chat not found.');
         res.send(chat);
@@ -16,7 +18,7 @@ router.get('/:id/messages', (req, res) => {
 
 // GET
 // Get single message by its id
-router.get('/:id/messages/:messageId', async (req, res) => {
+router.get('/:id/messages/:messageId', isLoggedIn, async (req, res) => {
     const message = await Message.findById(req.params.messageId, (err, message) => {
         if (err) res.send('Message not found.');
         return message;
@@ -41,7 +43,7 @@ router.get('/:id/messages/:messageId', async (req, res) => {
 
 // POST
 // Create new message
-router.post('/:id/messages/', (req, res) => {
+router.post('/:id/messages/', isLoggedIn, (req, res) => {
     try {
         let messagesArray = [];
 
@@ -52,8 +54,6 @@ router.post('/:id/messages/', (req, res) => {
                 username: req.user.username
             }
         });
-
-        // newMessage.save();
 
         Chat.findById(req.params.id, (err, chat) => {
             if (err) res.send('Message not found.');
@@ -74,21 +74,6 @@ router.post('/:id/messages/', (req, res) => {
         }).then((chat) => {
             res.send(chat)
         });
-        
-
-        // Update chat with new messages
-        // Chat.findOneAndUpdate({ _id: req.params.id }, {
-        //     $addToSet: {
-        //         messages: messagesArray
-        //     },
-        //     $set: {
-        //         lastUpdate: newMessage.created
-        //     }
-        // }, 
-        // { new: true }, // Return the newly updated version of the document
-        // (err, chat) => {
-        //     if (err) { res.send('Could not update this chat.'); }
-        // });
     } catch (err) {
         res.send('Could not create this message.');
     }
@@ -97,7 +82,7 @@ router.post('/:id/messages/', (req, res) => {
 
 // DELETE
 // Delete message
-router.post('/:id/messages/:id', (req, res) => {
+router.post('/:id/messages/:id', isLoggedIn, (req, res) => {
     try {
         Message.findByIdAndRemove({ _id: req.params.id }, (err) => {
             if (err) console.log(err);

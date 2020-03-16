@@ -143,7 +143,7 @@ router.get('/new-contact/:username', isLoggedIn, (req, res) => {
 });
 
 // Update user's contact
-router.post('/update-contact/:username', (req, res) => {
+router.post('/update-contact/:username', isLoggedIn, (req, res) => {
     const nickname = req.body.nickname;
 
     User.updateOne({ "_id": req.user._id, "contacts": { $elemMatch: { username: req.params.username }} }, {
