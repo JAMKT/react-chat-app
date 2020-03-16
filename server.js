@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const session = require("express-session");
-const sessionSecret = 'g00dN3ws'; 
+const sessionSecret = require('./config/sessionConfig').secret;
 const path = require('path');
 
 const users = require('./routes/api/Users');
