@@ -249,7 +249,6 @@ function escapeRegex(text) {
 // GET
 // Delete User Account
 router.get("/:id/delete", isLoggedIn, (req, res) => {
-    console.log(req.user.contacts);
     if(req.user.contacts !== null && req.user.contacts !== undefined && req.user.contacts.length !== 0){
         req.user.contacts.forEach(contact => {
             User.findOne({ username: contact.username }, (err, foundContact) => {

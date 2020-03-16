@@ -51,8 +51,7 @@ const Login = (props) => {
         
         axios.post('/api/users/login', data, config)
             .then((foundUser) => {
-                if(foundUser.data.success === false){
-                    console.log('Incorrect email incorrect');
+                if (foundUser.data.success === false) {
                     setError(true);
                 }
                 if (foundUser.data.foundUser) {

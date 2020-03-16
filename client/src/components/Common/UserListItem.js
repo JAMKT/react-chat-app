@@ -32,9 +32,7 @@ const UserListItem = (props) => {
 
     // Update the current user's "Contacts" page when a user is deleted
     const updateContacts = () => {
-        console.log('update contacts function was called');
         props.getContactList();
-        //props.history.push('/')
     }
 
     // Get user avatar
@@ -96,7 +94,6 @@ const UserListItem = (props) => {
         const nickname = document.getElementById("nickname").value;
 
         const data = { nickname };
-        console.log(data);
 
         const config = {
             withCredentials: true,
@@ -107,7 +104,6 @@ const UserListItem = (props) => {
 
         axios.post('/api/users/update-contact/' + props.name, data, config)
             .then((response) => {
-                console.log(response);
                 history.push('/all');
             })
             .catch(err => console.log(err));
@@ -117,7 +113,6 @@ const UserListItem = (props) => {
     
     // Delet user popup
    const deletePopupHandler = () => {
-       console.log('was clicked')
         setDeleteUserPopup(true);
    }
 
@@ -153,7 +148,6 @@ const UserListItem = (props) => {
     const removeContact = () => {
         axios.get('/api/users/remove-contact/' + props.name)
             .then((deletedUser) => {
-                console.log(deletedUser);
                 updateContacts();
                 
             })

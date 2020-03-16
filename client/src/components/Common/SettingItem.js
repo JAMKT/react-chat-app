@@ -110,7 +110,6 @@ const SettingItem = (props) => {
 
     // Delete user
     const deleteUser = () => {
-        console.log('delete user');
         axios.get('/api/users/' + auth.currUser._id + '/delete')
             .then(() => {
                 auth.loggedIn = false;

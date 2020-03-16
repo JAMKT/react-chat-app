@@ -24,10 +24,8 @@ const Contacts = (props) => {
     })
 
     const getContactList = () => {
-        console.log('getContactList funciton in Contacts.js was called');
         axios.get('/api/users/current-user')
             .then(user => {
-                console.log(user.data.contacts);
                 setContacts(user.data.contacts);
                 setUsers(null);
             })
