@@ -105,7 +105,7 @@ const SettingItem = (props) => {
             <Popup clearPopupState={() => clearPopuState()}>
                 <h3>Delete Account</h3>
                 <p>Are you sure you want to delete this account?</p>
-                <button className="delete-user-btn" onClick={() => deleteUser()}>Delete account</button>
+                <button className="delete-user-btn delete-user-btn-mobile" onClick={() => deleteUser()}>Delete account</button>
             </Popup> ) : null;
 
     // Delete user
@@ -266,7 +266,7 @@ const SettingItem = (props) => {
                             disabledBtn={!formState.isValid}>Submit</Button>
                     </form>
 
-                    <button className="delete-user-btn" onClick={deleteUserHandler}>Delete account</button>
+                    <button className="delete-user-btn delete-user-btn-mobile" onClick={deleteUserHandler}>Delete account</button>
                 </div>
             </div>
         </div>
