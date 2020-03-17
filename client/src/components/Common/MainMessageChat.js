@@ -17,20 +17,15 @@ const MainMessageChat = (props) => {
         transports: ['polling', 'websocket']
     });
 
-    socket.on('get-messages', messages => {
-        getMessages();
-    });
+        socket.on('get-messages', messages => {
+            getMessages();
+        });
 
     const joinRoom = () => {
         console.log("Creating room")
         socket.emit('create', props.chat._id);
         setRoom(true)
     }
-
-    // const joinRoom = () => {
-    //     socket.join(props.chat._id);
-    //     setRoom(true)
-    // }
 
     const sendMessage = (event) => {
         console.log(socket)
@@ -43,9 +38,9 @@ const MainMessageChat = (props) => {
             console.log("RECONNECTING")
             socket.connect()
         }
-
+        
         setLoading(true);
-
+        
         const data = {
             content: document.getElementById("message").value,
             author: {
@@ -59,8 +54,8 @@ const MainMessageChat = (props) => {
             data: data,
             chatId: chatId
         }
-        // socket.emit("send-message", packet);
-        io.to('some room').emit('some event', packet);
+        socket.emit("send-message", packet);
+
         console.log('outside');
 
         getMessages();
@@ -83,7 +78,7 @@ const MainMessageChat = (props) => {
     }
 
     useEffect(() => {
-        if (loading === false) {
+        if(loading === false){
             if (lastChatId !== props.chat._id) {
                 getMessages();
                 setLoading(true);
@@ -93,9 +88,6 @@ const MainMessageChat = (props) => {
         if(room !== true){
             joinRoom()
         }
-        // if (room === false) {
-        //     joinRoom()
-        // }
         const chatContainer = document.getElementById('scrollable-div');
         chatContainer.scrollTop = chatContainer.scrollHeight;
     });
