@@ -24,6 +24,10 @@ const SettingItem = (props) => {
             username: {
                 value: props.auth.username,
                 isValid: true
+            },
+            address: {
+                value: props.auth.address,
+                isValid: true
             }
         },
         {
@@ -47,6 +51,7 @@ const SettingItem = (props) => {
             email: formState.inputs.email.value,
             name: formState.inputs.name.value,
             username: formState.inputs.username.value,
+            address: formState.inputs.address.value,
             avatarColor: avatarColor
         }
         
@@ -62,6 +67,11 @@ const SettingItem = (props) => {
             // get current user
             let user = auth.currUser;
 
+            // check if current user's address is the same as the new address
+            if(user.address !== data.data.address){
+                // set the new address if it's different from the current user's address
+                user.address = data.data.address;
+            }  
             // check if current user's color is the same as the color selected by the user
             if(user.avatarColor !== data.data.avatarColor){
                 // set the selected/new color if it's different from the current user's color
@@ -252,6 +262,20 @@ const SettingItem = (props) => {
                             value={formState.inputs.email.value}
                             errorText="Please enter a valid email."
                             validator={[VALIDATOR_EMAIL()]}
+                            onInput={inputHandler}
+                            inputStyle="hide-text-input-field"
+                            inputContainerStyle="margin-s input-field grey-bg"
+                            labelStyle="input-field-label-active"
+                            errorStyle="error-border"
+                            />
+                        <Input 
+                            id="address"
+                            type="text"
+                            label="Address"
+                            valid={true}
+                            value={formState.inputs.address.value}
+                            errorText="Please enter your address."
+                            validator={[VALIDATOR_REQUIRE()]}
                             onInput={inputHandler}
                             inputStyle="hide-text-input-field"
                             inputContainerStyle="margin-s input-field grey-bg"
