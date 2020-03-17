@@ -22,7 +22,8 @@ const MainMessageChat = (props) => {
         });
 
     const joinRoom = () => {
-        socket.join(props.chat._id);
+        console.log("Creating room")
+        socket.emit('create', props.chat._id);
         setRoom(true)
     }
 
@@ -84,7 +85,7 @@ const MainMessageChat = (props) => {
                 return;
             } 
         }
-        if(room === false){
+        if(room !== true){
             joinRoom()
         }
         const chatContainer = document.getElementById('scrollable-div');

@@ -63,6 +63,10 @@ const Message = require('./models/Message');
 // Socket.io connection
 
     io.on('connection', socket => {
+        socket.on('create', room => {
+            console.log("CREATING ROOM")
+            socket.join(room);
+        });
         socket.on('send-message', packet => {
             try {
                 const newMessage = new Message({
@@ -89,7 +93,7 @@ const Message = require('./models/Message');
                     });
                 }).then(chat => {
                     console.log(chat)
-                    socket.broadcast.to(chat.id.toString()).emit('get-messages', "Message");
+                    socket.to(chat._id.toString()).emit('get-messages', "Message");
                 }).catch(err => console.log(err));
             } catch (err) {
                 console.log('Could not create this message.');
