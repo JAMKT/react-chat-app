@@ -95,16 +95,12 @@ io.on('connection', socket => {
             console.log('Could not create this message.');
         }
     });
-
-    socket.on('disconnect', () => {
-        console.log('Disconnected.');
-    });
 });
 
 
-// io.on('disconnect', () => {
-//     console.log('Disconnected.');
-// });
+io.on('disconnect', () => {
+    console.log('Disconnected.');
+});
 
 if (process.env.NODE_ENV === 'production') {
     //Set static folder
