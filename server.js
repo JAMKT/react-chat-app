@@ -68,14 +68,14 @@ io.on('connection', socket => {
         try {
             console.log(packet);
             const newMessage = new Message({
-                content: packet.data.content,
+                content: packet.packet.data.content,
                 author: {
-                    id: packet.data.author.id,
-                    username: packet.data.author.username
+                    id: packet.packet.data.author.id,
+                    username: packet.packet.data.author.username
                 }
             });
-
-            Chat.findById(packet.chatId, (err, chat) => {
+            
+            Chat.findById(packet.packet.chatId, (err, chat) => {
                 if (err) console.log('Message not found.');
 
                 Message.create(newMessage, (err, message) => {
