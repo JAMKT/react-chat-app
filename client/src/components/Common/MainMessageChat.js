@@ -36,7 +36,7 @@ const MainMessageChat = (props) => {
             .then((newMessage) => {
                 if (newMessage) {
                     getMessages();
-                    setLoading(false);
+                    setLoading(true);
                 }
             }).then(() => {
                 setLoading(false);
