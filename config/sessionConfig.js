@@ -1,3 +1,3 @@
 module.exports = {
-    secret: '' // Add your secret key here
+    secret: 'hjvlhckyfxgdx' // Add your secret key here
 }
