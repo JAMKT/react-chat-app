@@ -286,7 +286,7 @@ const SettingItem = (props) => {
                         <Button 
                             type="submit"
                             btnStyle="Button margin-xs"
-                            disabledBtn={!formState.isValid}>Submit</Button>
+                            disabledBtn={!formState.isValid}>Save</Button>
                     </form>
 
                     <button className="delete-user-btn delete-user-btn-mobile" onClick={deleteUserHandler}>Delete account</button>
