@@ -66,6 +66,7 @@ const Message = require('./models/Message');
 io.on('connection', socket => {
     socket.on('send-message', packet => {
         try {
+            console.log(packet);
             const newMessage = new Message({
                 content: packet.data.content,
                 author: {
