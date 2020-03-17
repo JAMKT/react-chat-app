@@ -13,6 +13,7 @@ const MainMessageChat = (props) => {
     const [loading, setLoading] = useState(false);
 
     const sendMessage = (event) => {
+        setLoading(false);
         event.preventDefault();
         const data = {
             content: document.getElementById("message").value,
