@@ -36,7 +36,7 @@ const MainMessageChat = (props) => {
             .then((newMessage) => {
                 if (newMessage) {
                     getMessages();
-                    setLoading(true);
+                    setLoading(false);
                 }
             }).then(() => {
                 setLoading(false);
@@ -44,9 +44,8 @@ const MainMessageChat = (props) => {
             .catch(err => console.log(err));
     }
 
-    const getMessages = (event) => {
+    const getMessages = () => {
         setLoading(true);
-        event.preventDefault();
         setLastChatId(props.chat._id);
         axios.get('/api/chats/' + props.chat._id + '/messages')
             .then((newMessages) => {
