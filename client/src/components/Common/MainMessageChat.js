@@ -12,7 +12,7 @@ const MainMessageChat = (props) => {
     const [messages, setMessages] = useState([]);
     const [lastChatId, setLastChatId] = useState(null);
     const [loading, setLoading] = useState(false);
-    const socket = io(process.env.ENDPOINT || 'http://localhost:5000', {
+    const socket = io(process.env.ENDPOINT, {
         transports: ['websocket']
     });
 
