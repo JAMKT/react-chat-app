@@ -17,14 +17,20 @@ const MainMessageChat = (props) => {
         transports: ['polling', 'websocket']
     });
 
-        socket.on('get-messages', messages => {
-            getMessages();
-        });
+    socket.on('get-messages', messages => {
+        getMessages();
+    });
 
-    const joinRoom = () => {
-        socket.join(props.chat._id);
-        setRoom(true)
+    socket.on('connect', onConnect);
+    function onConnect() {
+        console.log('connected');
+        socket.emit('join', 'my very own room');
     }
+
+    // const joinRoom = () => {
+    //     socket.join(props.chat._id);
+    //     setRoom(true)
+    // }
 
     const sendMessage = (event) => {
         console.log(socket)
@@ -37,9 +43,9 @@ const MainMessageChat = (props) => {
             console.log("RECONNECTING")
             socket.connect()
         }
-        
+
         setLoading(true);
-        
+
         const data = {
             content: document.getElementById("message").value,
             author: {
@@ -53,8 +59,8 @@ const MainMessageChat = (props) => {
             data: data,
             chatId: chatId
         }
-        socket.emit("send-message", packet);
-
+        // socket.emit("send-message", packet);
+        io.to('some room').emit('some event', packet);
         console.log('outside');
 
         getMessages();
@@ -77,16 +83,16 @@ const MainMessageChat = (props) => {
     }
 
     useEffect(() => {
-        if(loading === false){
+        if (loading === false) {
             if (lastChatId !== props.chat._id) {
                 getMessages();
                 setLoading(true);
                 return;
-            } 
+            }
         }
-        if(room === false){
-            joinRoom()
-        }
+        // if (room === false) {
+        //     joinRoom()
+        // }
         const chatContainer = document.getElementById('scrollable-div');
         chatContainer.scrollTop = chatContainer.scrollHeight;
     });

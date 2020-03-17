@@ -62,44 +62,53 @@ const Chat = require('./models/Chat');
 const Message = require('./models/Message');
 // Socket.io connection
 
-    io.on('connection', socket => {
-        socket.on('send-message', packet => {
-            try {
-                const newMessage = new Message({
-                    content: packet.data.content,
-                    author: {
-                        id: packet.data.author.id,
-                        username: packet.data.author.username
-                    }
-                });
-
-                Chat.findById(packet.chatId, (err, chat) => {
-                    if (err) console.log('Message not found.');
-
-                    Message.create(newMessage, (err, message) => {
-                        if (err) {
-                            console.log(err);
-                            console.log("Message was not created...");
-                        } else {
-                            message.save();
-                            chat.messages.push(message);
-                            chat.lastUpdate = message.created;
-                            chat.save();
-                        }
-                    });
-                }).then(chat => {
-                    console.log(chat)
-                    socket.broadcast.to(chat.id.toString()).emit('get-messages', "Message");
-                }).catch(err => console.log(err));
-            } catch (err) {
-                console.log('Could not create this message.');
-            }
+io.on('connection', socket => {
+    // listen for a custom event from the client and join that room
+    socket.on('join', function (room) {
+        console.log('join', room);
+        // joining 
+        socket.join(room, function () {
+            console.log(socket.rooms);
         });
     });
 
+    socket.on('send-message', packet => {
+        try {
+            const newMessage = new Message({
+                content: packet.data.content,
+                author: {
+                    id: packet.data.author.id,
+                    username: packet.data.author.username
+                }
+            });
+
+            Chat.findById(packet.chatId, (err, chat) => {
+                if (err) console.log('Message not found.');
+
+                Message.create(newMessage, (err, message) => {
+                    if (err) {
+                        console.log(err);
+                        console.log("Message was not created...");
+                    } else {
+                        message.save();
+                        chat.messages.push(message);
+                        chat.lastUpdate = message.created;
+                        chat.save();
+                    }
+                });
+            }).then(chat => {
+                console.log(chat)
+                socket.broadcast.to(chat.id.toString()).emit('get-messages', "Message");
+            }).catch(err => console.log(err));
+        } catch (err) {
+            console.log('Could not create this message.');
+        }
+    });
+});
+
 io.on('reconnect_attempt', () => {
     io.connect().
-    console.log("RECONNECTING")
+        console.log("RECONNECTING")
 });
 
 io.on('reconnect_failed', () => {
@@ -111,7 +120,7 @@ io.on('disconnect', () => {
     io.connect();
 });
 io.on('connect_timeout', (timeout) => {
-            console.log("TIMEOUT")
+    console.log("TIMEOUT")
     io.connect();
 });
 io.on('connect_error', (error) => {
