@@ -77,7 +77,6 @@ const MainMessageChat = (props) => {
         chatContainer.scrollTop = chatContainer.scrollHeight;
     });
 
-
     if (props.chat !== null && typeof props.chat !== 'undefined') {
         let name;
         let userId;
