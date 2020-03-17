@@ -89,7 +89,7 @@ io.on('connection', socket => {
                     }
                 });
             }).then(chat => {
-                socket.emit('get-messages', {"Message"});
+                socket.emit('get-messages', "Message");
             }).catch(err => console.log(err));
         } catch (err) {
             console.log('Could not create this message.');
