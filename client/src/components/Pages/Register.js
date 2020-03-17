@@ -26,6 +26,10 @@ const Register = () => {
             username: {
                 value: '',
                 isValid: false
+            },
+            address: {
+                value: '',
+                isValid: false
             }
         },
         {
@@ -40,6 +44,7 @@ const Register = () => {
             username: formState.inputs.username.value,
             name: formState.inputs.name.value,
             email: formState.inputs.email.value,
+            address: formState.inputs.address.value,
             avatarColor: 'BLACK',
             password: formState.inputs.password.value
         }
@@ -89,6 +94,19 @@ const Register = () => {
                             type="username"
                             label="Username"
                             errorText="Please enter a valid username."
+                            validator={[VALIDATOR_REQUIRE()]}
+                            onInput={inputHandler}
+                            inputStyle="hide-text-input-field"
+                            inputContainerStyle="margin-s input-field"
+                            labelStyle="input-field-label"
+                            errorStyle="error-border"
+                        />
+
+                        <Input
+                            id="address"
+                            type="address"
+                            label="Address"
+                            errorText="Please enter a valid address."
                             validator={[VALIDATOR_REQUIRE()]}
                             onInput={inputHandler}
                             inputStyle="hide-text-input-field"
