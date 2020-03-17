@@ -13,7 +13,7 @@ const MainMessageChat = (props) => {
     const [loading, setLoading] = useState(false);
 
     const sendMessage = (event) => {
-        setLoading(false);
+        setLoading(true);
         event.preventDefault();
         const data = {
             content: document.getElementById("message").value,
@@ -39,7 +39,7 @@ const MainMessageChat = (props) => {
                     setLoading(true);
                 }
             }).then(() => {
-                setLoading(false);
+                setLoading(true);
             })
             .catch(err => console.log(err));
     }
@@ -50,29 +50,35 @@ const MainMessageChat = (props) => {
         axios.get('/api/chats/' + props.chat._id + '/messages')
             .then((newMessages) => {
                 setMessages(newMessages.data.messages);
-                setLoading(false);
+                setLoading(true);
             }).then(() => {
                 setLoading(false);
             })
             .catch(err => console.log(err));
     }
 
+    document.onload = () => {
+        getMessages();
+    }
+
     useEffect(() => {
         if (loading === false) {
             if (lastChatId !== props.chat._id) {
                 getMessages();
-                setLoading(false);
+                setLoading(true);
                 return;
             } else {
-                if (props.chat.messages.length > 0 && messages.length > 0) {
-                    if (props.chat.messages[0].id !== messages[0]._id && props.chat.messages.length !== messages.length) {
-                        getMessages();
-                        setLoading(false);
-                        return;
+                if (props.chat.messages.length > 0 || messages.length > 0) {
+                    if (props.chat.messages.length !== messages.length || typeof messages.lenght === 'undefined') {
+                        if (props.chat.messages[0].id !== messages[0]._id && props.chat.messages.length !== messages.length) {
+                            getMessages();
+                            setLoading(true);
+                            return;
+                        }
                     }
                 }
             }
-        }
+        } 
 
         const chatContainer = document.getElementById('scrollable-div');
         chatContainer.scrollTop = chatContainer.scrollHeight;
