@@ -58,11 +58,10 @@ const MainMessageChat = (props) => {
     }
 
     useEffect(() => {
-        setLoading(false);
         if (loading === false) {
             if (lastChatId !== props.chat._id) {
                 getMessages();
-                setLoading(true);
+                setLoading(false);
                 return;
             } else {
                 if (props.chat.messages.length > 0 && messages.length > 0) {
