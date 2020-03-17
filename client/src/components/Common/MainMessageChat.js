@@ -12,7 +12,22 @@ const MainMessageChat = (props) => {
     const [messages, setMessages] = useState([]);
     const [lastChatId, setLastChatId] = useState(null);
     const [loading, setLoading] = useState(false);
-    const socket = io(process.env.ENDPOINT || 'localhost:5000', {transports: ['websocket']});
+    //process.env.ENDPOINT || 
+    const socket = io('http://localhost:5000', {
+        transports: ['websocket']
+    });
+
+    const socketStart = () => {
+        setLoading(true);
+        socket.on('get-messages', messages => {
+            console.log("Getting messages")
+            console.log(messages)
+            getMessages();
+        });
+        auth.socketStarted = true;
+        setLoading(false);
+    }
+    
 
     const sendMessage = (event) => {
         event.preventDefault();
@@ -27,16 +42,15 @@ const MainMessageChat = (props) => {
         }
 
         const chatId = props.chat._id;
-        socket.emit("send-message", data, chatId);
-
-        socket.on('get-messages', messages => {
-            setLastChatId(props.chat._id);
-            setMessages(messages);
-        });
+        const packet = {
+            data: data,
+            chatId: chatId
+        }
+        socket.emit("send-message", packet);
 
         console.log('outside');
 
-        setLoading(false);
+        getMessages();
 
         document.getElementById("message").value = "";
     }
@@ -69,6 +83,9 @@ const MainMessageChat = (props) => {
                         return;
                     }
                 }
+            }
+            if(auth.socketStarted !== true){
+                socketStart()
             }
         }
 

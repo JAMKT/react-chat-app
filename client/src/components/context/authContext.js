@@ -7,5 +7,6 @@ export const AuthContext = createContext({
     login: () => {},
     logout: () => {},
     currUser: null,
-    loadFromRedirect: null
+    loadFromRedirect: null,
+    socketStarted: null
 });
