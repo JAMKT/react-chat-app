@@ -66,16 +66,15 @@ const Message = require('./models/Message');
 io.on('connection', socket => {
     socket.on('send-message', packet => {
         try {
-            console.log(packet);
             const newMessage = new Message({
-                content: packet.packet.data.content,
+                content: packet.data.content,
                 author: {
-                    id: packet.packet.data.author.id,
-                    username: packet.packet.data.author.username
+                    id: packet.data.author.id,
+                    username: packet.data.author.username
                 }
             });
             
-            Chat.findById(packet.packet.chatId, (err, chat) => {
+            Chat.findById(packet.chatId, (err, chat) => {
                 if (err) console.log('Message not found.');
 
                 Message.create(newMessage, (err, message) => {

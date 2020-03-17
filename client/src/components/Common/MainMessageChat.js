@@ -45,7 +45,7 @@ const MainMessageChat = (props) => {
             data: data,
             chatId: chatId
         }
-        socket.emit("send-message", {packet});
+        socket.emit("send-message", packet);
 
         console.log('outside');
 
