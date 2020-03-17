@@ -13,7 +13,6 @@ const MainMessageChat = (props) => {
     const [loading, setLoading] = useState(false);
 
     const sendMessage = (event) => {
-        setLoading(true);
         event.preventDefault();
         const data = {
             content: document.getElementById("message").value,
@@ -83,7 +82,6 @@ const MainMessageChat = (props) => {
         const chatContainer = document.getElementById('scrollable-div');
         chatContainer.scrollTop = chatContainer.scrollHeight;
     });
-
 
     if (props.chat !== null && typeof props.chat !== 'undefined') {
         let name;
