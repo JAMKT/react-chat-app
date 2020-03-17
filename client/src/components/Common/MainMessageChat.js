@@ -21,10 +21,10 @@ const MainMessageChat = (props) => {
         getMessages();
     });
 
-    socket.on('connect', onConnect);
-    function onConnect() {
-        console.log('connected');
-        socket.emit('join', 'my very own room');
+    const joinRoom = () => {
+        console.log("Creating room")
+        socket.emit('create', props.chat._id);
+        setRoom(true)
     }
 
     // const joinRoom = () => {
@@ -88,7 +88,10 @@ const MainMessageChat = (props) => {
                 getMessages();
                 setLoading(true);
                 return;
-            }
+            } 
+        }
+        if(room !== true){
+            joinRoom()
         }
         // if (room === false) {
         //     joinRoom()

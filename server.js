@@ -63,15 +63,10 @@ const Message = require('./models/Message');
 // Socket.io connection
 
 io.on('connection', socket => {
-    // listen for a custom event from the client and join that room
-    socket.on('join', function (room) {
-        console.log('join', room);
-        // joining 
-        socket.join(room, function () {
-            console.log(socket.rooms);
-        });
+    socket.on('create', room => {
+        console.log("CREATING ROOM")
+        socket.join(room);
     });
-
     socket.on('send-message', packet => {
         try {
             const newMessage = new Message({
@@ -98,7 +93,7 @@ io.on('connection', socket => {
                 });
             }).then(chat => {
                 console.log(chat)
-                socket.broadcast.to(chat.id.toString()).emit('get-messages', "Message");
+                socket.to(chat._id.toString()).emit('get-messages', "Message");
             }).catch(err => console.log(err));
         } catch (err) {
             console.log('Could not create this message.');
