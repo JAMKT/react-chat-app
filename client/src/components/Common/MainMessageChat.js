@@ -50,7 +50,7 @@ const MainMessageChat = (props) => {
         axios.get('/api/chats/' + props.chat._id + '/messages')
             .then((newMessages) => {
                 setMessages(newMessages.data.messages);
-
+                setLoading(false);
             }).then(() => {
                 setLoading(false);
             })
