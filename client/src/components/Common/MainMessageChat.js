@@ -12,17 +12,22 @@ const MainMessageChat = (props) => {
     const [messages, setMessages] = useState([]);
     const [lastChatId, setLastChatId] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [room, setRoom] = useState(null);
     const socket = io(process.env.ENDPOINT || 'localhost:5000', {
-        transports: ['websocket']
+        transports: ['polling', 'websocket']
     });
 
         socket.on('get-messages', messages => {
             getMessages();
         });
 
-    
+    const joinRoom = () => {
+        socket.join(props.chat._id);
+        setRoom(true)
+    }
 
     const sendMessage = (event) => {
+        console.log(socket)
         event.preventDefault();
         console.log("Connected: " + socket.connected)
         console.log("Disconnected: " + socket.disconnected)
@@ -79,7 +84,9 @@ const MainMessageChat = (props) => {
                 return;
             } 
         }
-
+        if(room === false){
+            joinRoom()
+        }
         const chatContainer = document.getElementById('scrollable-div');
         chatContainer.scrollTop = chatContainer.scrollHeight;
     });

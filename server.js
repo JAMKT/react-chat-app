@@ -89,7 +89,7 @@ const Message = require('./models/Message');
                     });
                 }).then(chat => {
                     console.log(chat)
-                    socket.broadcast.emit('get-messages', "Message");
+                    socket.broadcast.to(chat.id.toString()).emit('get-messages', "Message");
                 }).catch(err => console.log(err));
             } catch (err) {
                 console.log('Could not create this message.');
@@ -103,18 +103,23 @@ io.on('reconnect_attempt', () => {
 });
 
 io.on('reconnect_failed', () => {
+    console.log("RECONNECTING ON FAIL")
     io.connect();
 });
 io.on('disconnect', () => {
+    console.log("DISCONECT")
     io.connect();
 });
 io.on('connect_timeout', (timeout) => {
+            console.log("TIMEOUT")
     io.connect();
 });
 io.on('connect_error', (error) => {
+    console.log("CONNECT ERROR")
     io.connect();
 });
 io.on('error', (error) => {
+    console.log("ERROR")
     io.connect();
 });
 
