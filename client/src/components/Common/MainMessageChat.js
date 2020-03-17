@@ -12,25 +12,27 @@ const MainMessageChat = (props) => {
     const [messages, setMessages] = useState([]);
     const [lastChatId, setLastChatId] = useState(null);
     const [loading, setLoading] = useState(false);
-    //process.env.ENDPOINT || 
-    const socket = io('http://localhost:5000', {
+    const socket = io(process.env.ENDPOINT || 'localhost:5000', {
         transports: ['websocket']
     });
 
-    const socketStart = () => {
-        setLoading(true);
         socket.on('get-messages', messages => {
-            console.log("Getting messages")
-            console.log(messages)
             getMessages();
         });
-        auth.socketStarted = true;
-        setLoading(false);
-    }
+
     
 
     const sendMessage = (event) => {
         event.preventDefault();
+        console.log("Connected: " + socket.connected)
+        console.log("Disconnected: " + socket.disconnected)
+        if (socket.connected === false) {
+            console.log(socket.connected)
+            console.log(socket.disconnected)
+            console.log("RECONNECTING")
+            socket.connect()
+        }
+        
         setLoading(true);
         
         const data = {
@@ -75,18 +77,7 @@ const MainMessageChat = (props) => {
                 getMessages();
                 setLoading(true);
                 return;
-            } else {
-                if (props.chat.messages.length > 0 && messages.length > 0) {
-                    if (props.chat.messages[0].id !== messages[0]._id && props.chat.messages.length !== messages.length) {
-                        getMessages();
-                        setLoading(true);
-                        return;
-                    }
-                }
-            }
-            if(auth.socketStarted !== true){
-                socketStart()
-            }
+            } 
         }
 
         const chatContainer = document.getElementById('scrollable-div');

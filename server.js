@@ -88,7 +88,8 @@ const Message = require('./models/Message');
                         }
                     });
                 }).then(chat => {
-                    socket.emit('get-messages', "Message");
+                    console.log(chat)
+                    socket.broadcast.emit('get-messages', "Message");
                 }).catch(err => console.log(err));
             } catch (err) {
                 console.log('Could not create this message.');
@@ -96,9 +97,25 @@ const Message = require('./models/Message');
         });
     });
 
+io.on('reconnect_attempt', () => {
+    io.connect().
+    console.log("RECONNECTING")
+});
 
+io.on('reconnect_failed', () => {
+    io.connect();
+});
 io.on('disconnect', () => {
-    console.log('Disconnected.');
+    io.connect();
+});
+io.on('connect_timeout', (timeout) => {
+    io.connect();
+});
+io.on('connect_error', (error) => {
+    io.connect();
+});
+io.on('error', (error) => {
+    io.connect();
 });
 
 const port = require('./config/env').serverPORT;
