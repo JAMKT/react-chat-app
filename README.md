@@ -27,8 +27,7 @@ npm run client
 ```
 
 ***Notes:*** 
-* *Create a file called dbKeys.js inside the `config` folder and add your MongoDB connection strings in there.*
-    - *The content of dbKeys.js should look like this (with your strings):*
+* *Add your MongoDB connection strings in dbKeys.js (inside the `config` folder).*
     ```
     if(process.env.NODE_ENV === 'production') {
         module.exports = { mongoURI: '' }; // Add your remote db connection string here
@@ -36,8 +35,7 @@ npm run client
         module.exports = { mongoURI: '' }; // Add your local db connection string here
     }
     ```
-* *Create another file inside the `config` folder called `sessionConfig.js`.*
-    - *The content of this file should look like this (with whatever text you want as the value of "secret"):*
+* *Add your session secret key in `sessionConfig.js` (inside the `config` folder).*
     ```
     module.exports = {
         secret: ''

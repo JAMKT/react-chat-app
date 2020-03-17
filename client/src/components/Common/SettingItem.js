@@ -24,6 +24,10 @@ const SettingItem = (props) => {
             username: {
                 value: props.auth.username,
                 isValid: true
+            },
+            address: {
+                value: props.auth.address,
+                isValid: true
             }
         },
         {
@@ -47,6 +51,7 @@ const SettingItem = (props) => {
             email: formState.inputs.email.value,
             name: formState.inputs.name.value,
             username: formState.inputs.username.value,
+            address: formState.inputs.address.value,
             avatarColor: avatarColor
         }
         
@@ -62,6 +67,11 @@ const SettingItem = (props) => {
             // get current user
             let user = auth.currUser;
 
+            // check if current user's address is the same as the new address
+            if(user.address !== data.data.address){
+                // set the new address if it's different from the current user's address
+                user.address = data.data.address;
+            }  
             // check if current user's color is the same as the color selected by the user
             if(user.avatarColor !== data.data.avatarColor){
                 // set the selected/new color if it's different from the current user's color
@@ -102,15 +112,14 @@ const SettingItem = (props) => {
     // If "deleteCurrUser" state is true, display Popup
     let deleteUserPopup = 
         deleteCurrUser === true ? (
-            <Popup>
+            <Popup clearPopupState={() => clearPopuState()}>
                 <h3>Delete Account</h3>
                 <p>Are you sure you want to delete this account?</p>
-                <button className="delete-user-btn" onClick={() => deleteUser()}>Delete account</button>
+                <button className="delete-user-btn delete-user-btn-mobile" onClick={() => deleteUser()}>Delete account</button>
             </Popup> ) : null;
 
     // Delete user
     const deleteUser = () => {
-        console.log('delete user');
         axios.get('/api/users/' + auth.currUser._id + '/delete')
             .then(() => {
                 auth.loggedIn = false;
@@ -120,12 +129,10 @@ const SettingItem = (props) => {
             .catch(err => console.log(err))
     }
 
-     
-    
     // If success, display success popup
     let successMessage = 
         success === true ? (
-            <Popup>
+            <Popup clearPopupState={() => clearPopuState()}>
                 <h3>Success!</h3>
                 <p>Profile Updated</p>
             </Popup> ) : null;
@@ -133,26 +140,19 @@ const SettingItem = (props) => {
     // If error, display error popup
     let errorMessage = 
         error === true ? (
-            <Popup>
+            <Popup clearPopupState={() => clearPopuState()}>
                 <h3>Error!</h3>
                 <p>Something went wrong. Please try again.</p>
             </Popup> ) : null;
-
-   
     
-    // Set timeout for success popup
-    if (success === true){
-        setTimeout(function(){
-            setSuccess(null);
-        }, 6000)
+     // Clear Popup state function for when the Popup is closed
+     const clearPopuState = () => {
+        setError(null);
+        setDeleteCurrUser(null);   
+        setSuccess(null);
     }
-
-     // Set timeout for deleteUser popup
-     if (deleteCurrUser === true){
-        setTimeout(function(){
-            setDeleteCurrUser(null);   
-        }, 6000)
-    }
+     
+    
 
     return (
         <div className="row padding-32 scrollable">
@@ -268,14 +268,28 @@ const SettingItem = (props) => {
                             labelStyle="input-field-label-active"
                             errorStyle="error-border"
                             />
+                        <Input 
+                            id="address"
+                            type="text"
+                            label="Address"
+                            valid={true}
+                            value={formState.inputs.address.value}
+                            errorText="Please enter your address."
+                            validator={[VALIDATOR_REQUIRE()]}
+                            onInput={inputHandler}
+                            inputStyle="hide-text-input-field"
+                            inputContainerStyle="margin-s input-field grey-bg"
+                            labelStyle="input-field-label-active"
+                            errorStyle="error-border"
+                            />
 
                         <Button 
                             type="submit"
                             btnStyle="Button margin-xs"
-                            disabledBtn={!formState.isValid}>Submit</Button>
+                            disabledBtn={!formState.isValid}>Save</Button>
                     </form>
 
-                    <button className="delete-user-btn" onClick={deleteUserHandler}>Delete account</button>
+                    <button className="delete-user-btn delete-user-btn-mobile" onClick={deleteUserHandler}>Delete account</button>
                 </div>
             </div>
         </div>

@@ -26,6 +26,10 @@ const Register = () => {
             username: {
                 value: '',
                 isValid: false
+            },
+            address: {
+                value: '',
+                isValid: false
             }
         },
         {
@@ -40,13 +44,13 @@ const Register = () => {
             username: formState.inputs.username.value,
             name: formState.inputs.name.value,
             email: formState.inputs.email.value,
+            address: formState.inputs.address.value,
             avatarColor: 'BLACK',
             password: formState.inputs.password.value
         }
 
         axios.post('/api/users/register', data)
             .then((data) => {
-                console.log(data);
                 window.location.href = "/login";
             })
             .catch(err => console.log(err));
@@ -55,7 +59,7 @@ const Register = () => {
     return (
         <div className="container">
             <div className="row">
-                <div className="side-col padding-32 white-bg">
+                <div className="side-col padding-32 white-bg mobile-full-height">
                     <h1 className="margin-s text-center">Create your account</h1>
                     <form onSubmit={onSubmitHandler}>
                         <Input
@@ -99,6 +103,19 @@ const Register = () => {
                         />
 
                         <Input
+                            id="address"
+                            type="address"
+                            label="Address"
+                            errorText="Please enter a valid address."
+                            validator={[VALIDATOR_REQUIRE()]}
+                            onInput={inputHandler}
+                            inputStyle="hide-text-input-field"
+                            inputContainerStyle="margin-s input-field"
+                            labelStyle="input-field-label"
+                            errorStyle="error-border"
+                        />
+
+                        <Input
                             id="password"
                             type="password"
                             label="Password"
@@ -121,7 +138,7 @@ const Register = () => {
                     <p className="margin-s link-text">Already have an account? Login <Link to="/login">here!</Link></p>
                 </div>
 
-                <div className="col blue-bg full-height padding-32"></div>
+                <div className="col blue-bg full-height padding-32 mobile-hide"></div>
 
             </div>
         </div>

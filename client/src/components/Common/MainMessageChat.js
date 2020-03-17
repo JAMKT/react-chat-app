@@ -59,18 +59,17 @@ const MainMessageChat = (props) => {
         if(loading === false){
             if (lastChatId !== props.chat._id) {
                 getMessages();
+                setLoading(true);
                 return;
-            }
-            /*
-            Somehow work without this, but maybe we will need it later... Don't delete
-            if (props.chat.messages.length > 0 && messages.length > 0) {
-                if (props.chat.messages[0] !== messages[0]._id) {
-                    console.log("DIFFERENT CHATS")
-                    getMessages();
-                    return;
+            } else {
+                if (props.chat.messages.length > 0 && messages.length > 0) {
+                    if (props.chat.messages[0].id !== messages[0]._id && props.chat.messages.length !== messages.length) {
+                        getMessages();
+                        setLoading(true);
+                        return;
+                    }
                 }
             }
-            */
         }
 
         const chatContainer = document.getElementById('scrollable-div');
@@ -88,7 +87,7 @@ const MainMessageChat = (props) => {
             props.chat.members.forEach((member) => {
                 if (member.username !== auth.currUser.username) {
                     namesArray.push(member.username);
-                    
+
                     let names = namesArray.join(', ');
 
                     name = names;
@@ -107,10 +106,10 @@ const MainMessageChat = (props) => {
 
         return (
             <div className="col main-message-chat absolute-center-pin full-height">
-                <ChatHeader name={name} userId={userId} chatId={props.chat._id} unselectChat={props.unselectChat} />
+                <ChatHeader name={name} userId={userId} chatId={props.chat._id} unselectChat={props.unselectChat} getMessages={getMessages} />
                 <div className="row padding-16 scrollable" id="scrollable-div">
                     {
-                        messages !== [] ?
+                        messages.length > 0 ?
                             messages.map((msg, index) => {
                                 let text;
                                 msg.author.id === auth.currUser._id ?

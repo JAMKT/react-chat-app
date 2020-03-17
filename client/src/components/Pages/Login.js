@@ -51,8 +51,7 @@ const Login = (props) => {
         
         axios.post('/api/users/login', data, config)
             .then((foundUser) => {
-                if(foundUser.data.success === false){
-                    console.log('Incorrect email incorrect');
+                if (foundUser.data.success === false) {
                     setError(true);
                 }
                 if (foundUser.data.foundUser) {
@@ -67,22 +66,20 @@ const Login = (props) => {
 
     let errorMessage = 
         error === true ? (
-            <Popup>
+            <Popup clearPopupState={() => clearPopuState()}>
                 <h3>Login failed</h3>
                 <p>Incorrect email or password.</p>
             </Popup> ) : null;
-    
-    if (error === true){
-        setTimeout(function(){
-            setError(null);
-        }, 8000)
-    }
 
+    // Clear Popup state function for when the Popup is closed
+    const clearPopuState = () => {
+        setError(null);
+    }
 
     return (
         <div className="container">
             <div className="row">
-                <div className="padding-32 side-col white-bg">
+                <div className="padding-32 side-col white-bg mobile-full-height">
                     <h1 className="margin-s text-center">Log in</h1>
                     <form onSubmit={onSubmitHandler}>
                         <Input
@@ -121,7 +118,7 @@ const Login = (props) => {
                 </div>
 
 
-                <div className="col blue-bg full-height padding-32">
+                <div className="col blue-bg full-height padding-32 mobile-hide">
 
                 </div>
             </div>

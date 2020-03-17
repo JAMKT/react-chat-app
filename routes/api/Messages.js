@@ -5,9 +5,11 @@ const router = express.Router();
 const Chat = require('../../models/Chat');
 const Message = require('../../models/Message');
 
+const isLoggedIn = require('../../middleware/isLoggedIn');
+
 // GET
 // Get all messages related to a specific chat
-router.get('/:id/messages', (req, res) => {
+router.get('/:id/messages', isLoggedIn, (req, res) => {
     Chat.findById(req.params.id).populate("messages").sort({ "created": -1 }).exec((err, chat) => {
         if (err) res.send('Chat not found.');
         res.send(chat);
@@ -16,7 +18,7 @@ router.get('/:id/messages', (req, res) => {
 
 // GET
 // Get single message by its id
-router.get('/:id/messages/:messageId', async (req, res) => {
+router.get('/:id/messages/:messageId', isLoggedIn, async (req, res) => {
     const message = await Message.findById(req.params.messageId, (err, message) => {
         if (err) res.send('Message not found.');
         return message;
@@ -41,7 +43,7 @@ router.get('/:id/messages/:messageId', async (req, res) => {
 
 // DELETE
 // Delete message
-router.post('/:id/messages/:id', (req, res) => {
+router.post('/:id/messages/:id', isLoggedIn, (req, res) => {
     try {
         Message.findByIdAndRemove({ _id: req.params.id }, (err) => {
             if (err) console.log(err);

@@ -706,6 +706,36 @@ svg.svg-inline--fa.fa-user.fa-w-14{
         width: 100%;
         max-width: 600px;
     }
+    
+    .delete-user-btn-mobile{
+        font-size: 16px;
+    }
+  
+}
+
+@media (max-width: 600px){
+    .mobile-full-height{
+        height: 85vh;
+        min-height: 80vh;
+    }
+    .mobile-hide{
+        display: none;
+    }
+    .nav-bar-iconlist-mobile{
+        padding-left: 0;
+    }
+    .navbar-profile-mobile{
+        width: 56px;
+        height: 56px;
+        margin-right: 0.7em;
+    }
+    .svg-avatar-nav-mobile{
+        max-width: 30px;
+        max-height: 30px;
+    }
+    .no-padding-mobile{
+        padding: 0;
+    }
 }
 
 

@@ -1,12 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import Popup from '../Common/SuccessErrorPopup/Popup';
 import axios from 'axios';
 
 const ChatHeader = (props) => {
     const [color, setColor] = useState(null);
+    const [clearChatPopup, setClearChatPopup] = useState(null);
 
+    // Clear Chat Popup
+   let clearPopup = 
+   clearChatPopup === true ? (
+       <Popup clearPopupState={() => clearPopupState()}>
+           <h3>Clear Chat</h3>
+           <p className="p-popup">Are you sure you want to clear this chat?</p>
+          <button className="contact-button-delete margin-xs" onClick={() => clearChat()}>Clear chat</button>
+       </Popup> 
+       ) : null;
+
+    // Clear Popup state function for when the Popup is closed
+    const clearPopupState = () => {
+        setClearChatPopup(null);
+    }
+ 
     const clearChat = () => {
         axios.get('/api/chats/clear-chat/' + props.chatId)
-            .then(() => {})
+            .then((response) => {
+                props.getMessages();
+                setClearChatPopup(null);
+            })
             .catch(err => {
                 console.log(err);
             });
@@ -28,6 +48,8 @@ const ChatHeader = (props) => {
     },[props.userId]);
 
     return (
+        <React.Fragment>
+        {clearPopup}
         <div className="row align-center padding-16 chat-header">
             <div className="col">
                  <div className="row align-center ">
@@ -41,7 +63,7 @@ const ChatHeader = (props) => {
            
             <div className="col">
                 <div className="row justify-end">
-                    <button onClick={clearChat} className="back-to-messages">
+                    <button onClick={() => setClearChatPopup(true)} className="back-to-messages">
                         Clear chat
                     </button>
                     <button onClick={props.unselectChat} className="back-to-messages">
@@ -51,6 +73,7 @@ const ChatHeader = (props) => {
                 
             </div>
         </div>
+        </React.Fragment>
     )
 }
 
