@@ -68,7 +68,7 @@ const MainMessageChat = (props) => {
                 setLoading(true);
                 return;
             } else {
-                if (props.chat.messages.length > 0 || messages.length > 0) {
+                if (props.chat.messages.length > 0 && messages.length > 0) {
                     if (props.chat.messages.length !== messages.length || typeof messages.lenght === 'undefined') {
                         if (props.chat.messages[0].id !== messages[0]._id && props.chat.messages.length !== messages.length) {
                             getMessages();
