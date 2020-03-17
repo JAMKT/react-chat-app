@@ -61,44 +61,44 @@ app.use((req, res, next) => {
 const Chat = require('./models/Chat');
 const Message = require('./models/Message');
 // Socket.io connection
-io.on('connection', socket => {
-    socket.on('send-message', (data, chatId) => {
-        try {
-            const newMessage = new Message({
-                content: data.content,
-                author: {
-                    id: data.author.id,
-                    username: data.author.username
-                }
-            });
-    
-            Chat.findById(chatId, (err, chat) => {
-                if (err) console.log('Message not found.');
-    
-                Message.create(newMessage, (err, message) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        message.save();
-                        chat.messages.push(message);
-                        chat.lastUpdate = message.created;
-                        chat.save();
+
+    io.on('connection', socket => {
+        socket.on('send-message', packet => {
+            try {
+                const newMessage = new Message({
+                    content: packet.data.content,
+                    author: {
+                        id: packet.data.author.id,
+                        username: packet.data.author.username
                     }
                 });
-            }).then(chat => {}).catch(err => console.log(err));
-        } catch (err) {
-            console.log('Could not create this message.');
-        }
 
-        Chat.findById(chatId).populate("messages").sort({ "created": -1 }).exec((err, chat) => {
-            if (err) res.send('Chat not found.');
-            socket.emit('get-messages', chat.messages);
+                Chat.findById(packet.chatId, (err, chat) => {
+                    if (err) console.log('Message not found.');
+
+                    Message.create(newMessage, (err, message) => {
+                        if (err) {
+                            console.log(err);
+                            console.log("Message was not created...");
+                        } else {
+                            message.save();
+                            chat.messages.push(message);
+                            chat.lastUpdate = message.created;
+                            chat.save();
+                        }
+                    });
+                }).then(chat => {
+                    socket.emit('get-messages', "Message");
+                }).catch(err => console.log(err));
+            } catch (err) {
+                console.log('Could not create this message.');
+            }
         });
     });
 
-    socket.on('disconnect', () => {
-        console.log('Disconnected.');
-    });
+
+io.on('disconnect', () => {
+    console.log('Disconnected.');
 });
 
 const port = require('./config/env').serverPORT;
