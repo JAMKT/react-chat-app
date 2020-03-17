@@ -48,6 +48,7 @@ router.post('/register', async (req, res) => {
             username: req.body.username,
             name: req.body.name,
             email: req.body.email,
+            address: req.body.address,
             password: hash
         });
 
@@ -186,6 +187,7 @@ router.post('/update-user', isLoggedIn, async (req, res) => {
         $set: {
             name: req.body.name,
             email: req.body.email,
+            address: req.body.address,
             avatarColor: req.body.avatarColor
         }
     },
