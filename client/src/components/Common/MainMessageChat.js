@@ -22,20 +22,13 @@ const MainMessageChat = (props) => {
     });
 
     const joinRoom = () => {
-        console.log("Creating room")
         socket.emit('create', props.chat._id);
         setRoom(true)
     }
 
     const sendMessage = (event) => {
-        console.log(socket)
         event.preventDefault();
-        console.log("Connected: " + socket.connected)
-        console.log("Disconnected: " + socket.disconnected)
         if (socket.connected === false) {
-            console.log(socket.connected)
-            console.log(socket.disconnected)
-            console.log("RECONNECTING")
             socket.connect()
         }
         
@@ -53,8 +46,6 @@ const MainMessageChat = (props) => {
             chatId: chatId
         }
         socket.emit("send-message", packet);
-
-        console.log('outside');
 
         document.getElementById("message").value = "";
     }
