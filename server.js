@@ -67,6 +67,27 @@ const Message = require('./models/Message');
             console.log("CREATING ROOM")
             socket.join(room);
         });
+        socket.on('reconnect_attempt', () => {
+    io.connect().
+    console.log("RECONNECTING")
+});
+
+socket.on('reconnect_failed', () => {
+    console.log("RECONNECTING ON FAIL")
+    io.connect();
+});
+socket.on('connect_timeout', (timeout) => {
+            console.log("TIMEOUT")
+    io.connect();
+});
+socket.on('connect_error', (error) => {
+    console.log("CONNECT ERROR")
+    io.connect();
+});
+socket.on('error', (error) => {
+    console.log("ERROR")
+    io.connect();
+});
         socket.on('send-message', packet => {
             try {
                 const newMessage = new Message({
@@ -101,6 +122,10 @@ const Message = require('./models/Message');
         });
     });
 
+
+
+
+
 io.on('reconnect_attempt', () => {
     io.connect().
     console.log("RECONNECTING")
@@ -115,7 +140,7 @@ io.on('disconnect', () => {
     io.connect();
 });
 io.on('connect_timeout', (timeout) => {
-            console.log("TIMEOUT")
+    console.log("TIMEOUT")
     io.connect();
 });
 io.on('connect_error', (error) => {

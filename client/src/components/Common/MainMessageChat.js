@@ -17,9 +17,9 @@ const MainMessageChat = (props) => {
         transports: ['polling', 'websocket']
     });
 
-        socket.on('get-messages', messages => {
-            getMessages();
-        });
+    socket.on('get-messages', messages => {
+        getMessages();
+    });
 
     const joinRoom = () => {
         console.log("Creating room")
@@ -39,8 +39,6 @@ const MainMessageChat = (props) => {
             socket.connect()
         }
         
-        setLoading(true);
-        
         const data = {
             content: document.getElementById("message").value,
             author: {
@@ -57,8 +55,6 @@ const MainMessageChat = (props) => {
         socket.emit("send-message", packet);
 
         console.log('outside');
-
-        getMessages();
 
         document.getElementById("message").value = "";
     }
