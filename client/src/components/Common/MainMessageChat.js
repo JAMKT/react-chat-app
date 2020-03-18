@@ -13,7 +13,7 @@ const MainMessageChat = (props) => {
     const [lastChatId, setLastChatId] = useState(null);
     const [loading, setLoading] = useState(false);
     const [room, setRoom] = useState(null);
-    const socket = io(process.env.ENDPOINT || 'localhost:5000', {
+    const socket = io(process.env.ENDPOINT, {
         transports: ['polling', 'websocket']
     });
 
@@ -46,7 +46,7 @@ const MainMessageChat = (props) => {
                 username: auth.currUser.username
             }
         }
-
+ 
         const chatId = props.chat._id;
         const packet = {
             data: data,

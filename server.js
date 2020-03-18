@@ -97,30 +97,15 @@ socket.on('error', (error) => {
                         username: packet.data.author.username
                     }
                 });
-
-                Chat.findById(packet.chatId, (err, chat) => {
-                    if (err) console.log('Message not found.');
-
-                    Message.create(newMessage, (err, message) => {
-                        if (err) {
-                            console.log(err);
-                            console.log("Message was not created...");
-                        } else {
-                            message.save();
-                            chat.messages.push(message);
-                            chat.lastUpdate = message.created;
-                            chat.save();
-                        }
-                    });
-                }).then(chat => {
-                    console.log(chat)
-                    socket.to(chat._id.toString()).emit('get-messages', "Message");
-                }).catch(err => console.log(err));
-            } catch (err) {
-                console.log('Could not create this message.');
-            }
-        });
+            }).then(chat => {
+                console.log(chat)
+                socket.to(chat._id.toString()).emit('get-messages', "Message");
+            }).catch(err => console.log(err));
+        } catch (err) {
+            console.log('Could not create this message.');
+        }
     });
+});
 
 
 
@@ -128,7 +113,7 @@ socket.on('error', (error) => {
 
 io.on('reconnect_attempt', () => {
     io.connect().
-    console.log("RECONNECTING")
+        console.log("RECONNECTING")
 });
 
 io.on('reconnect_failed', () => {
@@ -151,6 +136,15 @@ io.on('error', (error) => {
     console.log("ERROR")
     io.connect();
 });
+
+//Serve static assets if we are in production
+if (process.env.NODE_ENV === 'production') {
+    //Set static folder
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 const port = require('./config/env').serverPORT;
 server.listen(port, () => console.log(`Server started on port ${port}`));
